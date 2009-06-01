@@ -19,7 +19,7 @@
 				:complete => "deleteRow('tag_#{tag_list_row.id}');"
 		%>
 		<!-- delete indicator -->
-		<%= image_tag 'indicator.gif', :id => "spin_#{tag_list_row.id}", :style => "display:none;", :plugin => 'substruct' %>
+		<%= image_tag '/plugin_assets/substruct/images/indicator.gif', :id => "spin_#{tag_list_row.id}", :style => "display:none;", :plugin => 'substruct' %>
 	</div>
 
 	<!-- edit control -->
@@ -32,7 +32,7 @@
 		</a>
 	</span>
 	<!-- rename indicator -->
-	<%= image_tag 'indicator.gif', :plugin => 'substruct', :id => "spin_edit_#{tag_list_row.id}", :style => "display:none;" %>
+	<%= image_tag '/plugin_assets/substruct/images/indicator.gif', :id => "spin_edit_#{tag_list_row.id}", :style => "display:none;" %>
 
 	<!-- name -->
 	<span id="tag_name_<%= tag_list_row.id %>">
