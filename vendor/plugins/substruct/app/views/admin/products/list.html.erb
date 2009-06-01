@@ -36,9 +36,8 @@
 			<td style="text-align:center">
 				<%=
 					image_tag(
-						product.is_published? ? 'icons/png-24/16-square-green.png' : 'icons/png-24/16-square-red.png',
-						:style => 'margin: 5px;',
-						:plugin => 'substruct'
+						product.is_published? ? '/plugin_assets/substruct/images/icons/png-24/16-square-green.png' : '/plugin_assets/substruct/images/icons/png-24/16-square-red.png',
+						:style => 'margin: 5px;'
 					)
 				%>
 				</td>
