@@ -210,14 +210,15 @@ LOOKING INTO OTHER OPTIONS!!!
     result
   end
 
-  # Returns markdown formatted content
+  # Returns markdown formatted content   
+  # FIXME: the name of these methods is wrong, markdown == BlueCloth, textile == RedCloth
   def get_markdown(content)
-    new_content = RedCloth.new(content).to_html
+    new_content = textilize(content)
   end
 
   # Gets a markdown formatted snippet of content, truncated.
   def get_markdown_snippet(content, length=100)
-    rc = RedCloth.new(content).to_html
+    rc = textilize(content)
     cut_content = truncate_words(rc, length)
     new_content = sanitize_html(cut_content)
   end
