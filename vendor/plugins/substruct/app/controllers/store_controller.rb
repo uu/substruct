@@ -223,7 +223,11 @@ class StoreController < ApplicationController
   # Displays form fields for grabbing name/addy/credit info
   #
   # Also displays items in the current order
-  def checkout
+  def checkout        
+    @countries = Country.find(:all,
+                              :conditions => ['is_obsolete != ?', 1],
+                              :order => 'rank, name ASC')
+
     @title = "Please enter your information to continue this purchase."
     @cc_processor = Order.get_cc_processor
     if request.get?

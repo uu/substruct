@@ -121,6 +121,9 @@ class CustomersController < ApplicationController
   # Displays details of a single order
   # Restricts query to currently logged in user to prevent users from seeing others orders.
   def order_details
+    @countries = Country.find(:all,
+                              :conditions => ['is_obsolete != ?', 1],
+                              :order => 'rank, name ASC')
     @order = Order.find(
       :first,
       :conditions => ["order_number = ? AND order_user_id = ?", params[:id], @customer.id]

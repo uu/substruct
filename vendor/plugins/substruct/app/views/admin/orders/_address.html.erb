@@ -50,9 +50,11 @@
       show_obsolete ||= false
 		%>
 		<%= make_label('Country') %>
-		<%= render_component(:controller => "countries",
-		                      :action => show_obsolete ? "complete_select_list" : "select_list",
-		                      :params => {:select_name => "#{address_type}_address", :selected => selected_country}) %>
+		<select name="#{address_type}_address">
+      <% @countries.each { |country| %>
+        <option value="<%= country.id %>" <%= country.id == selected_country.to_i ? "selected" : "" %>><%= country.name %></option>
+      <% } %>
+    </select>
 	</div>
 	<div class="clear">&nbsp;</div>
 

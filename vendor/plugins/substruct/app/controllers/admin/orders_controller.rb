@@ -173,7 +173,10 @@ class Admin::OrdersController < Admin::BaseController
   # Edits or shows an existing order
   #
   #
-  def show
+  def show 
+    @countries = Country.find(:all,
+                              :conditions => ['is_obsolete != ?', 1],
+                              :order => 'rank, name ASC')
     @order = Order.find(params[:id])
     order_time = @order.created_on.strftime("%m/%d/%y %I:%M %p")
     @title = "Order #{@order.order_number} - #{order_time}"
