@@ -17,7 +17,7 @@
 					<a href="<%= @d.public_filename() %>"><%= @d.name %></a>
 					<div style="float:right;margin-top:10px;">
 						<%= 
-							link_to_remote image_tag("icons/png-24/16-em-cross.png", :plugin => 'substruct', :alt => 'Delete'),
+							link_to_remote image_tag("/plugin_assets/substruct/images/icons/png-24/16-em-cross.png", :plugin => 'substruct', :alt => 'Delete'),
 					    	{
 									:url => { :action => "remove_download_ajax", :id => @d.id },
 									:loading => "$('remove_d_link_#{@d.id}').hide(); $('download_indicator_#{@d.id}').show();",

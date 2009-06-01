@@ -33,7 +33,7 @@
 				<td>
 					<%= 
 						link_to_remote(
-							image_tag('icons/png-24/16-em-cross.png', :plugin => 'substruct', :alt => 'Remove from cart', :id => "remove_#{item.product_id}"),
+							image_tag('/plugin_assets/substruct/images/icons/png-24/16-em-cross.png', :plugin => 'substruct', :alt => 'Remove from cart', :id => "remove_#{item.product_id}"),
 							:url => {
 									:controller => "store",
 									:action => "remove_from_cart_ajax",
@@ -70,7 +70,7 @@
 			<td>
 				<%= 
 					link_to_remote(
-						image_tag('icons/png-24/16-em-cross.png', :plugin => 'substruct', :alt => 'Empty Cart', :id => 'empty_cart_image'),
+						image_tag('/plugin_assets/substruct/images/icons/png-24/16-em-cross.png', :plugin => 'substruct', :alt => 'Empty Cart', :id => 'empty_cart_image'),
 						{
 			  	  	:url => {
 					    	:controller => "store",

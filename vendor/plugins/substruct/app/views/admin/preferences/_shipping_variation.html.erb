@@ -5,7 +5,7 @@
 	<!-- remove link -->
 	<div style="float:right;margin-top:20px;">
 		<%= 
-			link_to_remote image_tag("icons/png-24/16-em-cross.png", :id => "trash_#{svid}", :plugin => 'substruct', :alt => 'Delete'),
+			link_to_remote image_tag("/plugin_assets/substruct/images/icons/png-24/16-em-cross.png", :id => "trash_#{svid}", :plugin => 'substruct', :alt => 'Delete'),
 	    	{
 					:url => { :action => "remove_shipping_variation_ajax", :id => svid },
 					:loading => "$('remove_shipping_var_link_#{svid}').hide(); $('variation_indicator_#{svid}').show();",

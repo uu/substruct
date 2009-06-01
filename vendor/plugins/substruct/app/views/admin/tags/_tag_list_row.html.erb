@@ -4,13 +4,13 @@
 		<span style="margin-right:10px;">
 			<span id="tag_rename_<%= tag_list_row.id %>">
 				<a href="#" onclick="showEditTag(<%= tag_list_row.id %>);return false;">
-					<%= image_tag 'icons/png-24/16-em-pencil.png', :plugin => 'substruct', :alt => 'Edit' %>
+					<%= image_tag '/plugin_assets/substruct/images/icons/png-24/16-em-pencil.png', :plugin => 'substruct', :alt => 'Edit' %>
 				</a>
 			</span>
 		</span>
 
 		<!-- delete -->
-		<%= link_to_remote image_tag("icons/png-24/16-em-cross.png", :id => "trash_#{tag_list_row.id}", :plugin => 'substruct', :alt => 'Delete'),
+		<%= link_to_remote image_tag("/plugin_assets/substruct/images/icons/png-24/16-em-cross.png", :id => "trash_#{tag_list_row.id}", :plugin => 'substruct', :alt => 'Delete'),
 		    :url => {
 		        :controller => "tags",
 		        :action => "destroy", 
@@ -28,7 +28,7 @@
 	</span>
 	<span id="tag_rename_controls_<%= tag_list_row.id %>" style="display:none;">
 		<a href="#" onclick="saveEdit(<%= tag_list_row.id %>);return false">
-			<%= image_tag 'icons/png-24/16-em-check.png', :plugin => 'substruct', :alt => 'Save' %>
+			<%= image_tag '/plugin_assets/substruct/images/icons/png-24/16-em-check.png', :plugin => 'substruct', :alt => 'Save' %>
 		</a>
 	</span>
 	<!-- rename indicator -->

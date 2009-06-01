@@ -1,7 +1,7 @@
 <div class="user_upload" id="file_<%= @file.id %>">
 	<div class="delete_icon">
 		<!-- delete -->
-		<%= link_to_remote image_tag("icons/png-24/16-em-cross.png", :id => "trash_#{@file.id}", :plugin => 'substruct', :alt => 'Delete'),
+		<%= link_to_remote image_tag("/plugin_assets/substruct/images/icons/png-24/16-em-cross.png", :id => "trash_#{@file.id}", :plugin => 'substruct', :alt => 'Delete'),
 		    :url => {
 		        :controller => "files",
 		        :action => "destroy", 
