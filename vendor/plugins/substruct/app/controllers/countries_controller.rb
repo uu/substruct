@@ -1,3 +1,4 @@
+# TODO: remove this controller
 class CountriesController < ApplicationController
 
 	# Build a select list of countries.
