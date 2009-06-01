@@ -51,17 +51,6 @@ Rails::Initializer.run do |config|
   config.i18n.default_locale = :en
 end
 
-# Add new inflection rules using the following format
-# (all these examples are active by default):
-# Inflector.inflections do |inflect|
-#   inflect.plural /^(ox)$/i, '\1en'
-#   inflect.singular /^(ox)en/i, '\1'
-#   inflect.irregular 'person', 'people'
-#   inflect.uncountable %w( fish sheep )
-# end
-
-# Include your application configuration below
-
 begin
   Preference.init_mail_settings()
 rescue
