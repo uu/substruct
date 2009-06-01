@@ -16,11 +16,18 @@ class Admin::PreferencesController < Admin::BaseController
   #
   def index
     set_title('General Preferences')
+    
+    # Here we order the list by rank then by name, so, first lower ranks, then
+    # equal ranks ordered by name. 
+    @countries = Country.find(:all,
+                              :conditions => ['is_obsolete != ?', 1],
+                              :order => 'rank, name ASC')
     # Key prefs into hash based on name
     @prefs = {}
     Preference.find(:all).each do |p|
       @prefs[p.name] = p
-    end
+    end       
+    @selected = @prefs['store_home_country'].value
   end
   
   def save_prefs
