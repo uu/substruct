@@ -47,7 +47,8 @@ Rails::Initializer.run do |config|
   # (enables use of different database adapters for development and test environments)
   # config.active_record.schema_format = :ruby
 
-  # See Rails::Configuration for more options
+  # See Rails::Configuration for more options 
+  config.i18n.default_locale = :en
 end
 
 # Add new inflection rules using the following format
