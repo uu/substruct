@@ -25,11 +25,11 @@
 		<!-- top links -->
 		<ul class="navigation" id="toplinks">
 			<li style="margin-right:0px;">
-				<a href="/store/show_cart" class="submodal-600-400">Cart</a>
+				<a href="/store/show_cart" class="submodal-600-400"><%= t('cart') %></a>
 			</li>
-			<li><a href="/customers/wishlist">Wishlist</a></li>
-			<li><a href="/questions/ask">Contact Us</a></li>
-			<li><a href="/customers/orders">Track an Order</a></li>
+			<li><a href="/customers/wishlist"><%= t('wishlist') %></a></li>
+			<li><a href="/questions/ask"><%= t('contact_us') %></a></li>
+			<li><a href="/customers/orders"><%= t('track_an_order') %></a></li>
 		</ul>
 		
 		<!-- logo -->
@@ -41,7 +41,7 @@
 			<div id="customer_msg">
 				<%= @customer.email_address %>
 				<br/>
-				<a href="/customers/logout">log out</a>
+				<a href="/customers/logout"><%= t('logout') %></a>
 			</div>
 		<% end %>
 		
@@ -61,8 +61,8 @@
 			<div id="navcap_right"></div>
 			<div id="navigation-inner">
 				<ul class="navigation">
-					<li class="<%= @cname == 'main' ? 'active' : '' %>"><a href="/">Home</a></li>
-					<li class="<%= (@cname == 'store' && @aname == 'index') ? 'active' : '' %>"><a href="/store">All Products</a></li>
+					<li class="<%= @cname == 'main' ? 'active' : '' %>"><a href="/"><%= t('home') %></a></li>
+					<li class="<%= (@cname == 'store' && @aname == 'index') ? 'active' : '' %>"><a href="/store"><%= t('all_products') %></a></li>
 					<% 
 						@main_nav_tags.each_index do |i| 
 							tag = @main_nav_tags[i]
@@ -119,12 +119,12 @@
 
 	<div id="footer">
 		<ul class="navigation">
-			<li><a href="/">Home</a></li>
-			<li><a href="/questions/faq">FAQ</a></li>
-			<li><a href="/questions/ask">Contact Us</a></li>
-			<li><a href="/blog">Blog</a></li>
-			<li><a href="/customers/wishlist">Wishlist</a></li>
-			<li><a href="/store/show_cart" class="submodal-600-400">Cart</a></li>
+			<li><a href="/"><%= t('home') %></a></li>
+			<li><a href="/questions/faq"><%= t('faq') %></a></li>
+			<li><a href="/questions/ask"><%= t('contact_us') %></a></li>
+			<li><a href="/blog"><%= t('blog') %></a></li>
+			<li><a href="/customers/wishlist"><%= t('wishlist') %></a></li>
+			<li><a href="/store/show_cart" class="submodal-600-400"><%= t('cart') %></a></li>
 		</ul>
 	</div>
 	<div class="clear"></div>

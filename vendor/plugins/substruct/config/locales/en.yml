@@ -1,5 +1,24 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
-en:
-  hello: "Hello world"
+en:    
+  all_products: "All products"
+  blog: "Blog"
+  cart: "Cart"
+  close: "Close"
+  contact_us: "Contact Us"   
+  content: "Content"
+  faq: "FAQ"      
+  files: "Files"
+  home: "Home"
+  logout: "Log out"        
+  online_help: "Online help"
+  orders: "Orders"         
+  preferences: "Preferences"
+  products: "Products"
+  promotions: "Promotions" 
+  public_site: "Public site"
+  questions: "Questions"
+  users_and_customers: "Users &amp; Customers"
+  track_an_order: "Track an Order"
+  wishlist: "Wishlist"

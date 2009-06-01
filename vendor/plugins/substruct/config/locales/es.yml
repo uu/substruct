@@ -1,0 +1,24 @@
+# Sample localization file for Spanish. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+es:
+  all_products: "Todos los productos"      
+  blog: "Blog"
+  cart: "Carrito"
+  close: "Cerrar"
+  contact_us: "Contacte con nosotros"
+  content: "Contenido"
+  faq: "Preguntas frecuentes"
+  files: "Archivos"
+  home: "Inicio"
+  logout: "Salir"   
+  online_help: "Ayuda en linea"
+  orders: "Pedidos"   
+  preferences: "Preferencias"
+  products: "Productos"
+  promotions: "Promociones"    
+  public_site: "Sitio publico"
+  questions: "Preguntas"
+  track_an_order: "Seguimiento de un pedido"
+  users_and_customers: "Usuarios y clientes"
+  wishlist: "Lista de deseos"

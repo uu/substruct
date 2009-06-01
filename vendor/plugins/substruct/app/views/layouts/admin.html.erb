@@ -24,7 +24,7 @@
 			<%= flash[:notice] %>
 		</p>
 		<p>
-		<a href="#" class="action" onmousedown="new Effect.BlindUp($('flash'))">Close</a>
+		<a href="#" class="action" onmousedown="new Effect.BlindUp($('flash'))"><%= t('close') %></a>
 		</p>
 	</div>
 	<script type="text/javascript">
@@ -42,25 +42,25 @@
 	<div id="navigation">
 		<ul class="navigation">
 			<li class="<%= @cname == 'orders' ? 'active' : '' %>">
-				<a href="/admin/orders">Orders</a>
+				<a href="/admin/orders"><%= t('orders') %></a>
 			</li>
 			<li class="<%= @cname == 'products' ? 'active' : '' %>">
-				<%= link_to_section "Products", :controller=>"/admin/products" rescue nil %>
+				<%= link_to_section t("products"), :controller=>"/admin/products" rescue nil %>
 			</li>
 			<li class="<%= @cname == 'promotions' ? 'active' : '' %>">
-				<%= link_to_section "Promotions", :controller=>"/admin/promotions" rescue nil %>
+				<%= link_to_section t("promotions"), :controller=>"/admin/promotions" rescue nil %>
 			</li>
 			<li class="<%= @cname == 'questions' ? 'active' : '' %>">
-				<%= link_to_section "Questions", :controller=>"/admin/questions" rescue nil %>
+				<%= link_to_section t("questions"), :controller=>"/admin/questions" rescue nil %>
 			</li>
 			<li class="<%= @cname == 'content_nodes' ? 'active' : '' %>">
-				<%= link_to_section "Content", :controller=>"/admin/content_nodes" rescue nil %>
+				<%= link_to_section t("content"), :controller=>"/admin/content_nodes" rescue nil %>
 			</li>
 			<li class="<%= @cname == 'files' ? 'active' : '' %>">
-				<%= link_to_section "Files", :controller=>"/admin/files" rescue nil %>
+				<%= link_to_section t("files"), :controller=>"/admin/files" rescue nil %>
 			</li>
 		  <li class="<%= @cname == 'users' ? 'active' : '' %>">
-				<%= link_to_section "Users &amp; Customers", :controller=>"/admin/users" rescue nil %>
+				<%= link_to_section t("users_and_customers"), :controller=>"/admin/users" rescue nil %>
 			</li>
 		</ul>
 	</div>
@@ -72,9 +72,9 @@
 			  <br/>
 			  <span class="user_id"><%=h User.find(session[:user]).login %> - <%=h request.env["SERVER_NAME"] %></span>
 			</div>
-			<a href="/">Public site</a> -
-			<a href="/admin/preferences/">Preferences</a> - 
-			<a href="http://code.google.com/p/substruct/wiki/HelpUsage" class="submodal-800-600">Online Help</a> -
+			<a href="/"><%= t('public_site') %></a> -
+			<a href="/admin/preferences/"><%= t('preferences') %></a> - 
+			<a href="http://code.google.com/p/substruct/wiki/HelpUsage" class="submodal-800-600"><%= t('online_help') %></a> -
 			<a href="http://dev.subimage.com/projects/substruct/">About Substruct</a>
 		</div>
 	</div>
