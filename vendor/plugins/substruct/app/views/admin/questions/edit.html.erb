@@ -1,7 +1,8 @@
 <div id="left">
-  <h1>Editing question</h1>
+  <%= content_tag :h1, t(:editing_question) %>
   <ul class="navigation secondary">
-    <li><a href="/admin/questions/list/">Back to Question List</a></li>
+     <%= content_tag :li, link_to(t(:back_to_question_list), :controller =>  'questions', :action => 'list') %>
+ 
   </ul>
 
   <%= form_tag :action => 'update', :id => @question %>
@@ -10,8 +11,8 @@
   </form>
 
 	<div style="float:right;">
-		<%= link_to 'Show', :action => 'show', :id => @question %> |
-	  <%= link_to 'Delete This Question', {:action => 'destroy', :id => @question}, :confirm => 'Are you sure?', :class => 'action' %>
+		<%= link_to t(:show), :action => 'show', :id => @question %> |
+	  <%= link_to t(:delete_this_question), {:action => 'destroy', :id => @question}, :confirm => t(:confirm), :class => 'action' %>
 	</div>
 
 

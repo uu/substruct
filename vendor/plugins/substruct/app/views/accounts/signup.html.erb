@@ -1,17 +1,17 @@
 <%= form_tag :action=> "signup" %>
 
-<div title="Account signup" id="signupform" class="form">
-  <h3>Signup</h3>
+<div title="<%= t(:account_signup) %>" id="signupform" class="form">
+  <%= content_tag :h3, t(:signup) %>
   <%= error_messages_for 'user' %><br/>
   
-  <label for="user_login">Desired login:</label><br/>
+  <label for="user_login"><%= t(:desired_login)%>:</label><br/>
   <%= text_field "user", "login", :size => 30 %><br/>
-  <label for="user_password">Choose password:</label><br/>
+  <label for="user_password"><%= t(:choose_password)%>:</label><br/>
   <%= password_field "user", "password", :size => 30 %><br/>
-  <label for="user_password_confirmation">Confirm password:</label><br/>
+  <label for="user_password_confirmation"><%= t(:confirm_password)%>:</label><br/>
   <%= password_field "user", "password_confirmation", :size => 30 %><br/>
 
-<input type="submit" value="Signup &#187;" class="primary" />
+<input type="submit" value="<%= t(:signup)%> &#187;" class="primary" />
 
 </form>
 

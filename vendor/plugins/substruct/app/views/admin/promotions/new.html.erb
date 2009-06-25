@@ -1,15 +1,15 @@
 <div id="left">
 	<h1><%= @title %></h1>
 	<ul class="navigation secondary">
-    <li><a href="/admin/promotions/list/">Back to Promotion List</a></li>
-  </ul>
+      <%= content_tag :li, link_to(t(:back_to_promotion_list), :controller => 'promotions', :action => 'list') %>
+    </ul>
 	<%= form_tag :action => 'create' %>
 		<%= render(:partial => 'form') %>
 
 		<div class="line">&nbsp;</div>
 		
 		<p>
-			<%= submit_tag "Create Promotion", :class => 'button hundred' %>
+			<%= submit_tag t(:create_new_promotion), :class => 'button hundred' %>
 		</p>
 		<div class="clear"></div>
 	</form>

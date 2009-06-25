@@ -3,12 +3,9 @@
 -->
 
 <h1>Downloads</h1>
+<%= content_tag :h1, t(:downloads) %>
 <div class="padLeft">
-	<p class="info">
-	  These are digital items that customers may purchase.
-	  <br/>
-	  They will be available to a customer after a successful transaction.
-	</p>
+    <%= content_tag :p, t(:downloads_info), :class => 'info' %>
 	<% if @product.downloads.length > 0 then %>
 		<div>
 			<ul>
@@ -17,7 +14,7 @@
 					<a href="<%= @d.public_filename() %>"><%= @d.name %></a>
 					<div style="float:right;margin-top:10px;">
 						<%= 
-							link_to_remote image_tag("/plugin_assets/substruct/images/icons/png-24/16-em-cross.png", :plugin => 'substruct', :alt => 'Delete'),
+							link_to_remote image_tag("/plugin_assets/substruct/images/icons/png-24/16-em-cross.png", :plugin => 'substruct', :alt => t(:delete)),
 					    	{
 									:url => { :action => "remove_download_ajax", :id => @d.id },
 									:loading => "$('remove_d_link_#{@d.id}').hide(); $('download_indicator_#{@d.id}').show();",
@@ -33,10 +30,10 @@
 			</ul>
 		</div>
 	<% else %>
-		This product has no downloads associated with it currently.
+        <%= t(:no_downloads_associated) %>
 	<% end %>
 	
-	<h4>Upload</h4>
+    <%= content_tag :h4, t(:upload) %>
 	<%= 
 		render :partial => '/shared/multiple_upload',
 			:locals => {

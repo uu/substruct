@@ -5,19 +5,19 @@
 	<%= form_tag :action=>"edit", :id => @role.id %>
 <% end %>
 
-  <h1>Editing Role</h1>
+  <%= content_tag :h1, t(:editing_role) %>
   <ul class="navigation secondary">
-    <li><a href="/admin/roles/list/">Back to Role List</a></li>
+    <%= content_tag :li, link_to(t(:back_to_role_list), :controller =>  'roles', :action => 'list') %>
   </ul>
 
   <%= render :partial => "form" %>
 
 	<!-- SAVE BUTTON -->
 	<div class="line" style="margin-top:20px;">&nbsp;</div>
-  <%= submit_tag 'Save This Role', :class => 'button hundred' %>
+  <%= submit_tag t(:save_this_role), :class => 'button hundred' %>
 
 	<div style="float:right;">
-  	<%= link_to 'Delete This Role', {:action => 'destroy', :id => @role}, :method => 'post', :confirm => 'Are you sure?', :class => 'action' %>
+  	<%= link_to t(:delete_this_role), {:action => 'destroy', :id => @role}, :method => 'post', :confirm => t(:confirm), :class => 'action' %>
 	</div>
 	
 
@@ -26,7 +26,7 @@
 
 <!-- RIGHT -->
 <div id="right">
-	<h1>Help</h1>
-	<p class="info">CRUD = CReate, Update, Delete</p>
+    <%= content_tag :h1, t(:help) %>
+    <%= content_tag :p, t(:roles_help5), :class => 'info' %>
 </div>
 <div class="clear">&nbsp;</div>

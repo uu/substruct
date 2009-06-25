@@ -1,16 +1,11 @@
 <!-- RIGHT -->
 <div id="right">
 	<br/>
-	<%= link_to 'Create New Promotion', {:action => 'new'}, :class => 'button' %>
+	<%= link_to t(:create_new_promotion), {:action => 'new'}, :class => 'button' %>
 	<div class="clear">&nbsp;</div>
 	
-	<h1>Help</h1>
-	<p>
-		Create promotions to offer discounts or free items to your customers.
-	</p>
-	<p>
-		Promotions may be percentage or dollar based, and can automatically add items to an order.
-	</p>
-	
+    <%= content_tag :h1, t(:help) %>
+    <%= content_tag :p, t(:create_new_promotion_help1) %>
+    <%= content_tag :p, t(:create_new_promotion_help2) %>
 </div>
 <div class="clear">&nbsp;</div>

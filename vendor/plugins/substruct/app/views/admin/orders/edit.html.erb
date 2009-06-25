@@ -7,15 +7,15 @@
 <div id="left">
 	<h1><%= @title %></h1>
 	<ul class="navigation secondary">
-    <li><a href="/admin/orders/list/">Back to Order List</a></li>
+    <%= content_tag :li, link_to(t(:back_to_order_list), :controller => 'orders', :action => 'list') %>
   </ul>
 
 	<div id="subnav">
 		<ul class="navigation tertiary" id="sub_tabs">
-			<li class="active"><a href="#" onclick="showSubTab('order_fields', this);return false;">Address &amp; Status</a></li>
-			<li><a href="#" onclick="showSubTab('order_accounts', this);return false;">Account Info</a></li>
-			<li><a href="#" onclick="showSubTab('order_items', this);return false;">Order Items</a></li>
-			<li><a href="#" onclick="showSubTab('order_notes', this);return false;">Notes</a></li>
+			<li class="active"><a href="#" onclick="showSubTab('order_fields', this);return false;"><%= t(:address_and_status) %></a></li>
+			<li><a href="#" onclick="showSubTab('order_accounts', this);return false;"><%= t(:account_info) %></a></li>
+			<li><a href="#" onclick="showSubTab('order_items', this);return false;"><%= t(:order_items) %></a></li>
+			<li><a href="#" onclick="showSubTab('order_notes', this);return false;"><%= t(:notes) %></a></li>
 		</ul>
 	</div>
 	<div class="clear">&nbsp;</div>
@@ -26,7 +26,7 @@
 	<!-- ORDER FIELDS -->
 	<div id="order_fields">
 		<div class="floatHalf">
-			<h2>Status</h2>
+            <%= content_tag :h2, t(:status) %>
 			<div class="padLeft">
 				<p>
 				<%= select("order", :order_status_code_id,
@@ -39,18 +39,18 @@
 		</div>
 		<div class="clear">&nbsp;</div>
 
-		<h2>Billing Address</h2>
+        <%= content_tag :h2, t(:billing_address) %>
 		<%= render(:partial => 'address', :locals => {:address_type => 'billing', :show_obsolete => true}) %>
 
 		<br/>
 		<div class="padLeft">
-			<label><%= check_box_tag("use_separate_shipping_address", 'true', @use_separate_shipping_address, :class => 'inline', :id => 'use_diff_shipping') %> Ship to a different address</label>
+			<label><%= check_box_tag("use_separate_shipping_address", 'true', @use_separate_shipping_address, :class => 'inline', :id => 'use_diff_shipping') %> <%= t(:shipping_address) %> </label>
 			<br/>
 		</div>
 
 		<div id="shipping_address"
 			style="<%= 'display:none;' if !@use_separate_shipping_address %>">
-			<h2>Shipping Address</h2>
+            <%= content_tag :h2, t(:shipping_address) %>
 			<%= render(:partial => 'address', :locals => {:address_type => 'shipping', :show_obsolete => true}) %>
 		</div>
 	<!-- / ORDER FIELDS -->
@@ -64,7 +64,7 @@
 
 	<!-- ORDER NOTES -->
 	<div id="order_notes" style="display:none;">
-		<h2>Notes</h2>
+        <%= content_tag :h2, t(:notes) %>
 		<div class="padLeft">
 			<% if @order.notes %>
 				<div class="notes">
@@ -73,11 +73,7 @@
 			<% end %>
 			<%= text_area_tag('order[new_notes]', nil, :cols => 40, :rows => 3, :class => 'textArea notesEdit')  %>
 			<span class="info">
-				<p>
-					Enter any notes here that you'd like to add to this order.
-					<br/>
-					Notes will be saved when you click the <b>Save Order</b> button at the bottom of this page.
-				</p>
+              <%= content_tag :p, t(:notes_info) %>
 			</span>
 		</div>
 	<!-- / ORDER NOTES -->
@@ -85,10 +81,10 @@
 
 	<!-- ORDER ITEMS -->
 	<div id="order_items" style="display:none;">
-		<div class="price" style="margin-top:5px;">Total: <%=h sub_number_to_currency(@order.total) %></div>
+		<div class="price" style="margin-top:5px;"><%= t(:total) %>: <%=h sub_number_to_currency(@order.total) %></div>
 		
 		<% if @order.referer %>
-			<h2>Referer</h2>
+        <%= content_tag :h2, t(:referer) %>
 			<div class="padLeft">
 				<p>
 					<%= auto_link(@order.referer)  %>
@@ -97,7 +93,7 @@
 			<br/>
 		<% end %>
 
-		<h2>Ship Via</h2>
+        <%= content_tag :h2, t(:ship_via) %>
 		<div class="padLeft">
 			<p>
 			<%= select("order", :order_shipping_type_id,
@@ -105,7 +101,7 @@
 			</p>
 		</div>
 
-		<h2>Order Items</h2>
+        <%= content_tag :h2, t(:order_items) %>
 
 		<div class="padLeft">
 			<table class="list" cellpadding="0" cellspacing="0">
@@ -116,10 +112,10 @@
 					<col style="width:70px;"/>
 				</colgroup>
 				<tr>
-					<th>Item</th>
-					<th>Quantity</th>
-					<th class="numeric">Price Each</th>
-					<th class="numeric">Total</th>
+					<th><%= t(:item) %></th>
+					<th><%= t(:quantity) %></th>
+					<th class="numeric"><%= t(:price_each) %></th>
+					<th class="numeric"><%= t(:total) %></th>
 				</tr>
 				
 				<!-- PRODUCTS IN THE ORDER -->
@@ -140,7 +136,7 @@
 				<% end %>
 				<tr class="footer">
 					<td class="numeric" colspan="3">
-						Shipping Cost
+                        <%= t(:shipping_cost) %>
 					</td>
 					<td class="numeric">
 						<%= text_field 'order', 'shipping_cost', :size => '5', :class => 'numeric' %>
@@ -154,10 +150,10 @@
 		<div class="line">&nbsp;</div>
 
 		<div style="float:right;">
-			<%= link_to 'Delete This Order', {:action => 'destroy', :id => @order}, :class => 'action', :confirm => 'Are you sure?', :post => true %>
+			<%= link_to t(:delete_this_order), {:action => 'destroy', :id => @order}, :class => 'action', :confirm => t(:confirm), :post => true %>
 		</div>
 		<p>
-			<%= submit_tag "Save This Order", :class => 'button hundred' %>
+			<%= submit_tag t(:save_this_order), :class => 'button hundred' %>
 		</p>
 	</form>
 </div>

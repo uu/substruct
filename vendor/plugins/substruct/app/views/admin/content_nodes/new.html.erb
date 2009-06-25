@@ -2,11 +2,11 @@
 	<div id="left">
 	  <h1><%= @title %></h1>
 	  <ul class="navigation secondary">
-	    <li><a href="/admin/content_nodes/list/">Back to Content List</a></li>
+        <%= content_tag :li, link_to(t(:back_to_content_list), :controller => 'content_nodes', :action => 'list') %>
 	  </ul>
 
     <%= render :partial => 'form' %>
-    <%= submit_tag "Save New Content", :class=> 'button hundredthirty' %>
+    <%= submit_tag t(:save_new_content), :class=> 'button hundredthirty' %>
 	</div>
 
 	<!-- RIGHT -->

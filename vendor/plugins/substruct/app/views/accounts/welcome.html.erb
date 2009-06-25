@@ -1,12 +1,6 @@
-
 <div class="memo">
-    <h3>Welcome</h3>
-
-    <p>You are now logged into the system...</p>
-    <p>
-    <a href="/admin/">Go to the admin control panel</a>
-    </p>
-      
-    <%= link_to "&#171; logout", :action=>"logout"%>  
-      
+    <%= content_tag :h3, t(:welcome) %>
+    <%= content_tag :p, t(:logged_in) %>
+    <%= content_tag :p, link_to(t(:go_to_admin_control_panel), :controller => 'admin') %>
+    <%= link_to "&#171; "+ t(:logout), :action => "logout" %>  
 </div>

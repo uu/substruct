@@ -1,6 +1,6 @@
 <%= form_tag :action=> "login" %>
 
-<h1>Login To Continue</h1>
+<%= content_tag :h1, t(:login_to_continue) %>
 
 
 <% if flash['notice'] %>
@@ -8,22 +8,17 @@
 <% end %>
 
 <div class="padLeft">
-  <p class="info">
-    All attempts to access this system are logged.
-    <br/>Unauthorized access is prohibited and punishable by law.
-  </p>
-
-
+  <%= content_tag :p, t(:all_attempts_to_access_logged), :class => 'info' %>
   <p>
-    <label for="user_login">Login:</label>
+    <label for="user_login"><%= t("login") %>:</label>
     <input type="text" class="textInput" name="user_login" id="user_login" size="30" value=""/>
     <br/><br/>
-    <label for="user_password">Password:</label>
+    <label for="user_password"><%= t(:password)%>:</label>
     <input type="password" class="textInput" name="user_password" id="user_password" size="30"/>
   </p>
 
   <p>
-    <input type="submit" name="login" value="Login" class="button eighty" />
+    <input type="submit" name="login" value="<%= t(:login) %>" class="button eighty" />
   </p>
 
 

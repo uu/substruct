@@ -1,8 +1,8 @@
-<h1>Logoff</h1>
+<%= content_tag :h1, t(:logoff)%>
 
-<p>You are now logged out of the system...</p>
+<%= content_tag :p, t(:logged_out)%>
 
 <ul>
-  <li><%= link_to "Back to Login", :action=>"login"%></li>
-  <li><a href="/">Home</a></li>
+  <%= content_tag :li, link_to(t(:back_to_login), :action => "login") %>
+  <%= content_tag :li, link_to(t(:home), '/') %>
 </ul>

@@ -2,17 +2,15 @@
 	IMAGES ######################################################################
 -->
 
-<h1>Images</h1>
+<%= content_tag :h1, t(:images) %>
 <div class="padLeft">
 	<% if @product.images.length > 0 then %>
 		<p>
-			Drag and drop images to set their order on the item page.
+            <%= t(:images_help1) %>
 			<br/>
-			<span class="hlt">The image listed first will be the default.</span>
+            <%= content_tag :span, t(:images_help2), :class => 'hlt' %>
 		</p>
-		<p class="info">
-			If you don't see an image it means the path is broken or doesn't exist any longer.
-		</p>
+            <%= content_tag :p, t(:images_help3), :class => 'info' %>
 		<div>
 			<ul onselectstart="return false;" class="sortable" id="image_list">
 			<% for @p_image in @product.images.find(:all) %>
@@ -25,13 +23,13 @@
 					</div>
 					<div class="float info">
 						<br/>
-            <a href="<%= @p_image.public_filename(:small) %>" class="submodal-400-400">View Small</a>
+            <a href="<%= @p_image.public_filename(:small) %>" class="submodal-400-400"><%= t(:view_small) %></a>
 						<br/>
-            <a href="<%= @p_image.public_filename %>" class="submodal-400-400">View Original</a>
+            <a href="<%= @p_image.public_filename %>" class="submodal-400-400"><%= t(:view_original) %></a>
 					</div>
 					<div style="float:right;margin-top:10px;">
 						<%= 
-							link_to_remote image_tag("/plugin_assets/substruct/images/icons/png-24/16-em-cross.png", :plugin => 'substruct', :alt => 'Delete'),
+							link_to_remote image_tag("/plugin_assets/substruct/images/icons/png-24/16-em-cross.png", :plugin => 'substruct', :alt => t(:delete)),
 					    	{
 									:url => { :action => "remove_image_ajax", :id => @p_image.id },
 									:loading => "$('remove_link_#{@p_image.id}').hide(); $('image_indicator_#{@p_image.id}').show();",
@@ -53,10 +51,10 @@
 			) 
 		%>
 	<% else %>
-		This product has no images associated with it currently.
+        <%= t(:no_images_associated) %>
 	<% end %>
 	
-	<h4>Upload</h4>
+    <%= content_tag :h4, t(:upload) %>
 	<%= 
 		render :partial => '/shared/multiple_upload',
 			:locals => {

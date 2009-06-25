@@ -1,23 +1,21 @@
-<h2>Payment Information</h2>
+<%= content_tag :h2, t(:payment_information) %>
 <div class="padLeft">
-	<p>
-		<span class="hlt">We accept Visa, MasterCard, and American Express</span>
-	</p>
+    <%= content_tag :p, content_tag(:span, t(:accepted_credit_cards), :class => 'hlt') %>
 
 	<div>
 		<div class="padLeft">
-			<%= make_label('Card Number', true) %>
+			<%= make_label(t(:card_number), true) %>
 			<%= text_field_tag 'order_account[cc_number]', @order_account.cc_number, :maxlength => 17, :class => 'textInput' %>
 	    <%= error_message_on(:order_account, :cc_number) %>
 
-			<%= make_label('Expiration Date', true) %>
+			<%= make_label(t(:expiration_date), true) %>
 		  <div class="float">	
 		    <%= select('order_account', 'expiration_month', OrderAccount.months) %>
-		    <p class="info">Month</p>
+		    <%= content_tag :p, t(:month), :class => 'info' %>
 		  </div>
 	    <div class="float">
 	      <%= select('order_account', 'expiration_year', OrderAccount.years) %>
-	      <p class="info">Year</p>
+		    <%= content_tag :p, t(:year), :class => 'info' %>
 	    </div>
 	    <div class="float">
 	      <%= error_message_on(:order_account, :expiration_month) %>

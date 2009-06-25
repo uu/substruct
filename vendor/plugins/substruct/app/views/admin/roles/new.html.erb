@@ -1,22 +1,22 @@
 <div id="left">
 <%= form_tag :action=>"new" %>
 
-  <h1>Editing Role</h1>
+  <%= content_tag :h1, t(:editing_role) %>
   <ul class="navigation secondary">
-    <li><a href="/admin/roles/list/">Back to Role List</a></li>
+    <%= content_tag :li, link_to(t(:back_to_role_list), :controller =>  'roles', :action => 'list') %>
   </ul>
 
   <%= render :partial => "form" %>
 
 	<!-- SAVE BUTTON -->
 	<div class="line" style="margin-top:20px;">&nbsp;</div>
-  <%= submit_tag 'Save New Role', :class => 'button hundred' %>
+  <%= submit_tag t(:save_new_role), :class => 'button hundred' %>
 
 </form>
 </div>
 
 <!-- RIGHT -->
 <div id="right">
-	<h1>Help</h1>
+    <%= content_tag :h1, t(:help) %>
 </div>
 <div class="clear">&nbsp;</div>

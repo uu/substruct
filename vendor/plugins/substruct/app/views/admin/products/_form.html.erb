@@ -5,28 +5,28 @@
 	PRODUCT AND VARIATIONS ######################################################
 -->
 <div class="padLeft">
-	<h2>Standard Product</h2>
+    <%= content_tag :h2, t(:standard_product) %>
 	<div class="padLeft">
 		<div class="float">
-			<%= make_label('Name', true) %>
+			<%= make_label(t(:name), true) %>
 			<%= text_field 'product', 'name', :class => 'textInput', :size => 30  %>
 		</div>
 		<div class="float">
-			<%= make_label('Product Code', true) %>
+			<%= make_label(t(:code), true) %>
 			<%= text_field 'product', 'code', :class => 'textInput', :size => 10 %>
 		</div>
 		<div class="float">
-			<%= make_label('Price') %>
+			<%= make_label(t(:price)) %>
 			<%= text_field 'product', 'price', :class => 'textInput numeric', :size => 6, :disabled => @product.variations.size > 0  %>
 		</div>
 		<div class="float">
-			<%= make_label('Quantity') %>
+			<%= make_label(t(:quantity)) %>
 			<%= text_field 'product', 'quantity', :class => 'textInput numeric', :size => 6, :disabled => @product.variations.size > 0  %>
 		</div>
 		<div class="clear"></div>
 		<% if @product.variations.size > 0 %>
 			<div class="hlt" style="padding:10px; text-align: center;">
-				When using product variations the price and quantity<br/>for the "standard product" will not be visible on the main site.
+              <%= t(:standard_product_info) %>
 			</div>
 		<% end %>
 
@@ -34,7 +34,7 @@
 
 	<!-- PRODUCT VARIATIONS -->
 
-	<h2>Variations</h2>
+    <%= content_tag :h2, t(:variations) %>
 
 	<div class="padLeft">
 
@@ -45,7 +45,7 @@
 	
 		<p>
 			<%= 
-				link_to_remote 'Add product variation',
+				link_to_remote t(:add_product_variation),
 		    	{
 						:url => { :action => "add_variation_ajax" },
 						:loading => "$('add_variation_link').hide(); $('add_variation_indicator').show();",
@@ -65,7 +65,7 @@
 	DETAILS #####################################################################
 -->
 
-<h1>Details</h1>
+<%= content_tag :h1, t(:variations) %>
 
 <div class="padLeft">
 	<div class="float" style="width:230px;">
@@ -73,45 +73,43 @@
 		<p>
 			<label>
 				<%= check_box('product', 'is_discontinued', :class => 'inline') %> 
-				Product is discontinued
+                <%= t(:product_is_discontinued) %>
 			</label>
-			<span class="info">
-				Discontinued products will continue to show on the site until there are no more in stock.
-			</span>
+            <%= content_tag :span, t(:product_is_discontinued_info), :class => 'info' %>
 		</p>
 	
 		<p>
-			<%= make_label('Date available') %>
+			<%= make_label(t(:date_available)) %>
 			<%= date_select 'product', 'date_available'  %>
 		</p>
 
 		<div class="float">
 			<p>
-				<%= make_label('Width') %>
+				<%= make_label(t(:width)) %>
 				<%= text_field 'product', 'size_width', :size => '10', :class => 'textInput'  %>
 				<br/>
-				<span class="info">(inches)</span>
+                <%= content_tag :span, "("+t(:width_measure)+")", :class => 'info' %>
 			</p>
 			<p>
-				<%= make_label('Depth') %>
+				<%= make_label(t(:depth)) %>
 				<%= text_field 'product', 'size_depth', :size => '10', :class => 'textInput'  %>
 				<br/>
-				<span class="info">(inches)</span>
+                <%= content_tag :span, "("+t(:width_measure)+")", :class => 'info' %>
 			</p>
 		</div>
 
 		<div class="float">
 			<p>
-				<%= make_label('Height') %>
+				<%= make_label(t(:height)) %>
 				<%= text_field 'product', 'size_height', :size => '10', :class => 'textInput'  %>
 				<br/>
-				<span class="info">(inches)</span>
+                <%= content_tag :span, "("+t(:width_measure)+")", :class => 'info' %>
 			</p>
 			<p>
-				<%= make_label('Weight') %>
+				<%= make_label(t(:weight)) %>
 				<%= text_field 'product', 'weight', :size => '10', :class => 'textInput'  %>
 				<br/>
-				<span class="info">(pounds)</span>
+                <%= content_tag :span, "("+t(:weight_measure)+")", :class => 'info' %>
 			</p>
 		</div>
 		<div class="clear">&nbsp;</div>
@@ -120,10 +118,8 @@
 
 	<div class="float">
 		<p>
-			<label for="product_description">Description</label>
-			<span class="info">
-		    HTML and <a href="http://hobix.com/textile/" target="_blank">Textile</a> markup is allowed here.
-		  </span>
+			<label for="product_description"><%= t(:description) %></label>
+            <%= content_tag :span, t(:product_description_info), :class => 'info' %>
 			<br/>
 			<%= text_area 'product', 'description', :rows => 14, :class => 'textArea'  %>
 		</p>

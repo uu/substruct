@@ -1,14 +1,14 @@
 <div id="left">
-	<h1>View Products By Tag</h1>
+    <%= content_tag :h1, t(:view_products_by_tags) %>
 	<ul class="navigation secondary">
-    <li><a href="/admin/products/list/">Back to Product List</a></li>
+    <%= content_tag :li, link_to(t(:back_to_product_list), :controller => 'products', :action => 'list') %>
   </ul>
 	<!-- View products by tag -->
 	<ul id="view_tags">
 		<% if @tags.length > 0 %>
 			<%= render(:partial => 'tag_list_view_item', :collection => @tags) %>
 		<% else %>
-			<li>No Tags have been created yet</li>
+            <%= content_tag :li, t(:no_tags_have_been_created_yet) %>
 		<% end %>
 	</ul>
 </div>

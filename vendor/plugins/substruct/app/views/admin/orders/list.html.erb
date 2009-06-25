@@ -8,30 +8,30 @@
 	<% end %>
 
 	<% if @orders.length == 0 then %>
-		<h4>No orders have been taken that apply to this view.</h4>
+        <%= content_tag :h4, t(:no_orders_have_been_taken) %>
 		<div class="padLeft">
-			<p>Would you like to try another view?</p>
+            <%= content_tag :p, t(:would_you_try_another_view) %>
 			<ul>
 				<li>
-					<a href="/admin/orders/list?key=Ready+To+Ship">Ready To Ship</a>
+                    <%= link_to t(:ready_to_ship), :controller => 'orders', :action => 'list', :key => 'Ready To Ship' %>
 					<br/>
-					<span class="info">Orders that have been paid for and are ready to be shipped out.</span>
+                    <%= content_tag :span, t(:ready_to_ship_info), :class => 'info' %>
 				</li>
 				<li>
-					<a href="/admin/orders/list?key=On+Hold">On Hold</a>
+                    <%= link_to t(:on_hold), :controller => 'orders', :action => 'list', :key => 'On Hold' %>
 					<br/>
-					<span class="info">Orders awaiting payment, or orders that have failed to process correctly.
-					<br/>(Due to invalid data entry of credit card, address, etc)</span>
+                    <%= content_tag :span, t(:on_hold_info), :class => 'info' %>
 				</li>
 				<li>
-					<a href="/admin/orders/list?key=Completed">Completed</a>
+                    <%= link_to t(:completed), :controller => 'orders', :action => 'list', :key => 'Completed' %>
 					<br/>
-					<span class="info">Orders have been shipped and completed</span>
+                    <%= content_tag :span, t(:completed_info), :class => 'info' %>
 				</li>
-				<li>
-					<a href="/admin/orders/list?key=All">All</a>
+				
+                <li>
+                    <%= link_to t(:all), :controller => 'orders', :action => 'list', :key => 'All' %>
 					<br/>
-					<span class="info">All orders, regardless of status</span>
+                    <%= content_tag :span, t(:all_info), :class => 'info' %>
 				</li>
 			</ul>
 		</div>
@@ -51,10 +51,10 @@
 				<col style="width:70px;"/>
 			</colgroup>
 			<tr>
-				<th>Order Name / Number</th>
-				<th>Date</th>
-				<th>Status</th>
-				<th>Total</th>
+				<th><%= t(:order_number) %></th>
+				<th><%= t(:order_date) %></th>
+				<th><%= t(:status) %></th>
+				<th><%= t(:total) %></th>
 			</tr>
 			<% for order in @orders %>
 				<tr class="<%= alternate %>">
@@ -62,7 +62,7 @@
 					  <% unless order.name.empty? %>
 						  <%= link_to(h(order.name), :action => 'show', :id => order) %>
 						<% else %>
-						  [Checkout incomplete]
+                          <%= t(:checkout_incomplete) %>
 						<% end %>
 						<br/>
 						<%= link_to(order.order_number, :action => 'show', :id => order) %>
@@ -76,13 +76,13 @@
 
 		<!-- DOWNLOAD ORDERS -->
 		<p style="margin-top:10px;">
-			<%= link_to "Download Orders: XML", 
+			<%= link_to t(:download_orders_xml), 
 						{ :action => 'download',
 		          :ids => @orders.collect{|o| o.id},
 		 					:format => 'xml' }, 
 						:class => 'action' 
 			%>
-			<%= link_to "Download Orders: CSV", 
+			<%= link_to t(:download_orders_csv), 
 						{ :action => 'download',
 		          :ids => @orders.collect{|o| o.id},
 		 					:format => 'csv' }, 

@@ -1,19 +1,17 @@
 <%= error_messages_for 'role' %>
 <p>
-	<label for="role_name">Name:</label>
+	<label for="role_name"><%= t(:name) %>:</label>
 	<%= text_field 'role', 'name', :class => 'textInput'  %>
 </p>
 
 <p>
-  <label for="role_description">Description:</label>
-  <span class="info">
-    HTML and <a href="http://hobix.com/textile/" target="_blank">Textile</a> markup is allowed here.
-  </span>
+  <label for="role_description"><%= t(:description) %>:</label>
+  <%= content_tag :span, t(:product_description_info) %>
   <br/>
   <%= text_area 'role', 'description', :cols => 70, :rows => 5, :class => 'textArea'  %>
 </p>
 
-<h2>Rights</h2>
+<%= content_tag :h2, t(:rights) %>
 <!-- 
 	Need hidden input for rights to make sure that if all
  	are cleared off it gets picked up.

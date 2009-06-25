@@ -1,12 +1,13 @@
 <div id="left">
   <h1>Create new user</h1>
+  <%= content_tag :h1, t(:create_new_user) %>
   <ul class="navigation secondary">
-    <li><a href="/admin/users/list/">Back to User List</a></li>
+     <%= content_tag :li, link_to(t(:back_to_user_list), :controller =>  'users', :action => 'list') %>
   </ul>
 
   <%= form_tag :action=>"new" %>
     <%= render :partial => "form" %>
-    <%= submit_tag 'Save New User', :class => 'button hundredthirty' %>
+    <%= submit_tag t(:save_new_user), :class => 'button hundredthirty' %>
 
   </form>
 </div>

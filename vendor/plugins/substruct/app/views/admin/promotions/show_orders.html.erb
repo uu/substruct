@@ -2,7 +2,7 @@
 	<h1><%=h @title %></h1>
 
 	<% if @orders.length == 0 then %>
-		<h4>No orders for this promotion yet.</h4>
+        <%= content_tag :h4, t(:no_orders_for_this_promotion_yet) %>
 	<% else %>
 
 	<table class="list" cellpadding="0" cellspacing="0">
@@ -13,10 +13,10 @@
 			<col style="width:70px;"/>
 		</colgroup>
 		<tr>
-			<th>Order Name / Number</th>
-			<th>Date</th>
-			<th>Status</th>
-			<th>Total</th>
+			<th><%= t(:order_number) %></th>
+			<th><%= t(:order_date) %></th>
+			<th><%= t(:status) %></th>
+			<th><%= t(:total) %></th>
 		</tr>
 		<% for order in @orders %>
 			<tr class="<%= alternate %>">
@@ -34,14 +34,14 @@
 
 	<!-- DOWNLOAD ORDERS -->
 	<p style="margin-top:10px;">
-		<%= link_to "Download Orders: XML", 
+		<%= link_to t(:download_orders_xml), 
 					{ :controller => 'orders',
 						:action => 'download',
 	          :ids => @orders.collect{|o| o.id},
 	 					:format => 'xml' }, 
 					:class => 'action' 
 		%>
-		<%= link_to "Download Orders: CSV", 
+		<%= link_to t(:download_orders_csv), 
 					{ :controller => 'orders',
 						:action => 'download',
 	          :ids => @orders.collect{|o| o.id},

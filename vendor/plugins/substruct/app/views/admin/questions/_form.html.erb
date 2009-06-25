@@ -1,40 +1,40 @@
 <!--[form:question]-->
 <div class="float">
-	<p><label for="question_rank">FAQ Rank</label>
+	<p><label for="question_rank"><%= t(:faq_rank) %></label>
 	<%= text_field 'question', 'rank', :size => 4, :maxlength => 4, :class => 'textInput'  %>
 	<%= error_message_on(:question, :rank) %>
 	</p>
 </div>
 <div class="float">
-	<p><label for="question_times_viewed">Times viewed</label>
+	<p><label for="question_times_viewed"><%= t(:times_viewed) %></label>
 	<%= text_field 'question', 'times_viewed', :size => 10, :class => 'textInput'  %>
 	<%= error_message_on(:question, :times_viewed) %>
 </p>
 </div>
 <div class="clear">&nbsp;</div>
 
-<p><label><%= check_box 'question', 'featured'  %> Feature this question in the FAQ</label></p>
+<p><label><%= check_box 'question', 'featured'  %> <%= t(:feature_this_quesion_in_faq) %></label></p>
 
-<p><label for="question_email_address">Email Address</label>
+<p><label for="question_email_address"><%= t(:email_address) %></label>
 	<%= text_field 'question', 'email_address', :size => 50, :class => 'textInput'  %>
 	<%= error_message_on(:question, :email_address) %>
 <br/>
-<span class="info">Address of the person who sent the question - not publicly visible</span>
+<%= content_tag :span, t(:faq_email_info), :class => 'info' %>
 </p>
 
-<p><label for="question_short_question">Title</label>
+<p><label for="question_short_question"><%= t(:title) %></label>
 <%= text_field 'question', 'short_question', :size => 60, :class => 'textInput'  %>
 <br/>
-<span class="info">This is what will show in the FAQ</span>
+    <%= content_tag :span, t(:faq_title_info), :class => 'info' %>
 	<%= error_message_on(:question, :short_question) %>
 </p>
 
-<p><label for="question_long_question">Question</label>
+<p><label for="question_long_question"><%= t(:question) %></label>
 <%= text_area 'question', 'long_question', :cols => 60, :rows => 5, :class => 'textArea'  %>
 	<%= error_message_on(:question, :long_question) %>
 </p>
 
-<p><label for="question_answer">Answer</label>
+<p><label for="question_answer"><%= t(:answer) %></label>
 <%= text_area 'question', 'answer', :cols => 60, :class => 'textArea'  %>
 	<%= error_message_on(:question, :answer) %>
 </p>

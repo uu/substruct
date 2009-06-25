@@ -18,7 +18,7 @@
 	
 			if (content == "") {
 				// Create failed!
-				alert("Adding new rate failed. Did you fill in all of the fields?");
+				alert(<%= t(:error_adding_new_shipping_rate) %>);
 			} else {
 				// Create worked, make new table row and fill it in
 				var row = new Insertion.Top($("shipping_types"), content);
@@ -65,7 +65,7 @@
 						<input type="text" class="textInput big numeric" name="shipping_type[price]" size="4" value="Price" onfocus="this.select();">
 					</td>
 					<td>
-						<%= submit_tag "Save New Rate", :id => "save_button", :class => 'button' %>
+						<%= submit_tag t(:save_new_rate), :id => "save_button", :class => 'button' %>
 					</td>
 				</tr>
 			</table>
@@ -75,12 +75,12 @@
 	<%= form_tag(:action => 'save_shipping') %>
 	
 	<h2>Rates</h2>
-	
+	<%= content_tag :h2, t(:rates) %>
 	<div id="shipping_types">
 		<%= render :partial => 'shipping_type', :collection => @shipping_types %>
 	</div>
 	
-  <%= submit_tag 'Save Shipping Rates & Variations', :class => 'button' %>
+  <%= submit_tag t(:save_shipping_rates_and_variations), :class => 'button' %>
 	</form>	
 	
 </div>
@@ -90,27 +90,13 @@
 <div id="right">
 	<%= render :partial => 'sidebar' %>
 	
-	<h1>Help</h1>
-	<p>
-		Here you can define how you will ship, and how much you'll charge for shipping.
-	</p>
-	<p>
-		By default, each Shipping Rate you set up will use the flat price to calculate fees.
-	</p>
-	<p>
-		If you wish to calculate using weight, add a weight variation. When checking out your customers will get the correct shipping price shown for the weight of items they're purchasing.
-	</p>
-	<p class="info">
-		If a proper weight variation is not found when calculating rates the default will be used.
-	</p>
-
-	
-	<h2>Editing</h2>
-	<p>
-		<span class="hlt">
-		You must use the save button at the bottom of this page for edits to take effect.
-		</span>
-	</p>
+	<%= content_tag :h1, t(:help) %>
+	<%= content_tag :p, t(:shipping_rates_help1) %>
+	<%= content_tag :p, t(:shipping_rates_help2) %>
+	<%= content_tag :p, t(:shipping_rates_help3) %>
+	<%= content_tag :p, t(:shipping_rates_help4), :class => 'info' %>
+	<%= content_tag :h2, t(:editing) %>
+	<%= content_tag :p, content_tag(:span, t(:shipping_rates_help4), :class => 'hlt') %>
 </div>
 
 <div class="clear"></div>

@@ -9,10 +9,11 @@
       <col style="width:60px;" />
     </colgroup>
     <tr>
-      <th>Question</th>
-      <th>Created</th>
-      <th>FAQ Rank</th>
-      <th>Viewed</th>
+      <th><%= t(:question) %></th>
+      <th><%= t(:created) %></th>
+      <th><%= t(:faq_rank) %></th>
+
+      <th><%= t(:viewed) %></th>
     </tr>
 
   <% if @questions.length > 0 then %>
@@ -23,15 +24,15 @@
       <td class="numeric"><%=h question.rank %></td>
       <td class="numeric"><%=h question.times_viewed %></td>
       <!--
-      <td><%= link_to 'Show', :action => 'show', :id => question %></td>
-      <td><%= link_to 'Edit', :action => 'edit', :id => question %></td>
-      <td><%= link_to 'Destroy', { :action => 'destroy', :id => question }, :confirm => 'Are you sure?' %></td>
+      <td><%#= link_to 'Show', :action => 'show', :id => question %></td>
+      <td><%#= link_to 'Edit', :action => 'edit', :id => question %></td>
+      <td><%#= link_to 'Destroy', { :action => 'destroy', :id => question }, :confirm => 'Are you sure?' %></td>
       -->
     </tr>
     <% end %>
   <% else %>
     <tr>
-      <td colspan="4">No questions have been asked yet.</td>
+      <td colspan="4"><%= t(:no_questions_have_been_asked_yet) %></td>
     </tr>
   <% end %>
   </table>

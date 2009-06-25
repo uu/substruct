@@ -1,6 +1,5 @@
 <div id="left">
-	<h1>Orders By Country</h1>
-
+    <%=  content_tag :h1, t(:orders_by_country) %>
 	<div class="float" style="width:47%;">
 	<% @countries.each_with_index do |country, index| %>
 		<%= 

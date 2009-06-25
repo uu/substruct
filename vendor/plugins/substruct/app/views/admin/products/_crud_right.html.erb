@@ -8,10 +8,10 @@
 <!-- 
 	TAGS ########################################################################
 -->
-<h1>Tag This Product</h1>
-
+<%= content_tag :h1, t(:tag_this_product) %>
 <p>
-	<a href="/admin/tags/list" class="action">Manage Tags</a> - <a href="http://dev.subimage.com/projects/substruct/wiki/HelpTagging" class="submodal-600-400 info">What are Tags?</a>
+	<%= link_to t(:manage_tags), {:controller => 'tags', :action => 'list'}, :class => 'action' %> - 
+    <%= link_to t(:manage_tags_info), 'http://code.google.com/p/substruct/wiki/HelpTagging', :class => 'submodal-600-400 info' %>
 </p>
 
 
@@ -27,14 +27,14 @@
 			<col />
 		</colgroup>
 		<tr class="fixedHeader">
-			<th colspan="4">Tag Name</th>
+			<th colspan="4"><%= t(:tag_name) %></th>
 		</tr>
 		<tbody id="tag_list_tbody">
 		<% if @tags.length > 0 %>
 			<%= render(:partial => 'tag_list_form_row', :collection => @tags, :locals => {:product => @product}) %>
 		<% else %>
 			<tr>
-				<td colspan="3">No tags have been created yet.</td>
+				<td colspan="3"><%= t(:no_tags_have_been_created_yet) %></td>
 			</tr>
 		<% end %>
 			<!-- blank row so the stupid columns line up right -->
@@ -43,17 +43,12 @@
 	</table>
 </div>
 
-<p class="info">
-	Tags will be assigned when you save this product.
-</p>
-<p class="info">
-	<i>(Button at the bottom of this page)</i>
-</p>
-
+<%= content_tag :p, t(:tag_this_product_help), :class => 'info' %>
+<%= content_tag :p, t(:button_in_the_bottom), :class => 'info' %>
 <!-- 
 	RELATED PRODUCTS ############################################################
 -->
-<h1>Related Products</h1>
+<%= content_tag :h1, t(:related_products) %>
 <%
 	i = 0
 	for relative in @product.related_products do
@@ -65,9 +60,7 @@
 	<%= render :partial => 'relative', :locals => { :input_id => "relative_box_#{i}" } %>
 <% end%>
 
-<span class="info">
-	Type in the product name or code here. It will be auto-completed for you.
-</span>
+<%= content_tag :span, t(:related_products_info), :class => 'info' %>
 
 </div>
 <div class="clear">&nbsp;</div>

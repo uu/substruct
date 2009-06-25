@@ -1,27 +1,27 @@
 <%= error_messages_for 'user' %>
 <!--[form:user]-->
 <p>
-	<label for="user_login">Login:</label>
+	<label for="user_login"><%= t(:login) %>:</label>
 	<%= text_field 'user', 'login', :class => 'textInput'  %>
 </p>
 
 <% unless @user.new_record? %>
-  <h4>Enter password and confirmation if you wish to change password</h4>
+  <%= content_tag :h4, t(:change_pasword_info) %>
 <% end %>
 <div id="change_password">
 	<p>
-		<label for="user_password">Password:</label>
+		<label for="user_password"><%= t(:password) %>:</label>
 		<%= password_field 'user', 'password', :class => 'textInput'  %>
 	</p>
 
 	<p>
-		<label for="user_password">Retype password:</label>
+		<label for="user_password"><%= t(:password_retype) %>:</label>
 		<%= password_field 'user', 'password_confirmation', :class => 'textInput'  %>
 	</p>
 </div>
 
 
-<h2>User Roles</h2>
+<%= content_tag :h2, t(:user_roles) %>
 <!-- 
 	Need hidden input for roles to make sure that if all
  	are cleared off it gets picked up.

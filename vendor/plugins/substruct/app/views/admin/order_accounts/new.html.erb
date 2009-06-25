@@ -1,8 +1,8 @@
-<h1>New order_account</h1>
+<%= content_tag :h1, t(:new_order_account) %>
 
 <%= form_tag :action => 'create' %>
   <%= render :partial => 'form' %>
-  <%= submit_tag "Create" %>
+  <%= submit_tag t(:create) %>
 </form>
 
-<%= link_to 'Back', :action => 'list' %>
+<%= link_to t(:back), :action => 'list' %>

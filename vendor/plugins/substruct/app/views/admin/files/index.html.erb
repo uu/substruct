@@ -47,7 +47,7 @@
 
 <div id="left"><!-- upload files -->
 	<div id="upload_container" style="display:none;">
-		<h1>Upload New Files</h1>
+		<%= content_tag :h1, t(:upload_new_files) %>
 		<%= form_tag({:action => 'upload'}, :multipart => true) %>
 			<%= 
 				render :partial => '/shared/multiple_upload',
@@ -56,7 +56,7 @@
 						:input_size => '30'
 					}
 			%>
-			<%= submit_tag 'Upload Files', :class => 'button' %>
+			<%= submit_tag t(:upload_files), :class => 'button' %>
 		</form>
 	</div>
 
@@ -67,28 +67,28 @@
 			<% if !params[:sort].nil? && params[:sort] == 'name' %>
 				<%=
 					link_to(
-						'Sort Newest to Oldest',
+						t(:sort_newest_to_oldest),
 						:action => 'index',
 						:key => params[:key],
 						:sort => 'date'
 					)
 				%>
 			<% else %>
-				Sorted Newest to Oldest
+				<%= t(:sorted_newest_to_oldest) %>
 			<% end %>
 		</li>
 		<li>
 			<% if params[:sort] != 'name' %>
 				<%=
 					link_to(
-						'Sort A-Z',
+						t(:sort_az),
 						:action => 'index',
 						:key => params[:key],
 						:sort => 'name'
 					)
 				%>
 			<% else %>
-				Sorted A-Z
+				<%= t(:sorted_az) %>
 			<% end %>
 		</li>
 	</ul>
@@ -98,9 +98,7 @@
 	
 	<% if @files.size == 0 %>
 		<div class="content_pad">
-			<p>
-				No files to show.
-			</p>
+    		<%= content_tag :p, t(:no_files_to_show) %>
 		</div>
 	<% end %>
 
@@ -116,16 +114,16 @@
 <!-- right side -->
 <div id="right">
 	<br/>
-	<a href="#" onclick="showUploadArea();" class="button" id="show_upload_button">Upload New Files</a>
-	<a href="#" onclick="hideUploadArea();" class="button cancel" style="display:none;" id="hide_upload_button">Cancel Uploading Files</a>
+	<a href="#" onclick="showUploadArea();" class="button" id="show_upload_button"><%= t(:upload_new_files) %></a>
+	<a href="#" onclick="hideUploadArea();" class="button cancel" style="display:none;" id="hide_upload_button"><%= t(:cancel_uploading_files) %></a>
 	<div class="clear">&nbsp;</div>
 	
-	<h1>View Files by Type</h1>
+    <%= content_tag :h1, t(:view_files_by_type) %>
 	<ul>
 		<li>
 			<%= 
 				link_to_unless_current(
-					'All Files',
+					t(:all_files),
 					:action => 'index'
 				)
 			%>
@@ -133,7 +131,7 @@
 		<li>
 			<%= 
 				link_to_unless_current(
-					'Images',
+					t(:images),
 					:action => 'index',
 					:key => 'Image'
 				)
@@ -142,7 +140,7 @@
 		<li>
 			<%= 
 				link_to_unless_current(
-					'Others',
+					t(:others),
 					:action => 'index',
 					:key => 'Asset'
 				)

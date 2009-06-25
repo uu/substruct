@@ -5,27 +5,27 @@
 
 	<%= render :partial => '/admin/preferences/sidebar' %>
 	<div class="clear">&nbsp;</div>
-	<h1>Help</h1>
+    <%= content_tag :h1, t(:help) %>
 	<div class="info">
-	<p>To control admin access in Substruct you assign roles to users.</p>
-	<p>A role is a collection of rights.</p>
-	<p>Rights consist of a controller name and an action list.</p>
-	<p>This action list can be either '*' for access to all actions	or a CSV list of actions.</p>
+    <%= content_tag :p, t(:roles_help1) %>
+    <%= content_tag :p, t(:roles_help2) %>
+    <%= content_tag :p, t(:roles_help3) %>
+    <%= content_tag :p, t(:roles_help4) %>
+    <%= content_tag :b, t(:roles_help_example_controllers) %>
 	<p>
-		<b>Example Controllers</b>
 		<ul>
-			<li>orders</li>
-			<li>products</li>
-			<li>questions</li>
+            <%= content_tag :li, t(:roles_help_example_controllers_o) %>
+            <%= content_tag :li, t(:roles_help_example_controllers_p) %>
+            <%= content_tag :li, t(:roles_help_example_controllers_q) %>
 		</ul>
 	</p>
 	<p>
-		<b>Example Actions</b>
+        <%= content_tag :b, t(:roles_help_example_actions) %>
 		<ul>
-			<li>list</li>
-			<li>create</li>
-			<li>edit</li>
-			<li>show</li>
+            <%= content_tag :li, t(:roles_help_example_actions_l) %>
+            <%= content_tag :li, t(:roles_help_example_actions_c) %>
+            <%= content_tag :li, t(:roles_help_example_actions_e) %>
+            <%= content_tag :li, t(:roles_help_example_actions_s) %>
 		</ul>
 	</p>
 	</div>

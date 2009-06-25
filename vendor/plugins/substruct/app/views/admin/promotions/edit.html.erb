@@ -1,17 +1,17 @@
 <div id="left">
 	<h1><%= @title %></h1>
 	<ul class="navigation secondary">
-    <li><a href="/admin/promotions/list/">Back to Promotion List</a></li>
+    <%= content_tag :li, link_to(t(:back_to_promotion_list), :controller => 'promotions', :action => 'list') %>
   </ul>
 	<%= form_tag :action => 'update', :id => @promotion %>
 		<%= render(:partial => 'form') %>
 		<div class="line">&nbsp;</div>
 
 		<div style="float:right;">
-			<%= link_to 'Delete This Promotion', {:action => 'destroy', :id => @promotion}, :class => 'action', :confirm => 'Are you sure?', :post => true %>
+			<%= link_to t(:delete_this_promotion), {:action => 'destroy', :id => @promotion}, :class => 'action', :confirm => 'Are you sure?', :post => true %>
 		</div>
 		<p>
-			<%= submit_tag "Save This Promotion", :class => 'button hundred' %>
+			<%= submit_tag t(:save_this_promotion), :class => 'button hundred' %>
 		</p>
 		<div class="clear"></div>
 	</form>

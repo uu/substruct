@@ -1,9 +1,9 @@
 <div id="fullContent">
 	<% if @viewing_tags == nil then %>
-  	<h1>Store</h1>
+    	<%= content_tag :h1, t(:store) %>
 	<% else %>
 		<h1>
-			<a href="/store">Store</a></a> &gt;
+			<%= link_to t(:store), :controller => 'store' %> &gt;
 			<%
 				# Show breadcrumb navigation for store
 				tag_name_list = Array.new
@@ -25,15 +25,9 @@
 
 	<!-- PRODUCTS LIST -->
 	<%= render :partial => 'product', :collection => @products %>
+    <%= content_tag :p, t(:sorry_no_products) if @products.length == 0 %>
 
-
-  <% if @products.length == 0 then %>
-    <p>
-      Sorry, no products to show in this view.
-    </p>
-  <% end %>
-
-	<%= will_paginate @products %>
+    <%= will_paginate @products %>
 
   <br/>
 	<!-- takes up space so we can see the bottom content on this page -->

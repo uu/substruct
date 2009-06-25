@@ -44,7 +44,7 @@
 	
 			if (content == "") {
 				// Create failed!
-				alert("Creation of this Section failed.\nDid you enter a duplicate name?");
+				alert('<%= t(:error_creating_new_section) %>');
 			} else {
 				// Create worked, make new table row and fill it in
 				new Insertion.Bottom($("section_list"), content);
@@ -81,7 +81,7 @@
 
 		// Runs when AJAX edit failure
 		function editFailure(t) {
-			alert("There was a communication error with the server when trying to save your section.")
+			alert('<%= t(:error_editing_section) %>')
 		}
 
 	</script>
@@ -98,7 +98,7 @@
 	<h1><%= @title %></h1>
 	
 	<ul class="navigation secondary">
-		<li><a href="/admin/content_nodes/list">Back to Content Nodes</a></li>
+        <%= content_tag :li, link_to(t(:back_to_content_nodes_list), :controller =>  'content_nodes', :action => 'list') %>
 	</ul>
 
 	<!-- AJAX CREATE TAG FORM -->
@@ -132,9 +132,9 @@
 
 	<h2>
 		<% if !@parent_section %>
-			Top Level Sections
+			<%= t(:top_level_sections) %>
 		<% else %>
-			<a href="/admin/sections/list">Top Level Sections</a> &gt; <%= @parent_section.name %>
+          <%= link_to(t(:top_level_sections), :controller =>  'sections', :action => 'list') %> &gt; <%= @parent_section.name %>
 		<% end %>
 	</h2>
 
@@ -142,7 +142,7 @@
 	<ul id="section_list" class="sortable">
 		<%= render(:partial => 'section_list_row', :collection => @sections) %>
 	</ul>
-	<div id="no_sections_row" style="display:<%= @sections.size > 0 ? 'none' : '' %>;">No sections to show...</div>
+	<div id="no_sections_row" style="display:<%= @sections.size > 0 ? 'none' : '' %>;"><%= t(:no_sections_to_show) %></div>
 	<%= 
 		sortable_element(
 			'section_list',
@@ -154,20 +154,20 @@
 <div id="right">
 	<%= render :partial => '/admin/preferences/sidebar' %>
 
-	<h1>Help</h1>
-	<h3>Section Groups</h3>
-	<p><span class="hlt">
-		You may group sections one level deep.
-	</span></p>
+    <%= content_tag :h1, t(:help) %>
+    <%= content_tag :h3, t(:section_groups) %>
 	<p>
-		To use a section as a group click on it's name. You will be taken to another view where you may create and order sections within the group.
+      <%= content_tag :span, t(:section_groups_help1), :class => 'hlt' %>
 	</p>
 	<p>
-		Deleting a section group will delete all sections within as well.
+      <%= content_tag :p, t(:section_groups_help2) %>
 	</p>
-	<h3>Sorting</h3>
 	<p>
-		You can sort the items shown by dragging and dropping them.
+      <%= content_tag :p, t(:section_groups_help3) %>
+	</p>
+    <%= content_tag :h3, t(:sorting) %>
+	<p>
+        <%= content_tag :p, t(:sorting_help) %>
 	</p>
 	
 </div>

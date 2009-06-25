@@ -2,7 +2,7 @@
   <h1><%= @title %></h1>
 	<% if @aname != 'list' && @aname != 'index' %>
 		<ul class="navigation secondary">
-	    <li><a href="/admin/content_nodes/list_sections/">Back to Content Section List</a></li>
+        <%=  content_tag :li, link_to(t(:back_to_content_section_list), :controller => 'content_nodes', :action => 'list_sections') %>
 	  </ul>
 	<% else %>
 		<ul class="navigation secondary">
@@ -10,28 +10,28 @@
 				<% if !params[:sort].nil? && params[:sort] == 'name' %>
 					<%=
 						link_to(
-							'Sort Newest to Oldest',
+							t(:sort_newest_to_oldest),
 							:action => 'index',
 							:key => params[:key],
 							:sort => 'date'
 						)
 					%>
 				<% else %>
-					Sorted Newest to Oldest
+					<%= t(:sorted_newest_to_oldest) %>
 				<% end %>
 			</li>
 			<li>
 				<% if params[:sort] != 'name' %>
 					<%=
 						link_to(
-							'Sort A-Z',
+							t(:sort_az),
 							:action => 'index',
 							:key => params[:key],
 							:sort => 'name'
 						)
 					%>
 				<% else %>
-					Sorted A-Z
+					<%= t(:sorted_az) %>
 				<% end %>
 			</li>
 		</ul>
@@ -49,11 +49,11 @@
 			<col />
     </colgroup>
     <tr>
-      <th>URL</th>
-      <th>Title</th>
-      <th>Content&nbsp;Length</th>
-      <th>Display&nbsp;Date</th>
-			<th>Type</th>
+      <th><%= t(:url) %></th>
+      <th><%= t(:title) %></th>
+      <th><%= t(:content_length) %></th>
+      <th><%= t(:display_date) %></th>
+      <th><%= t(:type) %></th>
     </tr>
 
   <% if @content_nodes.length > 0 then %>
@@ -63,21 +63,21 @@
         <%= link_to truncate(content_node.name, 20), {:action => 'edit', :id => content_node} %>
         <br/>
         <br/>
-        <span class="info"><%= link_to 'Show here', {:action => 'show', :id => content_node}, :class=> 'normal' %></span>
+        <span class="info"><%= link_to(t(:show_here), {:action => 'show', :id => content_node}, :class => 'normal') %></span>
         <br/>
-        <span class="info"><a href="/<%= content_node.name %>" class="normal">Show on the site</a></span>
+        <span class="info"><%= link_to t(:show_on_the_site), "/"+content_node.name %></span>
       </td>
       <td>
         <%= content_node.title %>
       </td>
-      <td><%= number_with_delimiter(content_node.content.length, ',') %> characters</td>
+      <td><%= number_with_delimiter(content_node.content.length, ',') + " " + t(:characters) %></td>
       <td><%= content_node.display_on.strftime("%m/%d/%y") %></td>
 			<td><%= content_node.class.to_s %></td>
     </tr>
     <% end %>
   <% else %>
     <tr>
-      <td colspan="5">No content to display in this view</td>
+      <td colspan="5"><%= t(:no_content_to_display) %></td>
     </tr>
   <% end %>
   </table>

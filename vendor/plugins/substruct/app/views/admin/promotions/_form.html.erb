@@ -5,38 +5,38 @@
 <!-- auto complete results div  -->
 <div class="auto_complete" id="product_lookup_auto_complete"></div>
 
-<%= make_label('Description', true) %>
+<%= make_label(t(:description), true) %>
 <p>
 	<%= text_field :promotion, :description, :maxlength => 256, :size => 50, :class => 'textInput' %>
 	<%= error_message_on(:promotion, :description) %>
 	<br/>
-	<span class="info">This will appear in your customers cart when the promo is applied.</span>
+    <%= content_tag :span, t(:promotions_info), :class => 'info' %>
 </p>
 
 <!-- start and end -->
-<%= make_label('Start', true ) %>
+<%= make_label(t(:start), true ) %>
 <p>
 	<%= datetime_select(:promotion, :start) %>
 </p>
 
-<%= make_label('End', true ) %>
+<%= make_label(t(:end), true ) %>
 <p>
 	<%= datetime_select(:promotion, :end) %>
 </p>
 
 <!-- code -->
 <div class="float">	
-	<%= make_label('Code', true) %>
+	<%= make_label(t(:code), true) %>
 	<p>
 		<%= text_field :promotion, :code, :maxlength => 20, :class => 'textInput' %>
 		<%= error_message_on(:promotion, :code) %>
 		<br/>
-		<span class="info">May not contain spaces.</span>
+        <%= content_tag :span, t(:promotions_code_info), :class => 'info' %>
 	</p>
 </div>
 
 <div class="float">
-	<%= make_label('Discount Amount and Type', true) %>
+	<%= make_label(t(:discount_amount_and_type), true) %>
 	<div class="float">
 		<p>
 			<%= text_field :promotion, :discount_amount, :size => 6, :class => 'textInput numeric' %>
@@ -58,13 +58,13 @@
 	<div class="clear"></div>
 </div>
 
-<%= make_label('Minimum cart value') %>
+<%= make_label(t(:minimum_cart_value)) %>
 <p>
 	<%= text_field :promotion, :minimum_cart_value, :size => 6, :class => 'textInput numeric' %>
 	<%= error_message_on(:promotion, :minimum_cart_value) %>
 </p>
 
-<%= make_label('Add product to order') %>
+<%= make_label(t(:add_product_to_promotion)) %>
 <p>
 	<input type="text" class="textInput" 
 		name="promotion[product_name]" id="product_name" 
@@ -73,9 +73,7 @@
 	/>
 	<%= javascript_tag("new Autocompleter.Local('product_name', 'product_lookup_auto_complete', items);") %>
 	<br/>
-	<span class="info">
-		Type in the product name or code here. It will be auto-completed for you.
-	</span>
+    <%= content_tag :span, t(:add_product_to_promotion_info), :class => 'info' %>
 </p>
 
 <div class="clear"></div>

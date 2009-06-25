@@ -1,11 +1,8 @@
 <!-- 
 	SECTION ########################################################################
 -->
-<h1>Place Content in Section</h1>
-
-<p>
-	<a href="/admin/sections/list" class="action">Manage Sections</a>
-</p>
+<%= content_tag :h1, t(:place_content_in_section) %>
+<%=  content_tag :p, link_to(t(:manage_sections), {:controller => 'sections', :action => 'list'}, :class => 'action') %>
 
 <!-- 
 	Empty tag to force updates even if no checkboxes are selected
@@ -19,14 +16,14 @@
 			<col />
 		</colgroup>
 		<tr class="fixedHeader">
-			<th colspan="3">Section Name</th>
+			<th colspan="3"><%= t(:section_name) %></th>
 		</tr>
 		<tbody id="tag_list_tbody">
 		<% if @sections.length > 0 %>
 			<%= render(:partial => 'section_list_form_row', :collection => @sections, :locals => {:content_node => @content_node}) %>
 		<% else %>
 			<tr>
-				<td colspan="3">No sections have been created yet.</td>
+              <td colspan="3"><%= t(:no_sections_have_been_created_yet) %></td>
 			</tr>
 		<% end %>
 			<!-- blank row so the stupid columns line up right -->
@@ -34,21 +31,13 @@
 		</tbody>
 	</table>
 </div>
-
-<p class="info">
-	Sections will be assigned when you save this content.
-</p>
-<p class="info">
-	<span class="hlt">You can place any type of content in a section, but really it's only relevant for Blogs at this time.</span>
-</p>
-<p class="info">
-	<i>(Button at the bottom of this page)</i>
-</p>
-
+<%= content_tag :p, t(:sections_will_be_assigned_when_you_save_this_content), :class => 'info' %>
+<%= content_tag(:p, content_tag(:span, t(:you_can_place_any_type_of_content_in_a_section), :class => 'hlt'), :class => 'info') %>
+<%= content_tag(:p, content_tag(:i, t(:button_in_the_bottom)), :class => 'info') %>
 <!--
 	LATEST UPLOADS #################################################################
 -->
-<h1>Latest File Uploads</h1>
+<%= content_tag :h1, t(:latest_file_uploads) %>
 <% for @file in @recent_uploads do %>
 	<div id="recent_upload_<%= @file.id %>" 
 		style="float:left; height: 50px; width: 50px; overflow: hidden; margin: 5px;"

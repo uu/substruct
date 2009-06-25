@@ -1,35 +1,33 @@
 <!--[form:content_node]-->
 <div class="floatHalf">
 	<p>
-	  <label for="content_node_title">Title</label>
+	  <label for="content_node_title"><%= t(:title) %></label>
 	  <%= text_field 'content_node', 'title', :class => 'textInput'  %>
 	  <br/>
-	  <span class="info">Appears in the browser title bar and sometimes in the page itself</span>
+      <%= content_tag :span, t(:appers_in_the_browser_title_bar), :class => 'info' %>
 	</p>
 	<p>
-	  <label for="content_node_display_one">Display date</label>
+	  <label for="content_node_display_one"><%= t(:display_date) %></label>
 	  <%= date_select 'content_node', 'display_on'  %>
 	</p>
 </div>
 <div class="floatHalf">
 	<p>
-	  <label for="content_node_name">URL</label>
+    <label for="content_node_name"><%= t(:url) %></label>
 	  <%= text_field 'content_node', 'name', :class => 'textInput'  %>
 	  <%= error_message_on(:content_node, :name) %>
 	  <br/>
 	  <span class="info">
 	    <ul>
-	      <li>Blog Posts will appear as /blog/URL or /URL</li>
-	      <li>Pages will appear as /URL</li>
-	      <li>Snippets can be inserted anywhere on your site</li>
+      	 <%= t(:url_info) %> 
 	    </ul>
 	  </span>
 	</p>
 	
-	<p><label>Content Type</label>
+	<p><label><%= t(:content_type) %></label>
 	  <%= select_tag('content_node[type]', options_for_select(ContentNode::TYPES, @content_node.type.to_s)) %>
 	  <br/>
-	  <span class="info">Determines where content shows up on the customer-facing site.</span>
+      <%= content_tag :span, t(:content_type_info), :class => 'info' %>
 	</p>
 
 </div>
@@ -41,18 +39,16 @@
 
 
 <!-- content edit -->
-<h3>Content</h3>
+<%= content_tag :h3, t(:content) %>
 <div id="content_edit">
-  <span class="info">
-    HTML and <a href="http://hobix.com/textile/" target="_blank">Textile</a> markup is allowed here.
-  </span>
+    <%= content_tag :span, t(:content_info), :class => 'info' %>
   <br/>
   <%= text_area 'content_node', 'content', :cols => 70, :rows => 10, :class => 'textArea'  %>
 </div>
 
 
 <!-- LATEST UPLOADS & UPLOAD FILE FORM -->
-<h3>Upload files with this content</h3>
+<%= content_tag :h3, t(:upload_files_wth_this_content) %>
 <%= 
 	render :partial => '/shared/multiple_upload',
 		:locals => {
@@ -60,11 +56,4 @@
 			:input_size => '30'
 		}
 %>
-<p class="info">
-	The files uploaded here can be inserted into your content automatically.
-	<br/>
-	If you place the text '[file1]' into your document, the path of the first file 
-	<br/>will be placed into your content when this is saved.
-	<br/>
-	You may upload and place as many files as you wish.
-</p>
+<%= content_tag :p, t(:upload_files_wth_this_content_info), :class => 'info' %>

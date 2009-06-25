@@ -1,25 +1,25 @@
 <div class="padLeft">
 
 	<div class="floatHalf">
-		<%= make_label('First Name', true) %>
+		<%= make_label(t(:first_name), true) %>
 		<%= text_field "#{address_type}_address", 'first_name', :maxlength => 50, :size => 30, :class => 'textInput' %>
 		<%= error_message_on("#{address_type}_address", :first_name) %>
 	</div>
 	<div class="floatHalf">
-		<%= make_label('Last Name', true) %>
+		<%= make_label(t(:last_name), true) %>
 	  <%= text_field "#{address_type}_address", 'last_name', :maxlength => 50, :size => 30, :class => 'textInput' %>
 	  <%= error_message_on("#{address_type}_address", :last_name) %>
 	</div>
 	<div class="clear">&nbsp;</div>
 
 	<div class="floatHalf">
-		<%= make_label('Address', true) %>
+		<%= make_label(t(:address), true) %>
 		<%= text_field "#{address_type}_address", 'address', :maxlength => 255, :size => 30, :class => 'textInput' %>
-		<p class="info">No shipments to PO or APO Boxes</p>
+        <%= content_tag :p, t(:address_info), :class => 'info' %>
 		<%= error_message_on("#{address_type}_address", :address) %>
 	</div>
 	<div class="floatHalf">
-		<%= make_label('City') %>
+		<%= make_label(t(:city)) %>
 		<%= text_field "#{address_type}_address", 'city', :maxlength => 50, :size => 30, :class => 'textInput' %>
 		<%= error_message_on("#{address_type}_address", :city) %>
   </div>
@@ -27,12 +27,12 @@
 
 	<div class="floatHalf">
 		<div class="float">
-			<%= make_label('State/Prov') %>
+			<%= make_label(t(:state)) %>
   		<%= text_field "#{address_type}_address", 'state', :maxlength => 30, :size => 10, :class => 'textInput' %>
   		<%= error_message_on("#{address_type}_address", :state) %>
   	</div>
 		<div class="float">
-			<%= make_label('Postal Code', true) %>
+			<%= make_label(t(:postal_code), true) %>
 		  <%= text_field "#{address_type}_address", 'zip', :maxlength => 10, :size => 10, :class => 'textInput' %>
 		  <%= error_message_on("#{address_type}_address", :zip) %>
 		</div>
@@ -49,7 +49,7 @@
 			# If not passed, so not defined, defaults to false.
       show_obsolete ||= false
 		%>
-		<%= make_label('Country') %>
+		<%= make_label(t(:country)) %>
 		<select name="#{address_type}_address">
       <% @countries.each { |country| %>
         <option value="<%= country.id %>" <%= country.id == selected_country.to_i ? "selected" : "" %>><%= country.name %></option>
@@ -58,7 +58,7 @@
 	</div>
 	<div class="clear">&nbsp;</div>
 
-	<%= make_label('Phone', true) %>
+	<%= make_label(t(:phone), true) %>
 	<%= text_field "#{address_type}_address", 'telephone', :maxlength => 20, :class => 'textInput' %>
 	<%= error_message_on("#{address_type}_address", :telephone) %>
 

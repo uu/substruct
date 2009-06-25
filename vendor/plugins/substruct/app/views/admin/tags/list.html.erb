@@ -44,7 +44,7 @@
 	
 			if (content == "") {
 				// Create failed!
-				alert("Creation of this Tag failed.\nDid you enter a duplicate name?");
+				alert('<%= t(:error_creating_new_tag) %>');
 			} else {
 				// Create worked, make new table row and fill it in
 				new Insertion.Bottom($("tag_list"), content);
@@ -81,7 +81,7 @@
 
 		// Runs when AJAX edit failure
 		function editFailure(t) {
-			alert("There was a communication error with the server when trying to save your tag.")
+			alert('<%= t(:error_editing_tag) %>')
 		}
 
 	</script>
@@ -98,7 +98,7 @@
 	<h1><%= @title %></h1>
 	
 	<ul class="navigation secondary">
-		<li><a href="/admin/products/list">Back to Products</a></li>
+        <%= content_tag :li, link_to(t(:back_to_product_list), :controller =>  'products', :action => 'list') %>
 	</ul>
 
 	<!-- AJAX CREATE TAG FORM -->
@@ -122,7 +122,7 @@
 						<%= text_field 'tag', 'name', :class => 'textInput big' %>
 					</td>
 					<td>
-						<%= submit_tag "Save New Tag", :id => "save_button", :class => 'button' %>
+						<%= submit_tag t(:save_new_tag), :id => "save_button", :class => 'button' %>
 					</td>
 				</tr>
 			</table>
@@ -132,9 +132,9 @@
 
 	<h2>
 		<% if !@parent_tag %>
-			Top Level Tags
+			<%= t(:top_level_tags) %>
 		<% else %>
-			<a href="/admin/tags/list">Top Level Tags</a> &gt; 
+            <%= link_to t(:top_level_tags, :controller => 'tags', :action => 'list' %> &gt;
 			<% if @parent_tag.parent %>
 				<%= link_to(@parent_tag.parent.name, :action => 'list', :id => @parent_tag.parent.name ) %> &gt;
 			<% end %>
@@ -146,7 +146,7 @@
 	<ul id="tag_list" class="sortable">
 		<%= render(:partial => 'tag_list_row', :collection => @tags) %>
 	</ul>
-	<div id="no_tags_row" style="display:<%= @tags.size > 0 ? 'none' : '' %>;">No tags to show...</div>
+	<div id="no_tags_row" style="display:<%= @tags.size > 0 ? 'none' : '' %>;"><%= t(:no_tags_to_show) %></div>
 	<%= 
 		sortable_element(
 			'tag_list',
@@ -158,22 +158,19 @@
 <div id="right">
 	<%= render :partial => '/admin/preferences/sidebar' %>
 		
-	<h1>Help</h1>
-	<h3>Tag Groups</h3>
-	<p><span class="hlt">
-		You may group tags two levels deep.
-	</span></p>
+    <%= content_tag :h1, t(:help) %>
+    <%= content_tag :h3, t(:tag_groups) %>
 	<p>
-		To use a tag as a group click on it's name. You will be taken to another view where you may create and order tags within the group.
+      <%= content_tag :span, t(:tag_help1), :class => 'hlt' %>
+    </p>
+	<p>
+      <%= content_tag :p, t(:tag_help2) %>
 	</p>
 	<p>
-		Deleting a tag group will delete all tags within as well.
+      <%= content_tag :p, t(:tag_help3) %>
 	</p>
-	<h3>Sorting</h3>
-	<p>
-		You can sort the items shown by dragging and dropping them.
-	</p>
-	
+      <%= content_tag :h3, t(:sorting) %>
+      <%= content_tag :p, t(:sorting_help) %>
 </div>
 
 <div class="clear"></div>

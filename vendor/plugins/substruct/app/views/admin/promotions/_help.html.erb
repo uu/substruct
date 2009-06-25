@@ -1,31 +1,18 @@
-<h1>Help</h1>
+<%= content_tag :h1, t(:help) %>
 
-<h3>Start and End</h3>
-<p>
-	Promotions are automatically activated and deactivated based on the values in these boxes.
-</p>
+<%= content_tag :h3, t(:promotion_help_start_end) %>
+<%= content_tag :p, t(:promotion_help_start_end_info) %>
 
-<h3>Add product to order</h3>
-<p>
-	This item is automatically added to the cart during checkout.
-</p>
-<p>
-	It's also used to define the "buy [n] get 1 free" item, as described below.
-</p>
+<%= content_tag :h3, t(:promotion_help_add_product) %>
+<%= content_tag :p, t(:promotion_help_add_product_info) %>
 
-<h2>Discounts</h2>
+<%= content_tag :h2, t(:discounts) %>
 
-<h3>Buy [n] get 1 free</h3>
-<p>
-	For every N items purchased, 1 will be added to the cart. "N" is defined in the <i>discount</i> box. That item is detemined by using the drop-down for "Add product to order".
-</p>
+<%= content_tag :h3, t(:promotion_help_buy_n) %>
+<%= content_tag :p, t(:promotion_help_buy_n_info) %>
 
-<h3>Dollars</h3>
-<p>
-	A straight dollar amount is discounted to the cart.
-</p>
+<%= content_tag :h3, t(:promotion_help_dollars) %>
+<%= content_tag :p, t(:promotion_help_dollars_info) %>
 
-<h3>Percent of total order</h3>
-<p>
-	A percentage of the total cart is discounted.
-</p>
+<%= content_tag :h3, t(:promotion_help_percent) %>
+<%= content_tag :p, t(:promotion_help_percent_info) %>

@@ -1,11 +1,9 @@
 <div id="left">
   <h1><%= @title %></h1>
-  <p>
-    This report represents the orders with a status of:
-  </p>
+  <%= content_tag :p, t(:order_report_title) %>
   <ul>
-    <li>ORDERED - PAID - SHIPPED</li>
-    <li>SENT TO FULFILLMENT</li>
+    <%= content_tag :li, t(:order_report_statuses1) %>
+    <%= content_tag :li, t(:order_report_statuses2) %>
   </ul>
   <br/>
 
@@ -21,11 +19,11 @@
           <col style="width:80px;"/>
         </colgroup>
         <tr>
-          <th>Date</th>
-          <th class="numeric">Orders</th>
-          <th class="numeric">Sale Total</th>
-          <th class="numeric">Tax</th>
-          <th class="numeric">Shipping</th>
+          <th><%= t(:order_date) %></th>
+          <th class="numeric"><%= t(:orders) %></th>
+          <th class="numeric"><%= t(:sales_total) %></th>
+          <th class="numeric"><%= t(:tax) %></th>
+          <th class="numeric"><%= t(:shipping) %></th>
         </tr>
         <% 1.upto(12) { |i| %>
           <tr class="<%=alternate%>">
@@ -37,7 +35,7 @@
           </tr>
         <% } %>
         <tr class="footer">
-          <td>Totals</td>
+          <td><%= t(:totals) %></td>
           <td class="numeric"><%= number_with_delimiter(orders[0]['number_of_sales'], ',') %></td>
           <td class="numeric"><%= sub_number_to_currency(orders[0]['sales_total']) %></td>
           <td class="numeric"><%= sub_number_to_currency(orders[0]['tax']) %></td>
