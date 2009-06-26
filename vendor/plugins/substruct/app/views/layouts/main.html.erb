@@ -119,13 +119,14 @@
 
 	<div id="footer">
 		<ul class="navigation">
-			<li><a href="/"><%= t('home') %></a></li>
-			<li><a href="/questions/faq"><%= t('faq') %></a></li>
-			<li><a href="/questions/ask"><%= t('contact_us') %></a></li>
-			<li><a href="/blog"><%= t('blog') %></a></li>
-			<li><a href="/customers/wishlist"><%= t('wishlist') %></a></li>
-			<li><a href="/store/show_cart" class="submodal-600-400"><%= t('cart') %></a></li>
-		</ul>
+
+            <%= content_tag :li, link_to(t(:home), '/') %>
+            <%= content_tag :li, link_to(t(:faq), :controller => 'questions', :action => 'faq') %>
+            <%= content_tag :li, link_to(t(:contact_us), :controller => 'questions', :action => 'ask') %>
+            <%= content_tag :li, link_to(t(:blog), :controller => 'blog', :action => 'index') %>
+            <%= content_tag :li, link_to(t(:wishlist), :controller => 'customers', :action => 'wishlist') %>
+            <%= content_tag :li, link_to(t(:cart), {:controller => 'store', :action => 'show_cart'}, :class => 'submodal-600-400') %>
+  		</ul>
 	</div>
 	<div class="clear"></div>
 	<br/>

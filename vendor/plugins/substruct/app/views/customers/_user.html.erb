@@ -1,7 +1,7 @@
-<h2>Email Address</h2>
+<%= content_tag :h2, t(:email_address) %>
 
 <div class="padLeft">
-	<%= make_label("Your Email Address") %>
+	<%= make_label(t(:your_email_address)) %>
 	<div class="padLeft">
 		<%= @order_user.email_address %>
 	</div>

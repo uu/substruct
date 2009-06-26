@@ -4,25 +4,25 @@
 		<col />
 	</colgroup>
   <tr>
-    <th>Shipping Via</th>
+    <th><%= t(:shipping_via) %></th>
 		<td>
 			<% if @order.order_shipping_type.nil? then %>
-	    	The fastest way possible...
+                <%= t(:the_fastest_way_possible) %>
 			<% else %>
 				<%= @order.order_shipping_type.name %>
 			<% end %>
 		</td>
   </tr>
   <tr>
-    <th>Shipping Cost</th>
+    <th><%= t(:shipping_cost) %></th>
     <td><%= sub_number_to_currency(@order.shipping_cost) %></td>
   </tr>
 	<tr>
-		<th>Items</th>
+		<th><%= t(:items) %></th>
 		<td><%= sub_number_to_currency(@order.line_items_total) %></td>
 	</tr>
   <tr>
-    <th>Final Order Total</th>
+    <th><%= t(:final_order_total) %></th>
     <td class="money"><%= sub_number_to_currency(@order.total) %></td>
   </tr>
 </table>

@@ -1,13 +1,14 @@
-Welcome to <%= @host %>
+<%= t(:welcome_to) %> <%= @host %>
 
-You've been signed up as:
+<%= t(:you_have_been_signed_up_as) %>:
 ----------------------------------------
-Email address: <%= params[:member][:email_address] %>
-Password: <%= params[:member][:password] %>
+<%= t(:email_address) %>: <%= params[:member][:email_address] %>
+<%= t(:password) %>: <%= params[:member][:password] %>
 ----------------------------------------
 
-Please save this email for your records.
+<%= t(:please_save_this_email) %>
 
-Thanks again for joining!
+<%= t(:thanks_again_for_joining) %>
+
 
 - <%= @host %>

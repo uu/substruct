@@ -1,14 +1,14 @@
 <table cellpadding="0" cellspacing="0" class="list">
   <tr>
-    <th>Item</th>
-    <th class="numeric">Total</th>
+    <th><%= t(:item) %></th>
+    <th class="numeric"><%= t(:total) %></th>
   </tr>
 <% for item in cart.items %>
   <tr class="<%= alternate %>">
     <td>
       <%= item.name %> <span class="info">(x<%= item.quantity %>)
       <br/>
-      <%= sub_number_to_currency(item.unit_price) %> each
+      <%= sub_number_to_currency(item.unit_price) %> <%= t(:each) %>
       </span>
     </td>
     <td class="numeric"><%= sub_number_to_currency(item.total) %></td>
@@ -16,23 +16,23 @@
 <% end %>
 <% if cart.items.length == 0 then %>
   <tr>
-    <td colspan="2" class="info">Nothing in your cart so far.</td>
+    <td colspan="2" class="info"><%= t(:nothing_in_your_cart) %></td>
   </tr>
 <% end %>
 	<% if cart.tax_cost > 0 %>
 		<tr class="<%= alternate %>">
-			<td>Tax (<%= cart.tax %>%)</td>
+			<td><%= t(:tax) %> (<%= cart.tax %>%)</td>
 			<td class="numeric"><%= sub_number_to_currency(cart.tax_cost) %></td>
 		</tr>
 	<% end %>
 	<% if cart.shipping_cost > 0 %>
 		<tr class="<%= alternate %>">
-			<td>Shipping - <%= cart.order_shipping_type.name %></td>
+			<td><%= t(:shipping) %> - <%= cart.order_shipping_type.name %></td>
 			<td class="numeric"><%= sub_number_to_currency(cart.shipping_cost) %></td>
 		</tr>
 	<% end %>
   <tr class="footer">
-    <td class="numeric">Total</td>
+    <td class="numeric"><%= t(:total) %></td>
     <td class="numeric"><%= sub_number_to_currency(cart.total) %></td>
   </tr>
 </table>

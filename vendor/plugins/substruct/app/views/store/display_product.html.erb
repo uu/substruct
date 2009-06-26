@@ -1,6 +1,6 @@
 <div class="product" id="product_<%= @product.id %>">
 	<h2>
-	  <%= @product.name %> -  <span class="money"><%= sub_number_to_currency(@product.price) %></span>
+	  <%= @product.name %> - <span class="money"><%= sub_number_to_currency(@product.price) %></span>
 	</h2>
 
 	<!-- product image -->
@@ -18,7 +18,7 @@
 	<%= get_markdown_snippet(@product.description) %>
 
 	<div style="float:right;">
-		<%= link_to_remote 'Add To Cart',
+		<%= link_to_remote t(:add_to_cart),
 				{
 	  	  	:url => {
 		        :controller => 'store',

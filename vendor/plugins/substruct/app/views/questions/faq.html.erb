@@ -12,7 +12,7 @@
 </div>
 
 <div class="yellowBg" id="right">
-  <h1>Quick FAQ List</h1>
+   <%= content_tag :h1, t(:quick_faq_list) %>
   <ul>
     <% for question in @questions %>
       <li><a href="#<%= question.id %>"><%= question.short_question %></a></li>

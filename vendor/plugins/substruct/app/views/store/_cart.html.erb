@@ -1,22 +1,19 @@
 <% if @order.empty? then %>
 	<div style="margin-top:25px;">
-		Add items to your cart using the <i>Add To Cart</i> links above.
-		<br/>
-		If you'd like to add multiple quantities of an item click the link twice.
-	</div>
+    <%= content_tag :div, t(:add_items_to_your_cart_help), :style => 'margin-top:25px;' %>
 <% else %>
 	<div class="cartItem" style="text-align:left;width:100px;margin-top:22px;">
 		<div style="font-size:1.1em;">
-			<b>Total</b>
+			<b><%= t(:total) %></b>
 			<br/>
 			<span class="money">
 				<%= sub_number_to_currency(@order.total) %>
 			</span>
 		</div>
 		<div style="margin-top:4px;">
-			<a href="<%= get_link_to_checkout %>" class="action">Checkout Now</a>
+            <%= link_to t(:checkout_now), get_link_to_checkout, :class => 'action' %>
 		</div>
-		<div style="margin-top:10px;"><%= link_to_remote 'Empty cart',
+		<div style="margin-top:10px;"><%= link_to_remote t(:empty_cart),
 	  	  :url => {
 		        :controller => "store",
 		        :action => "empty_cart_ajax"},
@@ -58,7 +55,7 @@
 							<%= image_tag "/plugin_assets/substruct/images/public/no_image_50.png", :plugin => 'substruct' %>
 						<% end %>
 					</div>
-					<span class="info"><%= link_to_remote 'Remove',
+					<span class="info"><%= link_to_remote t(:remove),
 							:url => {
 									:controller => "store",
 									:action => "remove_from_cart_ajax",

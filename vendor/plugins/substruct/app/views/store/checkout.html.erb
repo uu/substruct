@@ -1,18 +1,15 @@
 <% @two_column_layout = true %>
 
 <div id="left">
-  <h1>Secure Order Form - Step 1 of 3</h1>
-
-  <h2>Please fill in the fields below</h2>
+  <%= content_tag :h1, t(:order_form_title) %>
+  <%= content_tag :h2, t(:order_form_help1) %>
   <% if request.ssl? %>
     <p>
       <img src="/images/lock.gif" alt="Lock Icon" /> All information transmitted is <b>secure</b>.
     </p>
   <% end %>
 
-  <p>
-    Once you are done entering your information, scroll to the <a href="#bottom">bottom of the page</a> and press the <i>Submit Order Information</i> button.
-  </p>
+  <%= content_tag :p, t(:order_form_help2) %>
 
   <%= form_tag :action => 'checkout' %>
 
@@ -53,19 +50,19 @@
 
 		<!-- BILLING ADDRESS -->
 		<div class="form_block">
-	    <h2>Billing &amp; Shipping Address</h2>
+        <%= content_tag :h2, t(:billing_and_shipping_address) %>
 	    <%= render(:partial => '/admin/orders/address', :locals => {:address_type => 'billing'}) %>
 
 	    <br/>
 	    <div class="padLeft">
-	      <label><%= check_box_tag("use_separate_shipping_address", 'true', @use_separate_shipping_address, :class => 'inline', :id => 'use_diff_shipping') %> Ship to a different address</label>
+	      <label><%= check_box_tag("use_separate_shipping_address", 'true', @use_separate_shipping_address, :class => 'inline', :id => 'use_diff_shipping') %> <%= t(:ship_to_a_different_address) %></label>
 	    </div>
 		</div>
 		
 		<!-- SHIPPING ADDRESS -->
     <div id="shipping_address" class="form_block"
      style="<%= 'display:none;' if !@use_separate_shipping_address %>">
-      <h2>Shipping Address</h2>
+      <%= content_tag :h2, t(:shipping_address) %>
       <%= render(:partial => '/admin/orders/address', :locals => {:address_type => 'shipping'}) %>
     </div>
 
@@ -88,9 +85,7 @@
 							<%= error_message_on(:order, :promotion_code) %>
 						</p>
 					</div>
-						<p>
-							If you have a promotion code, enter it here.
-						</p>
+                        <%= content_tag :p, t(:promotion_code_order_form) %>
 					<div class="clear"></div>
 				</div>
 			</div>
@@ -100,7 +95,7 @@
 
     <a name="bottom"></a>
     <p>
-			<%= submit_tag('Submit Order Information', :class => 'button', :disable_with => 'Submitting information, please wait...') %>
+			<%= submit_tag(t(:submit_order_information), :class => 'button', :disable_with => t(:submit_order_information_info)) %>
       <div class="clear">&nbsp;</div>
     </p>
   </form>
@@ -110,14 +105,14 @@
 
 <div id="right">
 
-  <h1>You Are Buying</h1>
+  <%= content_tag :h1, t(:you_are_buying) %>
   <%= render(:partial => 'cart_contents', :locals => {:cart => @order}) %>
 
   <%= render(:partial => 'clear_cart') %>
 
-  <h2>Need help?</h2>
+  <%= content_tag :h21, t(:need_help) %>
   <ul>
-    <li><a href="/contact">Contact us</a></li>
+    <%= content_tag :li, link_to(t(:contact_us), :controller => 'contact') %>
   </ul>
 </div>
 

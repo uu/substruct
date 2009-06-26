@@ -12,13 +12,13 @@
         <%= radio_button_tag('ship_type_id', type.id, (type.id == @default_price)) %>
         <span class="money"><%= sub_number_to_currency(type.calculated_price) %></span> - <b><%= type.name %></b>
         <p style="padding-left:15px;font-style:italic;">
-           Total including shipping: <%= sub_number_to_currency(type.calculated_price+@order.total) %>
+           <%= t(:total_including_sipping) %>: <%= sub_number_to_currency(type.calculated_price+@order.total) %>
         </p>
       </label>
     <% end %>
 		<div class="line"></div>
     <p>
-      <%= submit_tag "Select Shipping Method", :class => 'button', :disable_with => 'Please wait...' %>
+      <%= submit_tag t(:select_shipping_method), :class => 'button', :disable_with => t(:please_wait) %>
     </p>
   </div>
 
@@ -26,7 +26,7 @@
 </div>
 
 <div id="right">
-  <h1>You Are Buying...</h1>
+  <%= content_tag :h1, t(:you_are_buying) %>
   <%= render(:partial => 'cart_contents', :locals => {:cart => @order}) %>
 
   <%= render(:partial => 'clear_cart') %>

@@ -1,11 +1,11 @@
 <p>
-	<%= make_label('E-mail Address', true) %>
+	<%= make_label(t(:email_address), true) %>
 	<%= text_field :customer, :email_address, :class => 'textInput'  %>
 	<%= error_message_on(:customer, :email_address) %>
 </p>
 
 <p>
-	<%= make_label('Password', true) %>
+	<%= make_label(t(:password), true) %>
 	<%= password_field :customer, :password, :class => 'textInput'  %>
 	<%= error_message_on(:customer, :password) %>
 </p>

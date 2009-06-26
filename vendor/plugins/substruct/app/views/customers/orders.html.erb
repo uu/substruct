@@ -3,14 +3,14 @@
 	
 	<div class="padLeft">
 		<% if @orders.size == 0 %>
-			<h3>You haven't placed any orders with us yet.</h3>
+            <%= content_tag :h3, t(:you_have_not_placed_any_orders) %>
 		<% else %>
 			<table class="list" cellpadding="0" cellspacing="0">
 				<tr>
-					<th class="numeric">Number</th>
-					<th class="numeric">Date</th>
-					<th class="numeric">Amount</th>
-					<th>Status</th>
+					<th class="numeric"><%= t(:order_number) %></th>
+					<th class="numeric"><%= t(:order_date) %></th>
+					<th class="numeric"><%= t(:amount) %></th>
+					<th><%= t(:status) %></th>
 				</tr>
 				<% for order in @orders %>
 					<tr class="<%= alternate() %>">

@@ -8,13 +8,13 @@
 
 <!-- empty file upload box that gets added / removed via JS -->
 <p id="<%= name %>_empty_file_upload" style="display:none;" class="upload_box">
-	<a style="float:right;" class="action" href="#" onclick="this.up('p').remove();return false;">Remove</a>
+	<a style="float:right;" class="action" href="#" onclick="this.up('p').remove();return false;"><%= t(:remove) %></a>
 	<input name="<%= "#{name}[][#{name}_data]" %>" size="<%= input_size %>" type="file" />
 	<input name="<%= "#{name}[][#{name}_data_temp]" %>" type="hidden" />
 </p>
 
 <p>
-	<a href="#" class="action" onclick="addEmptyUpload();return false;">Add file to upload</a>
+	<a href="#" class="action" onclick="addEmptyUpload();return false;"><%= t(:add_file_to_upload) %></a>
 	<script language="javascript" type="text/javascript">
 		// Adds an empty file upload html element to the form.
 		function addEmptyUpload() {

@@ -22,8 +22,8 @@
 		
 		<!-- top links -->
 		<ul class="navigation" id="toplinks">
-			<li><a href="/questions/ask">Contact Us</a></li>
-			<li><a href="/store">Continue Shopping</a></li>
+            <%= content_tag :li, link_to(t(:contact_us), :controller => 'questions', :action => 'ask') %>
+            <%= content_tag :li, link_to(t(:continue_shopping), :controller => 'store') %>
 		</ul>
 				
 		<!-- logo -->
@@ -48,12 +48,12 @@
 
 	<div id="footer">
 		<ul class="navigation">
-			<li><a href="/">Home</a></li>
-			<li><a href="/questions/faq">FAQ</a></li>
-			<li><a href="/questions/ask">Contact Us</a></li>
-			<li><a href="/blog">Blog</a></li>
-			<li><a href="/customers/wishlist">Wishlist</a></li>
-			<li><a href="/store/show_cart" class="submodal-600-400">Cart</a></li>
+            <%= content_tag :li, link_to(t(:home), '/') %>
+            <%= content_tag :li, link_to(t(:faq), :controller => 'questions', :action => 'faq') %>
+            <%= content_tag :li, link_to(t(:contact_us), :controller => 'questions', :action => 'ask') %>
+            <%= content_tag :li, link_to(t(:blog), :controller => 'blog', :action => 'index') %>
+            <%= content_tag :li, link_to(t(:wishlist), :controller => 'customers', :action => 'wishlist') %>
+            <%= content_tag :li, link_to(t(:cart), {:controller => 'store', :action => 'show_cart'}, :class => 'submodal-600-400') %>
 		</ul>
 	</div>
 	<div class="clear"></div>

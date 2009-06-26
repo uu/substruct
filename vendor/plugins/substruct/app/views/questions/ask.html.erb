@@ -1,31 +1,30 @@
-<% @title = 'Contact Us' %>
+<% @title = t(:contact_us) %>
 
 <div id="fullContent">
 	
 	<div class="form_block">
-		<h1>Contact Us</h1>
-	
-		<p>Ask your question below.</p>
+        <%= content_tag :h1, t(:contact_us) %>
+        <%= content_tag :p, t(:contact_us_info) %>
 	
 		<%= form_tag :action => 'send_question' %>
 		
       <div style="padding-bottom:10px;">
-        <%= make_label("Your Email Address", true) %>
+        <%= make_label(t(:your_email_address), true) %>
         <%= text_field 'question', 'email_address', :size => 50, :maxlength => 50, :class => 'textInput' %>
       	<%= error_message_on(:question, :email_address) %>
         <br/>
-        <span class="info">We won't ever sell, spam or share your email address.</span>
+        <%= content_tag :span, t(:your_email_address_info), :class => 'info' %>
       </div>
 
       <div style="padding-bottom:10px;">
-        <%= make_label("Question", true) %>
+        <%= make_label(t(:question), true) %>
         <%= text_area 'question', 'long_question', :cols => 60, :rows => 8, :class => 'textArea' %>
       	<%= error_message_on(:question, :long_question) %>
       </div>
 
       <div class="clear">&nbsp;</div>
       <p>
-  	    <%= submit_tag "Send your question to us", :class => 'button' %>
+  	    <%= submit_tag t(:send_your_question_to_us), :class => 'button' %>
         <div class="clear">&nbsp;</div>
       </p>
 	  </form>

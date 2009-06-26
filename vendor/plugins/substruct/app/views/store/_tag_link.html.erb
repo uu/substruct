@@ -9,5 +9,5 @@ else
 end
 %>
 <%= link_to h(tag_link.name), :controller => 'store', :action => 'show_by_tags', :tags => link_to_tags %>
-<span class="info">(<%= pluralize(tag_link.product_count, 'item') %>)</span>
+<span class="info">(<%= pluralize(tag_link.product_count, t(:item)) %>)</span>
 <br/>

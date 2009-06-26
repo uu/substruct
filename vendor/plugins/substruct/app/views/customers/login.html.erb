@@ -5,7 +5,7 @@
 		<div class="form_block">
 			<input type="hidden" name="modal" value="<%= params[:modal] %>" />
 			<p>
-				<%= make_label('Your e-mail address', true) %>
+				<%= make_label(t(:your_email_address), true) %>
 				<input type="text" class="textInput" size="40" name="login" id="email_address" value="<%= params[:login] %>" />
 			</p>
 			<script language="javascript">
@@ -13,16 +13,16 @@
 			</script>
 
 			<p>
-				<%= make_label('Any previous Order Number - OR - Password', true) %>
+				<%= make_label(t(:any_previous_order_number), true) %>
 				<input type="password" class="textInput" name="password" />
 				<br/>
-				<span class="info">Find this on any order email from us</span>
+                <%= content_tag :span, t(:any_previous_order_number_info), :class => 'info' %>
 			</p>
 			
 			<p>
 				<%=
 					link_to(
-						"Don't remember your password or can't find an order number?",
+					    t(:do_not_remeber_your_password),
 						:controller => 'customers',
 						:action => 'reset_password',
 						:params => {
@@ -36,7 +36,7 @@
 				<p>
 					<%=
 						link_to(
-							"Not a customer yet?",
+							t(:not_a_customer_yet),
 							{
 								:controller => 'customers',
 								:action => 'new'
@@ -50,7 +50,7 @@
 		  <div class="line">&nbsp;</div>
 
 	    <p>
-	      <%= submit_tag "Login", :class => 'button twohundred' %>
+	      <%= submit_tag t(:login), :class => 'button twohundred' %>
 	      <div class="clear">&nbsp;</div>
 	    </p>
 		
@@ -60,21 +60,13 @@
 
 <div id="right">
 	<% if @is_modal %>
-		<h3>Welcome Back</h3>
-		<p class="hlt" style="padding:5px;">
-			Please login so that we can load your checkout information.
-		</p>
-		<p>
-			Use any order number from a past purchase.
-		</p>
+        <%= content_tag :h3, t(:welcome_back) %>
+        <%= content_tag :p, t(:welcome_back_help1), :class => 'hlt', :style => 'padding:5px;' %>
+        <%= content_tag :p, t(:welcome_back_help2) %>
 	<% else %>
-		<h2>Directions</h2>
-		<p>
-			We need you to login before you can continue.
-		</p>
-		<p>
-			Use any order number from a past purchase.
-		</p>
+        <%= content_tag :h2, t(:directions) %>
+        <%= content_tag :p, t(:directions_help1) %> 
+        <%= content_tag :p, t(:directions_help2) %> 
 	<% end %>
 </div>
 

@@ -1,6 +1,6 @@
 <% if pagination && pagination.item_count > pagination.items_per_page then %>
   <p class="big">
-  	<b>Go to page:</b>
+  	<b><%= t(:go_to_page) %>:</b>
   	<% if params then %>
   	  <%= pagination_links(pagination, :window_size => 10, :params => params) %>
   	<% else %>

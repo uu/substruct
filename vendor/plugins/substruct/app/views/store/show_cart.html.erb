@@ -1,16 +1,14 @@
 <div class="price" style="float:right;">
-	Total - <%= sub_number_to_currency(@order.total) %>
+	<%= t(:total) %> - <%= sub_number_to_currency(@order.total) %>
 </div>
-<h1>Your Cart</h1>
-
+<%= content_tag :h1, t(:your_cart) %>
 <p>
 <a href="#" onclick="window.top.hidePopWin();return false;" class="action">Continue Shopping</a>
 </p>
 
 <% if @order.empty? then %>
-	<div>
-		There's nothing in your cart at this time.
-	</div>
+    <%= content_tag :div, t(:nothing_in_your_cart) %>
+  
 <% else %>
 	<table class="list" cellpadding="0" cellspacing="0">
 		<colgroup>
@@ -22,10 +20,10 @@
 		</colgroup>
 		<tr>
 			<th>&nbsp;</th>
-			<th class="first">Item</th>
-			<th class="numeric">Price Each</th>
-			<th class="numeric">Quantity</th>
-			<th class="numeric">Total Price</th>
+			<th class="first"><%= t(:item) %></th>
+			<th class="numeric"><%= t(:price_each) %></th>
+			<th class="numeric"><%= t(:quantity) %></th>
+			<th class="numeric"><%= t(:total) %></th>
 
 		</tr>
 		<% @order.items.each do |item| %>
@@ -33,7 +31,7 @@
 				<td>
 					<%= 
 						link_to_remote(
-							image_tag('/plugin_assets/substruct/images/icons/png-24/16-em-cross.png', :plugin => 'substruct', :alt => 'Remove from cart', :id => "remove_#{item.product_id}"),
+							image_tag('/plugin_assets/substruct/images/icons/png-24/16-em-cross.png', :plugin => 'substruct', :alt => t(:remove_from_cart), :id => "remove_#{item.product_id}"),
 							:url => {
 									:controller => "store",
 									:action => "remove_from_cart_ajax",
@@ -84,7 +82,7 @@
 				%>
 				<%= image_tag('/plugin_assets/substruct/images/indicator.gif', :plugin => 'substruct', :style => 'display:none;', :id => "indicator_delete_all") %>
 			</td>
-			<td colspan="3" class="numeric">Cart Total</td>
+			<td colspan="3" class="numeric"><%= t(:cart_total) %></td>
 			<td class="money numeric">
 				<%= sub_number_to_currency(@order.total) %>
 			</td>
@@ -93,10 +91,10 @@
 	<!-- take action on the cart -->
 	<div style="margin-top:10px;">
 		<div style="float:right;">
-			<a href="<%= get_link_to_checkout %>" class="button" style="width:150px;" target="_top">Checkout Now</a>
+			<a href="<%= get_link_to_checkout %>" class="button" style="width:150px;" target="_top"><%= t(:checkout_now) %></a>
 		</div>
 		<p>
-			<a href="#" onclick="window.top.hidePopWin();return false;" class="action">Continue Shopping</a>
+			<a href="#" onclick="window.top.hidePopWin();return false;" class="action"><%= t(:continue_shopping) %></a>
 		</p>
 	</div>
 <% end #products  %>

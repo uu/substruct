@@ -1,7 +1,7 @@
 <% if @order.downloads.count > 0 %>
-  <h2>Product Downloads</h2>
+  <%= content_tag :h2, t(:product_downloads) %>
   <p>
-    Your purchased items may be downloaded by clicking the following links.
+    <%= t(:product_downloads_info) %>
     <ul>
       <% @order.downloads.each do |dl| %>
         <li>

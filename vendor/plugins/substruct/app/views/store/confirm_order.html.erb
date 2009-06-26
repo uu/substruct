@@ -17,7 +17,7 @@
 		<div class="line"></div>
 		
 	  <p>
-	    <%= submit_tag "Submit Your Order", :class => 'button', :id => 'submit_button', :disable_with => 'Submitting, please wait...' %>
+	    <%= submit_tag t(:submit_your_order), :class => 'button', :id => 'submit_button', :disable_with => t(:submit_order_information_info) %>
 	  </p>
 	</div>
 
@@ -25,14 +25,9 @@
 </div>
 
 <div id="right">
-	<h1>Help</h1>
-	<p>
-		Please make sure your order is correct before continuing.
-	</p>
-	<p>
-		After pressing the <i>Submit Your Order</i> button on this page you will be charged for the item(s) shown.
- 	</p>
-
+    <%= content_tag :h1, t(:help) %>
+    <%= content_tag :p, t(:confirm_order_help1) %>
+    <%= content_tag :p, t(:confirm_order_help2) %>
 	<%= render :partial => 'clear_cart' %>
 </div>
 

@@ -1,55 +1,52 @@
 <div style="">
-  <h1 class="super_big">
-    Your order was successful.
-  </h1>
+  <%= content_tag :h1, t(:your_order_was_successfull), :class => 'super_big' %>
 
   <div class="float" style="width:45%;margin-right:20px;margin-left:20px;">
-    <h1>Thank you</h1>
-    <h3>Please print this page for your records.</h3>
+    <%= content_tag :h1, t(:thank_you) %>
+    <%= content_tag :h3, t(:please_print_this_page) %>
     <p style="font-weight:bold;">
     	<% if @payment_message %>
     	  <%= @payment_message %>
     	<% end %>
     </p>
     <p>
-      An email is being sent to <%= @order.customer.email_address %>.
-      <br/>
-      If you don't receive that email within a few hours please check your "spam" folder.
+      <%= t(:an_email_being_sent, :email => @order.customer.email_address) %>
     </p>
     <div class="line"></div>
     <%= render :partial => '/shared/product_downloads' %>
 
-    <h3><a href="/">Back to the home page</a></h3>
+    <%= content_tag :h3, link_to(t(:back_to_home_page), '/') %>
+
   </div>
 
   <div class="float" style="width:45%;">
-    <h1>Order #<%= @order.order_number %></h1>
+    <h1><%= t(:order_number) %><%= @order.order_number %></h1>
 
-    <h2>Billing Info</h2>
+    <%= content_tag :h2, t(:billing_address) %>
     <%= render(:partial => 'address_table', :locals => {:address => @order.billing_address}) %>
 
-    <h2>Shipping Info</h2>
+    <%= content_tag :h2, t(:shipping_address) %>
     <%= render(:partial => 'address_table', :locals => {:address => @order.shipping_address}) %>
 
-    <h2>Order Items</h2>
+    <%= content_tag :h2, t(:order_items) %>
     <%= render(:partial => 'cart_contents', :locals => {:cart => @order}) %>
 
-    <h2>Shipping And Totals</h2>
+    <%= content_tag :h2, t(:shipping_and_totals) %>
     <table cellpadding="0" cellspacing="0" class="list">
       <colgroup>
         <col style="width:35%;"/>
         <col />
       </colgroup>
       <tr>
-        <th>Shipping Via</th>
+        <%= content_tag :th, t(:shipping_via) %>
         <td><%= @order.order_shipping_type.name %></td>
       </tr>
       <tr>
-        <th>Shipping Cost</th>
+        <%= content_tag :th, t(:shipping_cost) %>
         <td><%= number_to_currency(@order.shipping_cost) %></td>
       </tr>
       <tr>
-        <th>Order Total</th>
+        <%= content_tag :th, t(:order_total) %>
         <td class="money"><%= number_to_currency(@order.total) %></td>
       </tr>
     </table>

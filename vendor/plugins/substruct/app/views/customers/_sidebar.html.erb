@@ -1,12 +1,12 @@
-<h2>Your Stuff</h2>
+<%= content_tag :h2, t(:your_stuff) %>
 <ul>
 	<li>
-		<%= link_to_unless_current('Account Details', :action => 'account') %>
+		<%= link_to_unless_current(t(:account_details), :action => 'account') %>
 	</li>
 	<li>
-		<%= link_to_unless_current('Orders', :action => 'orders') %>
+		<%= link_to_unless_current(t(:orders), :action => 'orders') %>
 	</li>
 	<li>
-		<%= link_to_unless_current('Wishlist', :action => 'wishlist') %>
+		<%= link_to_unless_current(t(:wishlist), :action => 'wishlist') %>
 	</li>
 </ul>

@@ -1,6 +1,6 @@
-<h2>Shopping Options</h2>
+<%= content_tag :h2, t(:shopping_options) %>
 <ul>
   <li>
-    <a href="/store">Continue Shopping</a>
+    <%= content_tag :li, link_to(t(:continue_shopping), :controler => 'store', :action => 'index')  %>
   </li>
 </ul>

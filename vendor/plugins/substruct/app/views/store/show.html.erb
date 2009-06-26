@@ -5,7 +5,7 @@
 		<span class="info"><%= @product.code %></span>
 	</h1>
 	<ul class="navigation secondary">
-    <li><a href="/store">Back to store index</a></li>
+    <%= content_tag :li, link_to(t(:back_to_store_index), :controller => 'store', :action => 'index') %>
   </ul>
 	<% if @default_image %>
 		<div style="float:left; margin:20px; width: 200px;">
@@ -14,10 +14,10 @@
           <%= image_tag @default_image.public_filename(:small) %>
         </a>
       <% end %>
-			<p class="info">Click to see full view</p>
+            <%= content_tag :p, t(:click_to_see_full_view), :class => 'info' %>
 			<!-- thumbnails! -->
 			<% if @images.size > 1 %>
-				<h4>Other product images</h4>
+                <%= content_tag :h4, t(:other_product_images) %>
 				<% for @p_image in @images do %>
 					<!-- product image for reordering -->
 					<div class="float" style="margin:5px;">
@@ -37,7 +37,7 @@
 	<div class="clear"></div>
 	<% if @product.related_products.size > 0 %>
 		<br/>
-		<h2>Related Products</h2>
+        <%= content_tag :h2, t(:related_products) %>
 		<br/>
 		<%= render :partial => 'product', :collection => @product.related_products %>
 		<div class="clear"></div>
@@ -53,7 +53,7 @@
 		if 0 >= @product.quantity 
 	%>
 		<br/>
-		<h3>Item is out of stock</h3>
+        <%= content_tag :h3, t(:item_is_out_of_stock) %>
 	<%
 	 	# ITEM OR ONE OF ITS VARIATIONS IN STOCK
 		else 
@@ -64,13 +64,13 @@
 				:url=> { :controller=>'store', :action=>'add_to_cart_ajax', :id => @product.id },
 				:html => {:name => 'add_product_form'},
 				:complete => "showPopWin('/store/show_cart', 600, 400, null, true)",
-				:failure => 'alert("That item appears to have gone out of stock before you were able to add it to your cart.\n\nPlease refresh this page.")',
+				:failure => 'alert(<%= t(:item_is_out_of_stock_info))',
 				:update => 'items'
 			)
 		%>
 		<% if @variations.size > 0 %>
 			<!-- product variations -->
-			<h2>Options</h2>
+            <%= content_tag :h2, t(:options) %>
 			<div>
 				<table>
 				<% @variations.each_index do |i| %>
@@ -93,7 +93,7 @@
 		<% end %>
 		
 		<br/>
-		<h3>How many do you want?</h3>
+        <%= content_tag :h3, t(:how_many_you_want) %>
 		<table style="width:100%;text-align:center;">
 			<tr>
 				<td style="width:40%;text-align:right;padding-right:5px;">
@@ -108,11 +108,11 @@
 	
 	<div align="center" style="margin-top:10px;">
 		<p>
-		Not ready to buy yet?
+        <%= t(:not_ready_to_buy_yet) %>
 		<br/>
 		<%= 
 			link_to(
-				'Add this item to your wishlist',
+				t(:add_this_item_to_wishlist),
 				{
 					:controller => 'customers',
 					:action => 'add_to_wishlist',

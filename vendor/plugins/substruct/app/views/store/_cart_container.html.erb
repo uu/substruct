@@ -38,7 +38,7 @@
 <div id="cart">
 	<div id="cartTitle">
 		<div id="indicator" style="display:none;"><%= image_tag "indicator.gif", :plugin => 'substruct' %></div>
-		<div id="cartTitleText">Shopping Cart</div>
+		<div id="cartTitleText"><%= t(:shopping_cart) %></div>
 	</div>
 	<div id="items">
 		<%= render(:partial => 'cart') %>

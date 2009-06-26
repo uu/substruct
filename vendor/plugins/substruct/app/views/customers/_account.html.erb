@@ -1,16 +1,16 @@
-<h2>Payment Information</h2>
+<%= content_tag, :h2, t(:payment_information) %>
 
 <div class="padLeft">
 
 	<div class="floatHalf">
-		<%= make_label('Card Number') %>
+		<%= make_label(t(:card_number)) %>
 		<div class="padLeft">
 			<%= @order_account.cc_number_last_four %>
 		</div>
 	</div>
 
 	<div class="floatHalf">
-		<%= make_label('Expiration Date') %>
+		<%= make_label(t(:expiration_date)) %>
 		<div class="padLeft">
 			<div class="float">
 				<%= @order_account.expiration_month %> / <%= @order_account.expiration_year %>

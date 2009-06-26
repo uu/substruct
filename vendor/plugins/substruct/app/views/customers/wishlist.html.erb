@@ -11,9 +11,7 @@
 	<h1><%= @title %></h1>
 	<div class="padLeft">
 		<% if @items.size == 0 %>
-			<h3>
-				No items are in your wishlist at this time.
-			</h3>
+            <%= content_tag :h3, t(:no_items_in_your_wishlist) %>
 		<% else %>
 			<% for item in @items do %>
 				<div id="item_<%= item.id %>">
@@ -22,7 +20,7 @@
 					<%= 
 						link_to_remote(
 							image_tag("/plugin_assets/substruct/images/icons/png-24/16-em-cross.png", 
-								:id => "trash_#{item.id}", :plugin => 'substruct', :alt => 'Delete'),
+								:id => "trash_#{item.id}", :plugin => 'substruct', :alt => t(:delete)),
 							{	
 					    :url => {
 					        :controller => "customers",
