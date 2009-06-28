@@ -3,7 +3,7 @@
 </div>
 <%= content_tag :h1, t(:your_cart) %>
 <p>
-<a href="#" onclick="window.top.hidePopWin();return false;" class="action">Continue Shopping</a>
+<a href="#" onclick="window.top.hidePopWin();return false;" class="action"><%= t(:continue_shopping) %></a>
 </p>
 
 <% if @order.empty? then %>
