@@ -6,8 +6,8 @@
 		        :controller => "files",
 		        :action => "destroy", 
 		        :id => @file.id},
-		    :loading => "status(#{@file.id});",
-				:complete => "deleteFile(#{@file.id});"
+    		    :loading => "status(#{@file.id});",
+				:complete => "deleteFile(#{@file.id});")
 		%>
 		<!-- delete indicator -->
 		<%= image_tag '/plugin_assets/substruct/images/indicator.gif', :id => "spin_#{@file.id}", :style => "display:none;", :plugin => 'substruct' %>
