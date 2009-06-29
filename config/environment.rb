@@ -48,7 +48,7 @@ Rails::Initializer.run do |config|
   # config.active_record.schema_format = :ruby
 
   # See Rails::Configuration for more options 
-  config.i18n.default_locale = :en
+  config.i18n.default_locale = :ru
 end
 
 begin
