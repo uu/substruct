@@ -11,13 +11,13 @@ class CustomersController < ApplicationController
   # Logs the customer in using email address &
   # order number OR password
   def login
-    @title = "Customer Login"
+    @title = t(:customer_login)
     @is_modal = (params[:modal] == 'true')
     
     if request.post?
       if customer = OrderUser.authenticate(params[:login], params[:password])
         log_customer_in(customer)
-				flash[:notice]  = "Login successful"
+				flash[:notice]  = t(:logged_in)
 				# If we're modal return a page that just refreshes things.
 				if @is_modal
 				  render :template => '/shared/modal_refresh', :layout => 'modal' and return
@@ -25,7 +25,7 @@ class CustomersController < ApplicationController
           redirect_back_or_default :action => 'orders'
         end
       else
-        flash.now[:notice]  = "Login unsuccessful"
+        flash.now[:notice]  = t(:login_unsuccessfull)
       end
     end
     # Can be called from the store page.
@@ -37,20 +37,20 @@ class CustomersController < ApplicationController
   
   def logout
     session[:customer] = nil
-    flash[:notice] = "You've been logged out."
+    flash[:notice] = t(:logged_out)
     redirect_to '/' and return
   end
   
   # Creates a new customer
   #
   def new
-    @title = "New Account"
+    @title = t(:new_account)
     # Update account details
     @customer = OrderUser.new
     if request.post?
       @customer.attributes = params[:customer]
       if @customer.save
-        flash[:notice] = "Your account has been created."
+        flash[:notice] = t(:your_account_has_been_created)
         log_customer_in(@customer)
         # If we've set a return_to url, go there.
         if session[:return_to]
@@ -59,7 +59,7 @@ class CustomersController < ApplicationController
           redirect_to :action => 'wishlist' and return
         end
       else
-        flash.now[:notice] = "There was a problem creating your account."
+        flash.now[:notice] = t(:error_creating_account)
         render and return
       end
     end    
@@ -69,13 +69,13 @@ class CustomersController < ApplicationController
   # Account details
   # Can change email or password from this.
   def account
-    @title = "Your Account Details"
+    @title = t(:your_account_details)
     # Update account details
     if request.post?
       if @customer.update_attributes(params[:customer])
-        flash.now[:notice] = "Account details saved."
+        flash.now[:notice] = t(:account_details_saved)
       else
-        flash.now[:notice] = "There was a problem saving your account."
+        flash.now[:notice] = t(:error_saving_account)
       end
     end
   end
@@ -83,13 +83,13 @@ class CustomersController < ApplicationController
   # Resets password for customer, emails it to them.
   #
   def reset_password
-    @title = "Reset Password"
+    @title = t(:reset_password)
     @is_modal = (params[:modal] == 'true')
     
     if request.post?
       if customer = OrderUser.find_by_email_address(params[:login])
         customer.reset_password()
-        flash[:notice] = "Your password has been reset and emailed to you."
+        flash[:notice] = t(:your_password_has_been_reset)
         redirect_to :action => 'login',
           :params => {
             :login => params[:login],
@@ -97,7 +97,7 @@ class CustomersController < ApplicationController
           }
         return
       else
-        flash.now[:notice] = "That account wasn't found in our system."
+        flash.now[:notice] = t(:error_finding_account)
         return
       end
     end
@@ -111,7 +111,7 @@ class CustomersController < ApplicationController
 
   # Displays all orders for a customer
   def orders
-    @title = "Your Orders"
+    @title = t(:your_orders)
     @orders = @customer.orders.paginate(
       :page => params[:page],
       :per_page => 10
@@ -132,7 +132,7 @@ class CustomersController < ApplicationController
     render(:file => 'public/404.html', :status => 404) and return unless @order
     
     @order_time = @order.created_on.strftime("%m/%d/%y %I:%M %p")
-    @title = "Order #{@order.order_number}"
+    @title = t(:order)+" "+@order.order_number
     @order_user = @order.order_user
     @order_account = @order_user.order_account
     @billing_address = @order.billing_address
@@ -158,7 +158,7 @@ class CustomersController < ApplicationController
 
   # Wishlist items
   def wishlist
-    @title = "Your Wishlist"
+    @title = t(:your_wishlist)
     @items = @customer.items.paginate(
       :page => params[:page],
       :per_page => 20
@@ -172,10 +172,10 @@ class CustomersController < ApplicationController
       if item = Item.find_by_id(params[:id])
         @customer.add_item_to_wishlist(item)
       else
-        flash[:notice] = "Sorry, we couldn't find the item that you wanted to add to your wishlist. Please try again."        
+        flash[:notice] = t(:error_finding_item_for_wishlist)        
       end
     else
-      flash[:notice] = "You didn't specify an item to add to your wishlist..."
+      flash[:notice] = t(:no_items_specified_for_wishlist)
     end
     redirect_to :action => 'wishlist' and return
   end
