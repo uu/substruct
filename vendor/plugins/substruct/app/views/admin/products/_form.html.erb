@@ -115,18 +115,19 @@
 		<div class="clear">&nbsp;</div>
 	
 	</div>
-
+<br />
 	<div class="float">
-		<p>
-			<label for="product_description"><%= t(:description) %></label>
-            <%= content_tag :span, t(:product_description_info), :class => 'info' %>
-			<br/>
-			<%= text_area 'product', 'description', :rows => 14, :class => 'textArea'  %>
-		</p>
+	
 	</div>
 
 	<div class="clear">&nbsp;</div>
-</div>
+</div>	<p>
+			<label for="product_description"><%= t(:description) %></label>
+            <%#= content_tag :span, t(:product_description_info), :class => 'info' %>
+			<br/>
+			<%#= text_area 'product', 'description', :rows => 14, :class => 'textArea'  %>
+            <%= fckeditor_textarea('product', 'description', :toolbarSet => 'Easy', :width => '100%', :height => '500px') %>
+		</p>
 
 <%= render :partial => 'image_upload' %>
 
