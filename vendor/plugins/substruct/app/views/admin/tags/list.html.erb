@@ -135,7 +135,8 @@
 			<%= t(:top_level_tags) %>
 		<% else %>
             <%= link_to t(:top_level_tags), :controller => 'tags', :action => 'list' %> &gt;
-			<% if @parent_tag.parent %>
+            <% parent = @parent_tag %>
+            <% while (parent = parent.parent) %>
 				<%= link_to(@parent_tag.parent.name, :action => 'list', :id => @parent_tag.parent.name ) %> &gt;
 			<% end %>
 			<%= @parent_tag.name %>
