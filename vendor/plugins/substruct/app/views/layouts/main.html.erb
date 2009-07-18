@@ -9,11 +9,13 @@
 			h controller.controller_name
 		end
 		-%> : <%=h @store_name %></title>
-	<%= javascript_include_tag :defaults, :cache => 'default' %>       
-	<%= javascript_include_tag '/plugin_assets/substruct/javascripts/substruct.js' %>
-  <%= javascript_include_tag '/plugin_assets/substruct/javascripts/subModal.js' %>
-  <%= stylesheet_link_tag '/plugin_assets/substruct/stylesheets/subModal.css' %>
-  <%= stylesheet_link_tag '/plugin_assets/substruct/stylesheets/main.css' %>    
+    <% bundle :name => 'main' do%>
+      <%= javascript_include_tag :defaults, :cache => 'default' %>       
+      <%= javascript_include_tag '/plugin_assets/substruct/javascripts/substruct.js' %>
+      <%= javascript_include_tag '/plugin_assets/substruct/javascripts/subModal.js' %>
+      <%= stylesheet_link_tag '/plugin_assets/substruct/stylesheets/subModal.css' %>
+      <%= stylesheet_link_tag '/plugin_assets/substruct/stylesheets/main.css' %>    
+    <% end %>
   <%= yield :header %>
 </head>
 <body>

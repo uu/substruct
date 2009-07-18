@@ -1,3 +1,4 @@
 log
 config/*.yml
 public/system/*
+public/javascripts/cache/*

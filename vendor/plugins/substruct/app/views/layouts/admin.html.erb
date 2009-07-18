@@ -9,13 +9,15 @@
 			h controller.controller_name
 		end
 		-%> : <%= t(:substruct_admin) %></title>
-	 <%= javascript_include_tag :defaults, :cache => 'default' %>
-     <%= javascript_include_tag '/plugin_assets/substruct/javascripts/substruct.js' %>
-     <%= javascript_include_tag '/plugin_assets/substruct/javascripts/subModal.js' %>   
+    <% bundle :name => 'admin' do %>
+      <%= javascript_include_tag :defaults, :cache => 'default' %>
+      <%= javascript_include_tag '/plugin_assets/substruct/javascripts/substruct.js' %>
+      <%= javascript_include_tag '/plugin_assets/substruct/javascripts/subModal.js' %>
+      <%= stylesheet_link_tag '/plugin_assets/substruct/stylesheets/admin.css' %>
+      <%= stylesheet_link_tag '/plugin_assets/substruct/stylesheets/subModal.css' %>
+    <% end %>
       <%= include_tiny_mce_js %>
       <%= tiny_mce_init %>
-     <%= stylesheet_link_tag '/plugin_assets/substruct/stylesheets/admin.css' %>
-     <%= stylesheet_link_tag '/plugin_assets/substruct/stylesheets/subModal.css' %>
 	<%= yield :header %>
 </head>
 <body>
