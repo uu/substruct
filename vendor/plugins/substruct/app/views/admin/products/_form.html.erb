@@ -126,7 +126,7 @@
             <%#= content_tag :span, t(:product_description_info), :class => 'info' %>
 			<br/>
 			<%#= text_area 'product', 'description', :rows => 14, :class => 'textArea'  %>
-            <%= fckeditor_textarea('product', 'description', :toolbarSet => 'Easy', :width => '100%', :height => '500px') %>
+            <%= text_area('product', 'description', :class => 'mceEditor', :cols => 95, :rows => 30) %>
 		</p>
 
 <%= render :partial => 'image_upload' %>
