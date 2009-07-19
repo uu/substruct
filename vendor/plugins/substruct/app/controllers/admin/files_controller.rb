@@ -5,7 +5,7 @@ class Admin::FilesController < Admin::BaseController
 
   # Lists all assets / file uploads in the system.
   def index
-    @title = "List of user uploaded files"
+    @title = t(:list_of_user_uploaded_files)
     
     if params[:sort] == 'name' then
       sort = "filename ASC"
@@ -58,7 +58,7 @@ class Admin::FilesController < Admin::BaseController
         end
       end
     end
-    flash[:notice] = "#{files_saved} file(s) uploaded."
+    flash[:notice] = files_saved + " " + t(:files_uploaded)
     redirect_to :action => 'index' and return
   end
   
