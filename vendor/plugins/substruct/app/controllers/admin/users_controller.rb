@@ -13,7 +13,7 @@ class Admin::UsersController < Admin::BaseController
     render :action => 'list'
   end
   def list
-    @title = 'Admin User List'
+    @title = t(:admin_users)
     @users = User.find(:all)
   end
 
@@ -22,13 +22,13 @@ class Admin::UsersController < Admin::BaseController
     @user = User.new(params[:user])
 		@roles = Role.find(:all, :order => 'name ASC')
     if request.post? and @user.save
-      flash[:notice] = 'User was successfully created.'
+      flash[:notice] = t(:user_was_succ_created)
       redirect_to :action => 'list'
     end      
   end
 
   def edit
-		@title = "Editing User"
+		@title = t(:editing_user)
     @user = User.find(params[:id])
     @user.attributes = params["user"]
 		
@@ -37,7 +37,7 @@ class Admin::UsersController < Admin::BaseController
 		
 		# Update user
     if request.post? and @user.save
-      flash[:notice] = 'User was successfully updated.'
+      flash[:notice] = t(:user_was_succ_updated)
       redirect_to :action => 'list'
     end
     @user.password = @user.password_confirmation =  ''
@@ -45,11 +45,11 @@ class Admin::UsersController < Admin::BaseController
 
   def destroy
 		if (User.count == 1) then
-			flash[:notice] = "You have to have at least one user in the system.\n\n"
-			flash[:notice] << "Try creating another one if you'd like to delete this one."
+			flash[:notice] = t(:error_deleting_user1)
+			flash[:notice] << t(:error_deleting_user2)
 			redirect_to :action => 'list' and return
 		elsif (session[:user].to_i == params[:id].to_i)
-		  flash[:notice] = "You can't delete yourself, sorry."
+		  flash[:notice] = t(:error_deleting_user3)
 		  redirect_to :action => 'list' and return
 		else
 		  User.find(params[:id]).destroy
@@ -63,7 +63,7 @@ class Admin::UsersController < Admin::BaseController
   
   # Lists customers in the system.
   def customers
-    @title = "Customer List"
+    @title = t(:customers)
     @customers = OrderUser.paginate(
       :include => ['orders'],
       :order => "last_name ASC, first_name ASC",
