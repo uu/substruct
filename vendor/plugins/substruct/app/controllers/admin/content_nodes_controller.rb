@@ -10,7 +10,7 @@ class Admin::ContentNodesController < Admin::BaseController
   # Lists content nodes by type
   #
   def list
-    @title = "Content List"
+    @title = t(:content_list)
     # Get all content node types
     @list_options = ContentNode::TYPES
 
@@ -67,7 +67,7 @@ class Admin::ContentNodesController < Admin::BaseController
 			return
     end
 
-    @title = "Content List For Section - '#{@section.name}'"
+    @title = t(:content_list_for_section) + " - " + @section.name
 
     conditions = nil
 
@@ -92,25 +92,25 @@ class Admin::ContentNodesController < Admin::BaseController
 
   # Creates a content node
   def new
-    @title = "Creating New Content"
+    @title = t(:create_new_content)
     @content_node = ContentNode.new
     set_recent_uploads()
   end
   
   def edit
-    @title = "Editing Content"
+    @title = t(:editing_content)
     @content_node = ContentNode.find(params[:id])
     set_recent_uploads()
   end
 
   def create
-    @title = "Creating a content node"
+    @title = t(:create_content_node)
     @content_node = ContentNode.new(params[:content_node])
     @content_node.type = params[:content_node][:type]
 
     if @content_node.save
       save_uploads_and_replace_paths()
-      flash[:notice] = 'ContentNode was successfully created.'
+      flash[:notice] = t(:content_node_was_succ_created)
       redirect_to :action => 'list'
     else
       set_recent_uploads
@@ -124,7 +124,7 @@ class Admin::ContentNodesController < Admin::BaseController
     
     if @content_node.update_attributes(params[:content_node])
       save_uploads_and_replace_paths()
-      flash[:notice] = 'ContentNode was successfully updated.'
+      flash[:notice] = t(:content_node_was_succ_updated)
       redirect_to :action => 'list'
     else
       set_recent_uploads
