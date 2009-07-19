@@ -332,6 +332,8 @@ ru:
   published: "Опубликовано"
   quantity: "Количество"
   question: "Вопрос"
+  question_was_succ_created: "Вопрос был успешно добавлен."
+  question_was_succ_updated: "Вопрос был успешно обновлён."
   questions: "Вопросы"
   quick_faq_list: "Краткий список вопросов"
   rates: "Тарифы"

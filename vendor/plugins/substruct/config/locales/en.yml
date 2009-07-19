@@ -332,6 +332,8 @@ en:
   published: "Published"
   quantity: "Quantity"
   question: "Question"
+  question_was_succ_created: "Question was successfully created."
+  question_was_succ_updated: "Question was successfully updated."
   questions: "Questions"
   quick_faq_list: "Quick FAQ List"
   rates: "Rates"
