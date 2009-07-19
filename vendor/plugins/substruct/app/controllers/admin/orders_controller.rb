@@ -34,7 +34,7 @@ class Admin::OrdersController < Admin::BaseController
       @viewing_by = @list_options[0]
     end
 
-    @title = "Order List"
+    @title = t(:order_list)
 
     conditions = nil
 
@@ -120,7 +120,7 @@ class Admin::OrdersController < Admin::BaseController
   # Shows sales totals for all years.
   #
   def totals
-    @title = 'Sales Totals'
+    @title = t(:sales_totals)
     sql = "SELECT DISTINCT YEAR(created_on) as year "
     sql << "FROM orders "
     sql << "ORDER BY year ASC"
@@ -135,7 +135,7 @@ class Admin::OrdersController < Admin::BaseController
   # Lists number orders by country
   #
   def by_country
-    @title = "Orders By Country"
+    @title = t(:orders_by_country)
     
     @countries = Country.find(:all)
     # Remove countries with 0 orders
@@ -150,13 +150,13 @@ class Admin::OrdersController < Admin::BaseController
     @country = Country.find_by_id(params[:id])
     
     if !@country
-      flash[:notice] = "No country found for the URL you entered."
+      flash[:notice] = t(:no_country_found)
       redirect_to :action => 'by_country' and return
     end
     
     # Need this so that links show up
     @list_options = @@list_options
-    @title = "Orders for #{@country.name}"
+    @title = t(:orders_for) + " " + @country.name
     
     # Paginate that will work with will_paginate...yee!
     per_page = 30
@@ -190,7 +190,7 @@ class Admin::OrdersController < Admin::BaseController
       @use_separate_shipping_address = true
     end
     @shipping_address = OrderAddress.new if !@shipping_address
-    logger.info "\n\n SHIPPING ADDRESS:\n #{@shipping_address.inspect}\n"
+    logger.info "\n\n #{t(:shipping_address)}:\n #{@shipping_address.inspect}\n"
     logger.info @use_separate_shipping_address
     
     # Find all products not included as a order line item already.
@@ -218,12 +218,12 @@ class Admin::OrdersController < Admin::BaseController
 
     begin
   		update_order_from_post
-      flash[:notice] = 'Order was successfully updated.'
+      flash[:notice] = t(:order_was_succ_updated)
       redirect_to :action => 'show', :id => @order.id
     rescue
       @products = Product.find(:all)
   		@shipping_address = OrderAddress.new unless @use_separate_shipping_address
-			flash[:notice] = 'There were problems modifying the order.'
+			flash[:notice] = t(:order_modification_failed)
       render :action => 'edit' and return
     end
   end
@@ -240,7 +240,7 @@ class Admin::OrdersController < Admin::BaseController
 		@order = Order.find(params[:id])
 		@order.order_status_code_id = 9
 		@order.save
-		flash[:notice] = "Order has been marked as returned."
+		flash[:notice] = t(:order_marked_as_returned)
 		redirect_to :action => 'show', :id => @order.id
 	end
 
@@ -305,8 +305,8 @@ class Admin::OrdersController < Admin::BaseController
       
       # Need this so that links show up
       @list_options = @@list_options
-      @title = "Search Results"
-      @search_title =  "You Searched For '#{@search_term}'"
+      @title = t(:search_results)
+      @search_title =  t(:you_searched_for)+ " " + @search_term
     end
 
 end
