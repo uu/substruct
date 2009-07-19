@@ -6,7 +6,7 @@ class Admin::PromotionsController < Admin::BaseController
   end
 
   def list
-    @title = t(:promotion_list)
+    @title = t(:promotions)
     @promotions = Promotion.find(:all, :order => 'code ASC')
   end
 
