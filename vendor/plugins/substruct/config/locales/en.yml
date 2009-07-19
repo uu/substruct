@@ -360,6 +360,8 @@ en:
   reset_password: "Rest Password"
   rights: "Rights"
   role: "Role"
+  role_was_succ_created: "Role was successfully created."
+  role_was_succ_updated: "Role was successfully updated."
   roles: "Roles"
   roles_help1: "To control admin access in Substruct you assign roles to users."
   roles_help2: "A role is a collection of rights."

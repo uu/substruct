@@ -10,23 +10,23 @@ class Admin::RolesController < Admin::BaseController
   end
 
   def list
-    @title = 'Role List'
+    @title = t(:roles)
     @roles = Role.find(:all)
   end
 
   def new
-		@title = "Creating new Role"
+		@title = t(:create_new_role)
     @role = Role.new(params[:role])
 		@rights = Right.find(:all, :order => 'name ASC')
     if request.post? and @role.save
-      flash[:notice] = 'Role was successfully created.'
+      flash[:notice] = t(:role_was_succ_created)
       redirect_to :action => 'list' and return
     end
 		render :action => 'edit'
   end
 
   def edit
-		@title = "Editing Role"
+		@title = t(:editing_role)
     @role = Role.find(params[:id])
     @role.attributes = params["role"]
 		
@@ -34,7 +34,7 @@ class Admin::RolesController < Admin::BaseController
 		
 		# Update user
     if request.post? and @role.save
-      flash[:notice] = 'Role was successfully updated.'
+      flash[:notice] = t(:role_was_succ_updated)
       redirect_to :action => 'list'
     end
   end
