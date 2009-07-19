@@ -6,7 +6,7 @@ class Admin::TagsController < Admin::BaseController
 
 	# List manages addition/deletion of items through ajax
   def list
-    @title = 'Manage Tags'
+    @title = t(:manage_tags)
     @tags = Tag.find_ordered_parents()
     
     if params[:id]
@@ -14,7 +14,7 @@ class Admin::TagsController < Admin::BaseController
       # If given faulty parent tag, redirect back to list with no ID
       # ...and show an error.
       if !@parent_tag
-        flash.now[:notice] = "Sorry, we couldn't find the tag you were looking for"
+        flash.now[:notice] = t(:no_tags_found)
         render and return
       end
       @parent_tag_id = @parent_tag.id
@@ -55,7 +55,7 @@ class Admin::TagsController < Admin::BaseController
 		@tag.name = params[:name]
     if !@tag.save
       render(:update) do |page| 
-        page.alert "Something went wrong saving your tag.\n\nRemember, tag names have to be unique."
+        page.alert t(:error_saving_tag)
       end
     else
       render(:update) do |page| 
