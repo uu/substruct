@@ -10,7 +10,7 @@ class Admin::ProductsController < Admin::BaseController
 
 	# Lists all products
   def list
-    @title = "All Product List"
+    @title = t(:all_products)
     @products = Product.paginate(
       :order => "name ASC",
       :page => params[:page],
@@ -42,7 +42,7 @@ class Admin::ProductsController < Admin::BaseController
 			return
     end
 
-    @title = "Product List For Tag - '#{@tag.name}'"
+    @title = t(:product_list_for_tag) + " - " + @tag.name
 
     conditions = nil
 
@@ -59,13 +59,13 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def new
-    @title = "New Product"
+    @title = t(:new_product)
 		@image = Image.new
     @product = Product.new
   end
   
   def edit
-    @title = "Editing A Product"
+    @title = t(:editing_product)
     @product = Product.find(params[:id])
 		@image = Image.new
   end
@@ -77,11 +77,11 @@ class Admin::ProductsController < Admin::BaseController
     # If we have ID param this isn't a new product
     if params[:id]
       @new_product = false
-      @title = "Editing Product"
+      @title = t(:editing_product)
       @product = Product.find(params[:id])
     else
       @new_product = true
-      @title = "New Product"
+      @title = t(:new_product)
       @product = Product.new()
     end
     @product.attributes = params[:product]
@@ -135,12 +135,12 @@ class Admin::ProductsController < Admin::BaseController
         end
       end
       
-      flash[:notice] = "Product '#{@product.name}' saved."
+      flash[:notice] = t(:product_saved, :name => @product.name)
       if image_errors.length > 0
-        flash[:notice] += "<b>Warning:</b> Failed to upload image(s) #{image_errors.join(',')}. This may happen if the size is greater than the maximum allowed of #{Image::MAX_SIZE / 1024 / 1024} MB!"
+        flash[:notice] += t(:error_saving_images, :images => image_errors.join(','), :maxsize => (Image::MAX_SIZE / 1024 / 1024))
       end
       if download_errors.length > 0
-        flash[:notice] += "<b>Warning:</b> Failed to upload file(s) #{download_errors.join(',')}."
+        flash[:notice] += t(:error_uploading_files) + " " + download_errors.join(',')
       end
       redirect_to :action => 'edit', :id => @product.id
     else
@@ -170,7 +170,7 @@ class Admin::ProductsController < Admin::BaseController
 	  session[:last_search_term] = @search_term
 
 	  # Need this so that links show up
-	  @title = "Search Results For '#{@search_term}'"
+	  @title = t(:search_results_for) + " " + @search_term
 
     # Paginate that will work with will_paginate...yee!
     per_page = 30
