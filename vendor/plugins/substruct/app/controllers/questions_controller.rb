@@ -2,11 +2,11 @@ class QuestionsController < ApplicationController
   layout 'main'
 
   def index
-    @title = "Questions"
+    @title = t(:questions)
   end
 
   def faq
-    @title = "FAQ (Frequently Asked Questions)"
+    @title = t(:faq)
     @questions = Question.find(
       :all,
       :conditions => "featured = 1",
@@ -22,9 +22,9 @@ class QuestionsController < ApplicationController
 	# Actually creates the question
 	def send_question
     @question = Question.new(params[:question])
-		@question.short_question = "Message from the contact form"
+		@question.short_question = t(:faq_message_from_form)
     if !@question.save then
-      flash.now[:notice] = 'There were some problems with the information you entered.<br/><br/>Please look at the fields below.'
+      flash.now[:notice] = t(:faq_error)
       render :action => 'ask'
     end
   end

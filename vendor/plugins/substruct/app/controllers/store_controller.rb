@@ -36,7 +36,7 @@ class StoreController < ApplicationController
 
   # Our simple store index
   def index
-    @title = "Store"
+    @title = t(:store)
 		@tags = Tag.find_alpha
 		@tag_names = nil
 		@viewing_tags = nil
@@ -51,7 +51,7 @@ class StoreController < ApplicationController
   
   def search
     @search_term = params[:search_term]
-    @title = "Search Results for: #{@search_term}"
+    @title = t(:search_results_for) + ": " + @search_term
     @products = Product.paginate(
       :order => 'name ASC',
       :conditions => ["(name LIKE ? OR code = ?) AND #{Product::CONDITIONS_AVAILABLE}", "%#{@search_term}%", @search_term],
@@ -91,7 +91,7 @@ class StoreController < ApplicationController
 		
     @viewing_tags = Tag.find(tag_ids_array, :order => "parent_id ASC")
 		viewing_tag_names = @viewing_tags.collect { |t| " > #{t.name}"}
-		@title = "Store #{viewing_tag_names}"
+		@title = t(:store) + " " + viewing_tag_names
 		@tags = Tag.find_related_tags(tag_ids_array)
 		
 		# Paginate products so we don't have a ton of ugly SQL
@@ -125,7 +125,7 @@ class StoreController < ApplicationController
   def show
     @product = Product.find_by_code(params[:id])
     if !@product
-      flash[:notice] = "Sorry, we couldn't find the product you were looking for"
+      flash[:notice] = t(:no_products_found)
       redirect_to :action => 'index' and return false
     end
     @title = @product.name
@@ -159,7 +159,7 @@ class StoreController < ApplicationController
 		redirect_to get_link_to_checkout
   rescue
     logger.error("[ERROR] - Can't find product for id: #{params[:id]}")
-    redirect_to_index("Sorry, you tried to buy a product that we don't carry any longer.")
+    redirect_to_index(t(:discontinued_product_warning))
   end
 
 	# Adds an item to our cart via AJAX
@@ -200,7 +200,7 @@ class StoreController < ApplicationController
 		@order.remove_product(product)
 		render :partial => 'cart'
 	rescue
-		render :text => "There was a problem removing that item. Please refresh this page."
+		render :text => t(:error_removing_item)
 	end
 
 	# Empties the entire cart via ajax...
@@ -216,7 +216,7 @@ class StoreController < ApplicationController
   # The old (non-ajax) way of doing things
   def empty_cart
     clear_cart_and_order
-    redirect_to_index("All items have been removed from your order.")
+    redirect_to_index(t(:all_items_was_removed_from_order))
   end
 
   # Gathers customer information.
@@ -228,7 +228,7 @@ class StoreController < ApplicationController
                               :conditions => ['is_obsolete != ?', 1],
                               :order => 'rank, name ASC')
 
-    @title = "Please enter your information to continue this purchase."
+    @title = t(:enter_your_information) 
     @cc_processor = Order.get_cc_processor
     if request.get?
       unless @order.has_been_placed? then
@@ -250,7 +250,7 @@ class StoreController < ApplicationController
   # Used with live rate calculation
   # Lets customer choose what method to use
   def select_shipping_method
-    @title = "Select Your Shipping Method - Step 2 of 3"
+    @title = t(:select_shipping_method_step)
 
     # Ensure order shipping cost is always set to zero when hitting this page.
     # For display purposes only.
@@ -300,7 +300,7 @@ class StoreController < ApplicationController
   # or process their order.
   #
   def confirm_order
-    @title = "Please confirm your order. - Step 3 of 3"
+    @title = t(:confirm_order_step)
     @cc_login = Order.get_cc_login 
     @paypal_url = Paypal.service_url
     # Make sure a shipping method is set
@@ -314,35 +314,27 @@ class StoreController < ApplicationController
   #
   # Submits order info to Authorize.net
   def finish_order
-    @title = "Thanks for your order!"
+    @title = t(:thanks_for_your_order)
     cc_processor = Order.get_cc_processor
     order_success = @order.run_transaction
     if order_success == true
-      @payment_message = "Card processed successfully"
+      @payment_message = t(:card_processed_succ)
       clean_order_success()
     elsif cc_processor == Preference::CC_PROCESSORS[1]
       case order_success
         when 4
-          @payment_message = %q\
-            Your order has been processed at PayPal but we
-	          have not heard back from them yet.  Your order
-			      will be ready to ship as soon as we receive 
-			      confirmation of your payment.
-			    \
-			    clean_order_success()
+          @payment_message = t(:paypal_waiting)
+            clean_order_success()
 	      when 5
-	        @payment_message = "Transaction processed successfully"
+	        @payment_message = t(:transaction_processed_succ)
           clean_order_success()
 	      else
-	        error_message = "Something went wrong and your transaction failed.<br/>"
-	        error_message << "Please try again or contact us."
+	        error_message = t(:transaction_failed)
 	        redirect_to_checkout(error_message) and return
         end
     else      
       # Redirect to checkout and allow them to enter info again.
-      error_message = "Sorry, but your transaction didn't go through.<br/>"
-      error_message << "#{order_success}<br/>"
-      error_message << "Please try again or contact us."
+      error_message = t(:transaction_failed2, :order => order_success)
       redirect_to_checkout(error_message) and return
     end
     render :layout => 'receipt' and return
@@ -375,8 +367,7 @@ class StoreController < ApplicationController
     def redirect_if_order_empty
       # If there's no order redirect to index
       if @order == nil || @order.empty?
-        redir_string = "There are no items in your order.\n\n"
-        redir_string << "Please add some items to your order before trying to access this page."
+        redir_string = t(:no_items_in_your_order)
         redirect_to_index(redir_string) and return false
       end
     end
@@ -436,11 +427,11 @@ class StoreController < ApplicationController
         logger.info "REMOVED ITEMS: #{removed_items.inspect}"
         # If any items were removed, flash and alert.
         if removed_items.size > 0
-          flash_msg = "The following item(s) have gone out of stock before you could purchase them:"
+          flash_msg = t(:items_is_out_of_stock)
           for item_name in removed_items do
             flash_msg << "\n* #{item_name}"
           end
-          flash_msg << "\n\n...The item(s) have been removed from your cart."
+          flash_msg << t(:items_removed_from_cart)
 
           if @order.empty?
             redirect_to_index(flash_msg) and return
@@ -468,7 +459,7 @@ class StoreController < ApplicationController
       stack_trace = $@.join("\n")
       logger.error "#{$!}\n\n#{stack_trace}\n"
       @shipping_address = OrderAddress.new unless @use_separate_shipping_address
-      flash.now[:notice] = 'There were some problems with the information you entered.<br/><br/>Please look at the fields below.'
+      flash.now[:notice] = t(:faq_error)
       render and return
     end
 

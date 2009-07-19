@@ -36,7 +36,7 @@ class ContentNodesController < ApplicationController
 
   # Shows all blog content nodes.
   def index
-		@title = "Blog"
+	@title = t(:blog)
     @content_nodes = Blog.paginate(
       :conditions => 'display_on <= CURRENT_DATE',
       :page => params[:page],
@@ -54,7 +54,7 @@ class ContentNodesController < ApplicationController
       render :file => "#{RAILS_ROOT}/public/404.html", :layout => false, :status => 404
       return
     end
-    @title = "Blog entries for #{@section.name}"
+    @title = t(:blog_entries_for)+ " " + @section.name
     @content_nodes = @section.blogs.paginate(
       :conditions => 'display_on <= CURRENT_DATE',
       :page => params[:page],
