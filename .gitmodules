@@ -1,3 +1,0 @@
-[submodule "vendor/plugins/easy-fckeditor"]
-	path = vendor/plugins/easy-fckeditor
-	url = git://github.com/gramos/easy-fckeditor.git
