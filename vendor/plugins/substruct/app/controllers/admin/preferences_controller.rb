@@ -15,7 +15,7 @@ class Admin::PreferencesController < Admin::BaseController
   #
   #
   def index
-    set_title('General Preferences')
+    set_title(t(:general_preferences))
     
     # Here we order the list by rank then by name, so, first lower ranks, then
     # equal ranks ordered by name. 
@@ -37,13 +37,13 @@ class Admin::PreferencesController < Admin::BaseController
     
     Preference.save_settings(params[:prefs])
 
-    flash[:notice] = "Preferences have been saved."
+    flash[:notice] = t(:preferences_was_succ_saved)
     
     begin
       Preference.init_mail_settings()
     rescue
-      flash[:notice] = "There was an error initializing your mail server settings."
-      flash[:notice] << "Please re-check your settings and save again."
+      flash[:notice] = t(:error_initialize_mail1)
+      flash[:notice] << t(:error_initialize_mail2)
     end
 
     redirect_to :action => 'index' and return
@@ -56,7 +56,7 @@ class Admin::PreferencesController < Admin::BaseController
   # Also saves shipping prices.
   #
   def shipping
-    set_title('Shipping rates')
+    set_title(t(:shipping_rates))
     @shipping_types = OrderShippingType.find(:all)
   end
   def save_shipping
@@ -66,7 +66,7 @@ class Admin::PreferencesController < Admin::BaseController
         type = OrderShippingType.find(id)
         type.update_attributes(type_attributes)
       end
-      flash[:notice] = "Shipping rates updated."
+      flash[:notice] = t(:shipping_rates_succ_updated)
     end
     redirect_to :action => 'shipping'
   end
