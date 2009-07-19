@@ -6,7 +6,7 @@ class Admin::SectionsController < Admin::BaseController
 
 	# List manages addition/deletion of items through ajax
   def list
-    @title = 'Manage Sections'
+    @title = t(:manage_sections)
     @sections = Section.find_ordered_parents()
     
     if params[:id]
@@ -14,7 +14,7 @@ class Admin::SectionsController < Admin::BaseController
       # If given faulty parent section, redirect back to list with no ID
       # ...and show an error.
       if !@parent_section
-        flash.now[:notice] = "Sorry, we couldn't find the section you were looking for"
+        flash.now[:notice] = t(:no_sections_found)
         render and return
       end
       @parent_section_id = @parent_section.id
@@ -55,7 +55,7 @@ class Admin::SectionsController < Admin::BaseController
 		@section.name = params[:name]
     if !@section.save
       render(:update) do |page| 
-        page.alert "Something went wrong saving your section.\n\nRemember, section names have to be unique."
+        page.alert t(:error_saving_section)
       end
     else
       render(:update) do |page| 
