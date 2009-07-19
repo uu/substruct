@@ -2,3 +2,4 @@ log
 config/*.yml
 public/system/*
 public/javascripts/cache/*
+public/stylesheets/cache/*
