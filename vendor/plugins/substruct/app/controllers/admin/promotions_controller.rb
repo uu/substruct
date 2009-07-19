@@ -6,20 +6,20 @@ class Admin::PromotionsController < Admin::BaseController
   end
 
   def list
-    @title = "Promotion List"
+    @title = t(:promotion_list)
     @promotions = Promotion.find(:all, :order => 'code ASC')
   end
 
   def new
-    @title = "Creating New Promotion"
+    @title = t(:create_new_promotion)
     @promotion = Promotion.new
   end
 
   def create
-    @title = "Creating Promotion"
+    @title = t(:create_new_promotion)
     @promotion = Promotion.new(params[:promotion])
     if @promotion.save
-      flash[:notice] = 'Promotion was successfully created.'
+      flash[:notice] = t(:promotion_was_succ_created)
       redirect_to :action => 'list'
     else
       render :action => 'new'
@@ -27,14 +27,14 @@ class Admin::PromotionsController < Admin::BaseController
   end
 
   def edit
-    @title = "Editing Promotion"
+    @title = t(:editing_promotion)
     @promotion = Promotion.find(params[:id])
   end
 
   def update
     @promotion = Promotion.find(params[:id])
     if @promotion.update_attributes(params[:promotion])
-      flash[:notice] = 'Promotion was successfully updated.'
+      flash[:notice] = t(:promotion_was_succ_updated)
       redirect_to :action => 'list'
     else
       render :action => 'edit'
@@ -50,7 +50,7 @@ class Admin::PromotionsController < Admin::BaseController
   #
   def show_orders
     @promotion = Promotion.find(params[:id])
-    @title = "Orders for #{@promotion.code}"
+    @title = t(:orders_for) + " " + @promotion.code
     @orders = Order.paginate(
       :order => 'created_on DESC',
       :conditions => ["promotion_id = ?", @promotion.id],
