@@ -132,7 +132,7 @@ class CustomersController < ApplicationController
     render(:file => 'public/404.html', :status => 404) and return unless @order
     
     @order_time = @order.created_on.strftime("%m/%d/%y %I:%M %p")
-    @title = t(:order)+" "+@order.order_number
+    @title = t(:order) + " " + @order.order_number.to_s
     @order_user = @order.order_user
     @order_account = @order_user.order_account
     @billing_address = @order.billing_address
