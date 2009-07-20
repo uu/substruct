@@ -35,7 +35,8 @@
 </p>
 
 <p><label for="question_answer"><%= t(:answer) %></label>
-<%= text_area 'question', 'answer', :cols => 60, :class => 'textArea'  %>
+<%#= text_area 'question', 'answer', :cols => 60, :class => 'textArea'  %>
+<%= text_area('question', 'answer', :class => 'mceEditor', :cols => 95, :rows => 30) %>
 	<%= error_message_on(:question, :answer) %>
 </p>
 

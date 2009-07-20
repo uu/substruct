@@ -41,9 +41,10 @@
 <!-- content edit -->
 <%= content_tag :h3, t(:content) %>
 <div id="content_edit">
-    <%= content_tag :span, t(:content_info), :class => 'info' %>
-  <br/>
-  <%= text_area 'content_node', 'content', :cols => 70, :rows => 10, :class => 'textArea'  %>
+    <%#= content_tag :span, t(:content_info), :class => 'info' %>
+  <%#= text_area 'content_node', 'content', :cols => 70, :rows => 10, :class => 'textArea'  %>
+  <%= text_area('content_node', 'content', :class => 'mceEditor', :cols => 95, :rows => 30) %>
+
 </div>
 
 
