@@ -32,7 +32,7 @@
   		<%= error_message_on("#{address_type}_address", :state) %>
   	</div>
 		<div class="float">
-			<%= make_label(t(:postal_code), true) %>
+			<%= make_label(t(:postal_code), false) %>
 		  <%= text_field "#{address_type}_address", 'zip', :maxlength => 10, :size => 10, :class => 'textInput' %>
 		  <%= error_message_on("#{address_type}_address", :zip) %>
 		</div>

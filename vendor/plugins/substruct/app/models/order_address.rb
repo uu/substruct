@@ -5,7 +5,7 @@ class OrderAddress < ActiveRecord::Base
   belongs_to :country
 	  # Validation
 	validates_presence_of :order_user_id, :country_id
-	validates_presence_of :zip, :message => "#{ERROR_EMPTY} If you live in a country that doesn't have postal codes please enter '00000'."
+    #validates_presence_of :zip, :message => "#{ERROR_EMPTY} If you live in a country that doesn't have postal codes please enter '00000'."
 	validates_presence_of :telephone, :message => ERROR_EMPTY
 	validates_presence_of :first_name, :message => ERROR_EMPTY
 	validates_presence_of :last_name, :message => ERROR_EMPTY
