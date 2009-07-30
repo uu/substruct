@@ -53,7 +53,12 @@ class Admin::OrdersController < Admin::BaseController
     end
 
     session[:last_order_list_view] = @viewing_by
-
+    @orders_grid = initialize_grid(Order, 
+                              :name => 'orders_grid', 
+                              :per_page => 20,
+                              :order => 'created_on',
+                              :order_direction => 'desc'
+                              )
     @orders = Order.paginate(
       :order => 'created_on DESC',
       :conditions => conditions,

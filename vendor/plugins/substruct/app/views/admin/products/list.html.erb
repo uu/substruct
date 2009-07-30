@@ -6,48 +6,24 @@
   <%= content_tag :p, link_to(t(:show_all_products), :controller => 'products', :action => 'list') %>
   <% end %>
 
-  <%= will_paginate @products %>
-	<br/>
 
-  <table class="list" cellpadding="0" cellspacing="0">
-    <colgroup>
-      <col />
-      <col style="width:150px;" />
-      <col style="width:110px;" />
-      <col style="width:60px;" />
-			<col style="width:60px;" />
-    </colgroup>
-    <tr>
-      <th><%= t(:name) %></th>
-      <th><%= t(:code) %></th>
-      <th class="numeric"><%= t(:price) %></th>
-      <th class="numeric"><%= t(:quantity) %></th>
-			<th><%= t(:is_published) %></th>
-    </tr>
-  <% if @products.length > 0 then %>
-    <% for product in @products %>
-    <tr class="<%= alternate %>">
-      <td><%= link_to(h(product.name), :action => 'edit', :id => product) %></td>
-      <td><%= product.code %></td>
-      <td class="numeric"><%= sub_number_to_currency(product.price) %></td>
-      <td class="numeric"><%= product.quantity %></td>
-			<td style="text-align:center">
-				<%=
-					image_tag(
-						product.is_published? ? '/plugin_assets/substruct/images/icons/png-24/16-square-green.png' : '/plugin_assets/substruct/images/icons/png-24/16-square-red.png',
-						:style => 'margin: 5px;'
-					)
-				%>
-				</td>
-    </tr>
-    <% end %>
-  <% else %>
-    <tr><td colspan="4"><%= t(:no_products_to_show) %></td></tr>
-  <% end %>
-  </table>
+ <%= grid(@products_grid, :table_html_attrs => {:id => 'products_grid'}) do |g|
+      g.column :column_name => t(:name), :attribute_name => 'name' do |p|
+        link_to(p.name, :action => 'edit', :id => p)
+      end
+      g.column :column_name => t(:code), :attribute_name => 'code'        
+      g.column :column_name => t(:price), :attribute_name => 'price'      
+      g.column :column_name => t(:quantity), :attribute_name => 'quantity', :no_filter => true
+      g.column :column_name => t(:is_published), :attribute_name => 'is_discontinued', :no_filter => true do |p|
+        #FIXME: attr_name has to be is_published. (model class, include, join etc..)
+        image_tag(
+            p.is_published? ? '/plugin_assets/substruct/images/icons/png-24/16-square-green.png' : '/plugin_assets/substruct/images/icons/png-24/16-square-red.png', :style => 'margin: 5px;'
+            )
 
-	<br/>
-  <%= will_paginate @products %>
+      end
+      
+  end
+  %>
 
 </div>
 

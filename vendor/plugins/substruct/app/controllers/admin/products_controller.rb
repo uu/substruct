@@ -11,6 +11,8 @@ class Admin::ProductsController < Admin::BaseController
 	# Lists all products
   def list
     @title = t(:all_products)
+
+    @products_grid = initialize_grid(Product, :name => 'products_grid', :per_page => 20)
     @products = Product.paginate(
       :order => "name ASC",
       :page => params[:page],
@@ -47,7 +49,6 @@ class Admin::ProductsController < Admin::BaseController
     conditions = nil
 
     session[:last_product_list_view] = @viewing_by
-
 
     #@products = @tag.products
     @products = @tag.products.paginate(

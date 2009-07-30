@@ -5,12 +5,8 @@ class Admin::QuestionsController < Admin::BaseController
   end
 
   def list
+    @questions_grid = initialize_grid(Question, :name => 'questions_grid', :per_page => 20)
     @title = t(:questions)
-    @questions = Question.paginate(
-      :order => '-rank DESC',
-      :page => params[:page],
-      :per_page => 30
-    )
   end
 
   def show

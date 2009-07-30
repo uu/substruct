@@ -4,65 +4,52 @@
 	<% if @promotions.length == 0 then %>
         <%= content_tag :h4, t(:no_promotions_have_been_created) %>
 	<% else %>
+      
 
-		<table class="list" cellpadding="0" cellspacing="0">
-			<colgroup>
-				<col/>
-				<col style="width:150px;" />
-				<col/>
-				<col style="width:100px;" />
-				<col style="width:100px;" />
-			</colgroup>
-			<tr>
-				<th><%= t(:code) %></th>
-				<th><%= t(:is_active) %></th>
-				<th><%= t(:description) %></th>
-				<th class="numeric"><%= t(:discount) %></th>
-				<th class="numeric"><%= t(:orders) %></th>
-			</tr>
-			<% for promo in @promotions %>
-				<tr class="<%= alternate %>">
-					<td><%= link_to(promo.code, :action => 'edit', :id => promo) %></td>
-					<td style="text-align:center;">
-						<%=
-							image_tag(
-								promo.is_active? ? '/plugin_assets/substruct/images/icons/png-24/16-square-green.png' : '/plugin_assets/substruct/images/icons/png-24/16-square-red.png',
-								:align => 'left',
-								:style => 'margin: 5px;',
-								:plugin => 'substruct'
-							)
-						%>
-						<p class="info">
-							<%= promo.start.strftime("%m/%d/%y @ %I:%M %p") %>
-							<br/>
-							<%= t(:to) %>
-							<br/>
-							<%= promo.end.strftime("%m/%d/%y @ %I:%M %p") %>
-						</p>
-					</td>
-					<td>
-						<%= promo.description %>
-						<br/>
-						<% if promo.item %>
-							<span class="info">
-							<%= t(:add_item) %>: <%= promo.item.name %> - <%= sub_number_to_currency(promo.item.price) %>
-							</span>
-						<% end %>
-					</td>
-					<td class="numeric">
-						<% if promo.discount_type == 0 %>
-							<%= sub_number_to_currency(promo.discount_amount) %>
-						<% elsif promo.discount_type == 1 %>
-							<%= promo.discount_amount %>%
-						<% elsif promo.discount_type == 2 %>
-                            <%= t(:buy_one_get_one_free, :amount => promo.discount_amount.to_i) %>
-						<% end %>
-					</td>
-					<td class="numeric"><%= link_to(number_with_delimiter(promo.orders.size, ','), :action => 'show_orders', :id => promo) %></td>
-				</tr>
-			<% end %>
-		</table>
 
+
+<%= grid(@promotions_grid, :table_html_attrs => {:id => 'promotions_grid'}) do |g|
+        g.column :column_name => t(:code), :attribute_name => 'code' do |p|
+          link_to(p.code, :action => 'edit', :id => p)
+        end
+        
+        g.column :column_name => t(:is_active) do |p|
+
+            out = p.start.strftime("%d.%m.%y @ %H:%M") + "<br />"
+
+          	out << image_tag(
+                    p.is_active? ? '/plugin_assets/substruct/images/icons/png-24/16-square-green.png' : '/plugin_assets/substruct/images/icons/png-24/16-square-red.png',
+                    :align => 'left',
+                    :style => 'margin: 5px;',
+                    :plugin => 'substruct'
+                    )
+            out <<  "<br />" + p.end.strftime("%d.%m.%y @ %H:%M")
+
+        end
+        g.column :column_name => t(:description), :attribute_name => 'description' do |p|
+          out = p.description
+          if p.item 
+            out << "<span class='info'>"
+            out << t(:add_item) + ":" + p.item.name + "-" + sub_number_to_currency(p.item.price)
+            out << "</span>"
+          end 
+          out
+        end
+        g.column :column_name => t(:discount) do |p|
+           if p.discount_type == 0
+              sub_number_to_currency(p.discount_amount) 
+           elsif p.discount_type == 1 
+              p.discount_amount
+           elsif p.discount_type == 2 
+              t(:buy_one_get_one_free, :amount => p.discount_amount.to_i) 
+           end 
+
+        end
+        g.column :column_name => t(:orders), :attribute_name => 'promotion_id', :model_class => Order, :no_filter => true  do |p|
+           link_to(number_with_delimiter(p.orders.size, ','), :action => 'show_orders', :id => p) 
+        end
+    end
+    %> 
 	<% end %>
 </div>
 

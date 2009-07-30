@@ -42,37 +42,29 @@
 		</div-->
 
 	<% else %>
+      <%= grid(@orders_grid, :table_html_attrs => {:id => 'orders_grid'}) do |g|
+            g.column :column_name => t(:order_number), :attribute_name => 'order_number', :no_filter => true do |o|
+               out = !o.name.empty? ? link_to(h(o.name), :action => 'show', :id => o) : t(:checkout_incomplete)
+						
+               out << "<br />"
 
-		<table class="list" cellpadding="0" cellspacing="0">
-			<colgroup>
-				<col/>
-				<col style="width:70px;"/>
-				<col style="width:190px;"/>
-				<col style="width:70px;"/>
-			</colgroup>
-			<tr>
-				<th><%= t(:order_number) %></th>
-				<th><%= t(:order_date) %></th>
-				<th><%= t(:status) %></th>
-				<th><%= t(:total) %></th>
-			</tr>
-			<% for order in @orders %>
-				<tr class="<%= alternate %>">
-					<td>
-					  <% unless order.name.empty? %>
-						  <%= link_to(h(order.name), :action => 'show', :id => order) %>
-						<% else %>
-                          <%= t(:checkout_incomplete) %>
-						<% end %>
-						<br/>
-						<%= link_to(order.order_number, :action => 'show', :id => order) %>
-					</td>
-					<td><%= order.created_on.strftime("%m/%d/%y %I:%M %p") %></td>
-					<td><%= order.status %></td>
-					<td class="numeric"><%= sub_number_to_currency(order.total) %></td>
-				</tr>
-			<% end %>
-		</table>
+              out + link_to(o.order_number, :action => 'edit', :id => o) 
+            end
+            
+            g.column :column_name => t(:order_date), :attribute_name => 'created_on', :no_filter => true do|o|
+              o.created_on.strftime("%d.%m.%y (%H:%M)")
+            end
+            g.column :column_name => t(:status) do |o|
+              o.status
+            end
+            g.column :column_name => t(:total) do |o|
+              o.total
+            end
+
+        end
+        %>
+
+
 
 		<!-- DOWNLOAD ORDERS -->
 		<p style="margin-top:10px;">
@@ -89,13 +81,6 @@
 						:class => 'action' 
 			%>
 		</p>
-
-		<!-- PAGINATION -->
-		<%= will_paginate @orders %>
-
-		<%# render(:partial => '/shared/pagination',
-								 :object => @order_pages,
-								 :locals => {:params => {:key =>@viewing_by, :term => @search_term} }) %>
 
 	<% end %>
 </div>

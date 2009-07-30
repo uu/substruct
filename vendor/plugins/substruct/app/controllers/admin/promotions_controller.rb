@@ -7,6 +7,7 @@ class Admin::PromotionsController < Admin::BaseController
 
   def list
     @title = t(:promotions)
+    @promotions_grid = initialize_grid(Promotion, :name => 'promotions_grid', :per_page => 20, :order => 'code', :order_direction => 'ASC', :include => :orders)
     @promotions = Promotion.find(:all, :order => 'code ASC')
   end
 
