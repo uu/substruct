@@ -91,7 +91,7 @@
 			-->
 			<% end %>
 			<tr>
-				<td class="borderTop" colspan="3"><%= t(:shipping_and_handling) - <%= @order.order_shipping_type.name if @order.order_shipping_type %></td>
+				<td class="borderTop" colspan="3"><%= t(:shipping_and_handling) %> - <%= @order.order_shipping_type.name if @order.order_shipping_type %></td>
 				<td class="borderTop numeric"><%= sub_number_to_currency(@order.shipping_cost) %></td>
 			</tr>
 			<tr class="footer">
