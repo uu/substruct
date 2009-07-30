@@ -3,7 +3,8 @@ module Substruct
     MAJOR  = 1
     MINOR  = 0
     TINY   = 'a6'
-    STRING = [MAJOR, MINOR, TINY].join('.').freeze
+    MOD    = 'Mod: UU-0709'
+    STRING = [MAJOR, MINOR, TINY, ":", MOD].join('.').freeze
     #TITLE  = "Noh-Varr".freeze
   end
 end
