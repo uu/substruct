@@ -48,7 +48,7 @@
 						
                out << "<br />"
 
-              out + link_to(o.order_number, :action => 'edit', :id => o) 
+              out + link_to(o.order_number, :action => 'show', :id => o) 
             end
             
             g.column :column_name => t(:order_date), :attribute_name => 'created_on', :no_filter => true do|o|

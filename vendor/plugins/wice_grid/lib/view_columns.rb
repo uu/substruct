@@ -34,18 +34,22 @@ module Wice
       @enter_key_handler ||= "if (event.keyCode == 13) {#{grid.name}.process()}"
     end
 
-    def yield_processing_function #:nodoc:
+    def yield_declaration_of_column_filter #:nodoc:
       nil
     end
-    
-    def name_and_detachness #:nodoc:
-      "'#{column_name}', " + (! detach_with_id.blank?).to_s
+        
+    def detachness #:nodoc:
+      (! detach_with_id.blank?).to_s
     end
 
     def yield_javascript #:nodoc:
-      processing_function = yield_processing_function
-      if processing_function
-        "#{@grid.name}.register( #{processing_function});"
+      declaration = yield_declaration_of_column_filter
+      if declaration
+        %!#{@grid.name}.register( {
+          filter_name : "#{self.column_name}",
+          detached : #{detachness},
+          #{declaration}
+        } ); !
       else
         ''
       end
@@ -53,7 +57,8 @@ module Wice
 
     def render_filter #:nodoc:
       params = @grid.filter_params(self)
-      return render_filter_internal(params)
+      res = render_filter_internal(params)
+      return (res.is_a?(Array)) ? res : [res, nil]
     end
 
     def render_filter_internal(params) #:nodoc:
@@ -124,15 +129,15 @@ module Wice
       text_field_tag(parameter_name2, params[:to], :size => 3, :onkeydown=>enter_key_handler, :id => @dom_id2)
     end
 
-    def yield_processing_function #:nodoc:
-      "function(){
-        return #{@grid.name}.read_values_and_form_query_string(#{self.name_and_detachness}, ['#{@query}', '#{@query2}'], ['#{@dom_id}', '#{@dom_id2}']);
-      }"
+    def yield_declaration_of_column_filter #:nodoc:
+      %$templates : ['#{@query}', '#{@query2}'],
+          ids : ['#{@dom_id}', '#{@dom_id2}']  $
     end
   end
 
   class ViewColumnFloat < ViewColumnInteger #:nodoc:
     @@handled_type[:decimal] = self
+    @@handled_type[:float] = self
   end
 
   class ViewColumnCustomDropdown < ViewColumn #:nodoc:
@@ -163,7 +168,7 @@ module Wice
         select_options[:class] = 'custom_dropdown'
         select_options[:multiple] = params.is_a?(Array) && params.size > 1
         select_toggle = content_tag(:a,
-          content_tag(:img, '', :alt => 'Expand/Collapse', :src => Defaults::TOGGLE_MULTI_SELECT_ICON),
+          tag(:img, :alt => 'Expand/Collapse', :src => Defaults::TOGGLE_MULTI_SELECT_ICON),
           :href => "javascript: toggle_multi_select('#{@dom_id}', this, 'Expand', 'Collapse');",
           :class => 'toggle_multi_select_icon', :title => 'Expand')
       end
@@ -173,10 +178,9 @@ module Wice
       select_toggle + '</div>'
     end
 
-    def yield_processing_function #:nodoc:
-      "function(){
-        return #{@grid.name}.read_values_and_form_query_string(#{self.name_and_detachness}, ['#{@query_without_equals_sign}'], ['#{@dom_id}']);
-      }"
+    def yield_declaration_of_column_filter #:nodoc:
+      %$templates : ['#{@query_without_equals_sign}'],
+          ids : ['#{@dom_id}']  $
     end
   end
 
@@ -199,6 +203,7 @@ module Wice
 
   class ViewColumnDatetime < ViewColumn #:nodoc:
     @@handled_type[:datetime] = self
+    @@handled_type[:timestamp] = self
     include ActionView::Helpers::DateHelper
     include ::Wice::JSCalendarHelpers
 
@@ -235,13 +240,16 @@ module Wice
 
 
     def render_standard_filter_internal(params) #:nodoc:
+      '<div class="date-filter">' +
       select_datetime(params[:fr], {:include_blank => true, :prefix => @name1}) + '<br/>' +
-      select_datetime(params[:to], {:include_blank => true, :prefix => @name2})
+      select_datetime(params[:to], {:include_blank => true, :prefix => @name2}) +
+      '</div>'
     end
 
     def render_calendar_filter_internal(params) #:nodoc:
-      datetime_calendar(params[:fr], {:include_blank => true, :prefix => @name1, :id => @dom_id}, :title => Defaults::DATE_SELECTOR_TOOLTIP_FROM) + '<br/>' +
-      datetime_calendar(params[:to], {:include_blank => true, :prefix => @name2, :id => @dom_id2}, :title => Defaults::DATE_SELECTOR_TOOLTIP_TO)
+      html1, js1 = datetime_calendar(params[:fr], {:include_blank => true, :prefix => @name1, :id => @dom_id}, :title => Defaults::DATE_SELECTOR_TOOLTIP_FROM)
+      html2, js2 = datetime_calendar(params[:to], {:include_blank => true, :prefix => @name2, :id => @dom_id2}, :title => Defaults::DATE_SELECTOR_TOOLTIP_TO)
+      [%!<div class="date-filter">#{html1}<br/>#{html2}</div>!, js1 + js2]
     end
 
 
@@ -257,14 +265,9 @@ module Wice
 
     end
 
-    def yield_processing_function #:nodoc:
-      "function(){
-        return #{@grid.name}.read_values_and_form_query_string(#{self.name_and_detachness}, [" +
-          @queris_ids.collect{|tuple| "'" + tuple[0] + "'"}.join(', ') +
-          "], [" +
-          @queris_ids.collect{|tuple| "'" + tuple[1] + "'"}.join(', ') +
-          "]);
-      }"
+    def yield_declaration_of_column_filter #:nodoc:
+      %$templates : [ #{@queris_ids.collect{|tuple| "'" + tuple[0] + "'"}.join(', ')} ],
+          ids : [ #{@queris_ids.collect{|tuple| "'" + tuple[1] + "'"}.join(', ')} ] $
     end
 
   end
@@ -275,13 +278,18 @@ module Wice
     @@datetime_chunk_names = %w(year month day)
 
     def render_standard_filter_internal(params) #:nodoc:
+      '<div class="date-filter">' +
       select_date(params[:fr], {:include_blank => true, :prefix => @name1, :id => @dom_id}) + '<br/>' +
-      select_date(params[:to], {:include_blank => true, :prefix => @name2, :id => @dom_id2})
+      select_date(params[:to], {:include_blank => true, :prefix => @name2, :id => @dom_id2}) +
+      '</div>'
     end
 
     def render_calendar_filter_internal(params) #:nodoc:
-      date_calendar(params[:fr], {:include_blank => true, :prefix => @name1}, :title => Defaults::DATE_SELECTOR_TOOLTIP_FROM) + '<br/>' +
-      date_calendar(params[:to], {:include_blank => true, :prefix => @name2}, :title => Defaults::DATE_SELECTOR_TOOLTIP_TO)
+      
+      html1, js1 = date_calendar(params[:fr], {:include_blank => true, :prefix => @name1}, :title => Defaults::DATE_SELECTOR_TOOLTIP_FROM)
+      html2, js2 = date_calendar(params[:to], {:include_blank => true, :prefix => @name2}, :title => Defaults::DATE_SELECTOR_TOOLTIP_TO)
+      
+      [%!<div class="date-filter">#{html1}<br/>#{html2}</div>!, js1 + js2]
     end
   end
 
@@ -299,6 +307,11 @@ module Wice
         @query, _, parameter_name, @dom_id = form_parameter_name_id_and_query(:v => '')
         @query2, _, parameter_name2, @dom_id2 = form_parameter_name_id_and_query(:n => '')
         text_field_tag(parameter_name, params[:v], :size => 8, :onkeydown=>enter_key_handler, :id => @dom_id) +
+          if defined?(::Wice::Defaults::NEGATION_CHECKBOX_LABEL) && ! ::Wice::Defaults::NEGATION_CHECKBOX_LABEL.blank?
+            ::Wice::Defaults::NEGATION_CHECKBOX_LABEL
+          else
+            ''
+          end +
           check_box_tag(parameter_name2, '1', (params[:n] == '1'), :id => @dom_id2, :title => ::Wice::Defaults::NEGATION_CHECKBOX_TITLE)
 
       else
@@ -307,15 +320,13 @@ module Wice
       end
     end
 
-    def yield_processing_function #:nodoc:
+    def yield_declaration_of_column_filter #:nodoc:
       if negation
-        "function(){
-          return #{@grid.name}.read_values_and_form_query_string(#{self.name_and_detachness}, ['#{@query}', '#{@query2}'], ['#{@dom_id}', '#{@dom_id2}']);
-        }"
+        %$templates : ['#{@query}', '#{@query2}'],
+            ids : ['#{@dom_id}', '#{@dom_id2}'] $
       else
-        "function(){
-          return #{@grid.name}.read_values_and_form_query_string(#{self.name_and_detachness}, ['#{@query}'], ['#{@dom_id}']);
-        }"
+        %$templates : ['#{@query}'],
+            ids : ['#{@dom_id}'] $
       end
     end
   end

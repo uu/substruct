@@ -11,6 +11,7 @@ module Wice
     attr_reader :page_parameter_name
     attr_reader :after_row_handler
     attr_reader :before_row_handler
+    attr_reader :blank_slate_handler
     attr_reader :grid
     attr_accessor :erb_mode
 
@@ -52,6 +53,10 @@ module Wice
 
     def select_for(filter)  #:nodoc:
       filter_columns(filter).select{|col| yield col}
+    end
+
+    def find_one_for(filter)  #:nodoc:
+      filter_columns(filter).find{|col| yield col}
     end
 
 
@@ -102,6 +107,7 @@ module Wice
     #
     # * <tt>:column_name</tt> - Name of the column.
     # * <tt>:td_html_attrs</tt> - a hash of HTML attributes to be included into the <tt>td</tt> tag.
+    # * <tt>:class</tt> - a shortcut for <tt>:td_html_attrs => {:class => 'css_class'}</tt>    
     # * <tt>:attribute_name</tt> - name of a database column (which normally correspond to a model attribute with the same name). By default the
     #   field is assumed to belong to the default table (see documentation for the +initialize_grid+ method). Parameter <tt>:model_class</tt>
     #   allows to specify another table. Presence of this parameter
@@ -136,14 +142,25 @@ module Wice
     #     sent to <em>all</em> ActiveRecord objects throughout all pages. The main difference from <tt>:auto</tt> is that this method does
     #     not have to be a field in the result set, it is just some  value computed in the method after the database call and ActiveRecord
     #     instantiation.
+    #
     #     But here lies the major drawback - this mode requires additional query without +offset+ and +limit+ clauses to instantiate _all_
     #     ActiveRecord objects, and performance-wise it brings all the advantages of pagination to nothing.
     #     Thus, memory- and performance-wise this can be really bad for some queries and tables and should be used with care.
+    #
+    #     If the method returns a atomic value like a string or an integer, it is used for both the value and the label of the select option element.
+    #     However, if the retuned value is a two element array, the first element is used for the option label and the second - for the value. 
+    #     Read more in README, section 'Custom dropdown filters'
     #   * An array of symbols (method names) - similar to the mode with a single symbol name. The first method name is sent to the ActiveRecord
     #     object if it responds to this method, the second method name is sent to the
     #     returned value unless it is +nil+, and so on. In other words, a single symbol mode is a
     #     case of an array of symbols where the array contains just one element. Thus the warning about the single method name
     #     mode applies here as well.
+    #
+    #     If the last method returns a atomic value like a string or an integer, it is used for both the value and the label of the 
+    #     select option element.
+    #     However, if the retuned value is a two element array, the first element is used for the option label and the second - for the value. 
+    #     Read more in README, section 'Custom dropdown filters'
+    
     # * <tt>:boolean_filter_true_label</tt> - overrides the default value for <tt>BOOLEAN_FILTER_TRUE_LABEL</tt> ('+yes+') in the config.
     #   Only has effect in a column with a boolean filter.
     # * <tt>:boolean_filter_false_label</tt> - overrides the default value for <tt>BOOLEAN_FILTER_FALSE_LABEL</tt> ('+no+') in the config.
@@ -179,6 +196,7 @@ module Wice
       options = {
         :column_name        => '',
         :td_html_attrs      => {},
+        :class              => nil,
         :model_class        => nil,
         :attribute_name     => nil,
         :no_filter          => false,
@@ -214,6 +232,12 @@ module Wice
         raise WiceGridArgumentError.new("Invalid attribute name #{options[:attribute_name]}. An attribute name must not contain a table name!")
       end
 
+      if options[:class]
+        options[:td_html_attrs].add_or_append_class_value(options[:class])
+        options.delete(:class)
+      end
+
+
       if block.nil?
         if ! options[:attribute_name].blank?
           block = lambda{|obj| obj.send(options[:attribute_name])}
@@ -230,7 +254,7 @@ module Wice
 
         db_column, table_name, main_table = col_type_and_table_name
         col_type = db_column.type
-        
+
         if options[:custom_filter]
           
           custom_filter = if options[:custom_filter] == :auto
@@ -269,8 +293,8 @@ module Wice
           klass = ViewColumnCustomDropdown
         else
           klass = ViewColumn.handled_type[col_type] || ViewColumn
-        end
-      end
+        end # custom_filter
+      end # attribute_name
 
       vc = klass.new(block, options, @grid, table_name, main_table, custom_filter)
       
@@ -304,10 +328,26 @@ module Wice
       @before_row_handler = block
     end
 
+    # The output of the block submitted to +blank_slate+ is rendered instead of the whole grid if no filters are active
+    # and there are no records to render.
+    # In addition to the block style two other variants are accepted:
+    # *   <tt>g.blank_slate "some text to be rendered"</tt>
+    # *   <tt>g.blank_slate :partial => "partial_name"</tt>
+    def blank_slate(opts = nil, &block)
+      if (opts.is_a?(Hash) && opts.has_key?(:partial) && block.nil?) || (opts.is_a?(String) && block.nil?)
+        @blank_slate_handler = opts
+      elsif opts.nil? && block
+        @blank_slate_handler = block
+      else
+        raise WiceGridArgumentError.new("blank_slate accepts only a string, a block, or :template => 'path_to_template' ")
+      end
+    end
+
 
     def get_row_attributes(ar_object) #:nodoc:
       if @row_attributes_handler
         row_attributes = @row_attributes_handler.call(ar_object)
+        row_attributes = {} if row_attributes.blank?
         unless row_attributes.is_a?(Hash)
           raise WiceGridArgumentError.new("row_attributes block must return a hash containing HTML attributes. The returned value is #{row_attributes.inspect}")
         end

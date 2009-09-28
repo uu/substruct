@@ -8,16 +8,15 @@ rescue MissingSourceFile => e
                                     'gem sources -a http://gems.github.com')
 end
 
-require 'wice_grid_config.rb'
 require 'js_calendar_helpers.rb'
-require 'core_ext.rb'
+require 'wice_grid_core_ext.rb'
 require 'grid_renderer.rb'
 require 'table_column_matrix.rb'
-require 'view_helper.rb'
+require 'wice_grid_view_helpers.rb'
 require 'view_columns.rb'
 require 'grid_output_buffer.rb'
 require 'controller.rb'
-require 'spreadsheet_wrapper.rb'
+require 'wice_grid_spreadsheet.rb'
 require 'wice_grid_serialized_queries_controller.rb'
 
 module Wice
@@ -51,7 +50,6 @@ module Wice
         :order_direction => Defaults::ORDER_DIRECTION,
         :name => Defaults::GRID_NAME,
         :enable_export_to_csv => Defaults::ENABLE_EXPORT_TO_CSV,
-        :allow_showing_all_records => Defaults::ALLOW_SHOWING_ALL_QUERIES,
         :csv_file_name => nil,
         :columns => nil,
         :order => nil,
@@ -73,9 +71,15 @@ module Wice
       @csv_file_name = @options[:csv_file_name]
 
       @after = @options[:after]
-      @name = @options[:name].to_s
-      raise WiceGridArgumentError.new("name of the grid should be a string or a symbol") unless name.kind_of? String or name.kind_of? Symbol
-      raise WiceGridArgumentError.new("name of the grid can only contain alphanumeruc characters") unless @name =~ /^\w[\w\d_]*$/
+      
+      case @name = @options[:name]
+      when String
+      when Symbol
+        @name = @name.to_s
+      else
+        raise WiceGridArgumentError.new("name of the grid should be a string or a symbol")
+      end
+      raise WiceGridArgumentError.new("name of the grid can only contain alphanumeruc characters") unless @name =~ /^[a-zA-Z\d_]*$/
 
       @klass = klass
 
@@ -301,7 +305,7 @@ module Wice
 
     # with this variant we get even those values which do not appear in the resultset
     def distinct_values_for_column(column)  #:nodoc:
-      res = column.model_klass.find(:all, :select => 'distinct ' + column.name).collect{|ar| ar.send(column.name) }.reject(&:blank?).map{|i|[i,i]}
+      res = column.model_klass.find(:all, :select => 'distinct ' + column.name).collect{|ar| ar[column.name] }.reject(&:blank?).map{|i|[i,i]}
     end
 
 
@@ -312,7 +316,15 @@ module Wice
         v = ar.deep_send(*messages)
         uniq_vals << v unless v.nil?
       end
-      return uniq_vals.to_a.map{|i|[i,i]}
+      return uniq_vals.to_a.map{|i|
+        if i.is_a?(Array) && i.size == 2
+          i
+        elsif i.is_a?(Hash) && i.size == 1
+          i.to_a.flatten
+        else
+          [i,i]
+        end
+      }
     end
 
     def output_csv?
@@ -326,9 +338,11 @@ module Wice
     def all_record_mode?
       @status[:pp]
     end
-    
-    def allow_showing_all_records?
-      @options[:allow_showing_all_records]
+        
+    def dump_status
+      "   params: #{params[name].inspect}\n"  +
+      "   status: #{@status.inspect}\n" +
+      "   ar_options #{@ar_options.inspect}\n"
     end
     
     
@@ -397,11 +411,6 @@ module Wice
       query
     end
 
-    def dump_status
-      "   params: #{params[name].inspect}\n"  +
-      "   status: #{@status.inspect}\n" +
-      "   ar_options #{@ar_options.inspect}\n"
-    end
 
   end
 end
@@ -410,6 +419,14 @@ module ActiveRecord #:nodoc:
   module ConnectionAdapters #:nodoc:
     class Column #:nodoc:
 
+      # TO DO: Move into this module what can be moved not to pollute the namespace
+      module GridTools   #:nodoc:
+        class << self
+          def special_value(str)   #:nodoc:
+            str =~ /^\s*(not\s+)?null\s*$/i
+          end
+        end
+      end
       attr_accessor :model_klass
 
       def initialize_request_parameters(all_filter_params, main_table, table_alias, custom_filter_active)  #:nodoc:
@@ -424,7 +441,7 @@ module ActiveRecord #:nodoc:
         end
 
         if @request_params
-          if self.type == :datetime
+          if self.type == :datetime || self.type == :timestamp
             [:fr, :to].each do |sym|
               if @request_params[sym]
                 if @request_params[sym].is_a?(String)
@@ -489,21 +506,44 @@ module ActiveRecord #:nodoc:
           Wice.log "invalid parameters for the grid string filter - empty string"
           return false
         end
-        [" #{negation}  #{alias_or_table_name(table_alias)}.#{self.name} #{::Wice::Defaults::STRING_MATCHING_OPERATOR} ?",
+        [" #{negation}  #{alias_or_table_name(table_alias)}.#{self.name} #{::Wice.get_string_matching_operators(model_klass)} ?",
             '%' + string_fragment + '%']
       end
 
       alias_method :generate_conditions_text, :generate_conditions_string
+
 
       def  generate_conditions_custom_filter_options(table_alias, opts)   #:nodoc:
         if opts.empty?
           Wice.log "empty parameters for the grid custom filter"
           return false
         end
+        opts = (opts.kind_of?(Array) && opts.size == 1) ? opts[0] : opts
+        
         if opts.kind_of?(Array)
-          [" #{alias_or_table_name(table_alias)}.#{self.name} IN ( " + (['?'] * opts.size).join(', ') + ' )'] + opts
+          opts_with_special_values, normal_opts = opts.partition{|v| GridTools.special_value(v)}
+          
+          conditions_ar = if normal_opts.size > 0 
+            [" #{alias_or_table_name(table_alias)}.#{self.name} IN ( " + (['?'] * normal_opts.size).join(', ') + ' )'] + normal_opts
+          else
+            []
+          end
+            
+          if opts_with_special_values.size > 0
+            special_conditions = opts_with_special_values.collect{|v| " #{alias_or_table_name(table_alias)}.#{self.name} is " + v}.join(' or ')
+            if conditions_ar.size > 0
+              conditions_ar[0] = " (#{conditions_ar[0]} or #{special_conditions} ) "
+            else
+              conditions_ar = " ( #{special_conditions} ) "
+            end
+          end
+          conditions_ar
         else
-          [" #{alias_or_table_name(table_alias)}.#{self.name} = ?", opts]
+          if GridTools.special_value(opts)
+            " #{alias_or_table_name(table_alias)}.#{self.name} is " + opts
+          else 
+            [" #{alias_or_table_name(table_alias)}.#{self.name} = ?", opts]
+          end
         end
       end
 
@@ -511,6 +551,8 @@ module ActiveRecord #:nodoc:
       def  generate_conditions_decimal(table_alias, opts)   #:nodoc:
         generate_conditions_integer(table_alias, opts)
       end
+      
+      alias_method :generate_conditions_float, :generate_conditions_decimal
 
       def  generate_conditions_integer(table_alias, opts)   #:nodoc:
         unless opts.kind_of? Hash
@@ -564,6 +606,8 @@ module ActiveRecord #:nodoc:
       def  generate_conditions_datetime(table_alias, opts)  #:nodoc:
         generate_conditions_date(table_alias, opts)
       end
+      
+      alias_method :generate_conditions_timestamp, :generate_conditions_datetime
 
       def generate_conditions_date(table_alias, opts)   #:nodoc:
         conditions = [[]]

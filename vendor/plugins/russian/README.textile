@@ -233,7 +233,9 @@ ru:
 
 h3. Валидация
 
-Обработка ошибок в ActiveRecord перегружается -- в Russian включен популярный плагин custom_error_message, с помощью которого можно переопределять стандартное отображение сообщений об ошибках. Так, например,
+До версии Rails 2.3.4 форматирование сообщений об ошибках не было гибким, и для нормального отображения ошибок на русском языке приходилось испольковать хаки. Если вы используете Rails 2.3.4 и выше, пропустите этот пункт (используйте ключ переводов @activerecord.errors.full_messages.format@).
+
+Для Rails 2.3.3 и ниже обработка ошибок в ActiveRecord перегружается -- в Russian включен популярный плагин custom_error_message, с помощью которого можно переопределять стандартное отображение сообщений об ошибках. Так, например,
 
 @validates_acceptance_of :accepted_terms, :message => 'нужно принять соглашение'@
 
@@ -277,12 +279,21 @@ end
 # => <a href="/person/1-donald-knut">Дональд Кнут</a>
 </code></pre>
 
-h1. Автор
+h1. Авторы
 
 Для сообщений об ошибках, обнаруженных неточностях и предложений:
 
-Ярослав Маркин ("yaroslav@markin.net":mailto:yaroslav@markin.net)
+* "Ярослав Маркин":http://yaroslav.markin.net ("yaroslav@markin.net":mailto:yaroslav@markin.net)
+
+При участии:
+
+* "Юлика Тарханова":http://julik.nl
+* "Евгения Пименова":http://libc.st/
+* "Дмитрия Смалько":http://github.com/dsmalko
+* Alex Fortuna ("alex@askit.org":mailto:alex@askit.org)
+* "Антона Агеева":http://blog.antage.name/
+* "Александра Семенова":http://rotuka.com/
 
 Огромное спасибо:
 
-Юлику Тарханову (me@julik.nl) за "rutils":http://rutils.rubyforge.org/
+"Юлику Тарханову":http://julik.nl за "rutils":http://rutils.rubyforge.org/
